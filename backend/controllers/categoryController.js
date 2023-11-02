@@ -24,7 +24,7 @@ exports.createCategory = async (req, res) => {
 exports.getAllCategories = async (req, res) => {
   try {
     const categories = await Category.find();
-    res.json(categories);
+    res.json({categories});
   } catch (error) {
     res.status(500).json({ error: 'Unable to retrieve categories' });
   }

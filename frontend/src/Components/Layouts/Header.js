@@ -1,4 +1,5 @@
-import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,18 +13,29 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { getUser, logout } from '../../utils/helpers';
+
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Header = () => {
+  const [anchorElNav, setAnchorElNav] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [userAuthenticated, setUserAuthenticated] = useState(false); // User authentication status
 
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  useEffect(() => {
+    if (getUser()) {
+
+      setUserAuthenticated(true);
+    }
+  }, []);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -34,6 +46,17 @@ const Header = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  // const handleLogin = () => {
+
+  //   return <Link to="/login" className="btn ml-4" id="login_btn">Login</Link>;
+  // };
+
+  const handleLogout = () => {
+    // Implement your logout logic here and set the userAuthenticated state accordingly
+  
+    setUserAuthenticated(false);
   };
 
   return (
@@ -112,7 +135,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            LOOOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -127,11 +150,17 @@ const Header = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            {userAuthenticated ? (
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Link to="/login" className="btn ml-4" id="login_btn">
+                <Button sx={{ color: 'white' }}>Login</Button>
+              </Link>
+            )}
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -148,18 +177,29 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
+              {/* {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
-              ))}
+              ))} */}
+              <MenuItem key={1} onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Profile</Typography>
+              </MenuItem>
+              <MenuItem key={2} onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Account</Typography>
+              </MenuItem>
+              <MenuItem key={3} onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Dashboard</Typography>
+              </MenuItem>
+              <MenuItem key={4} onClick={logout}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
             </Menu>
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
+  );
+};
 
-  )
-}
-
-export default Header
+export default Header;

@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 
 const Sidebar = () => {
   const [isCategoryOpen, setCategoryOpen] = useState(false);
+  const [isProductOpen, setProductOpen] = useState(false); // State for managing product dropdown
 
   const toggleCategory = () => {
     setCategoryOpen(!isCategoryOpen);
+  };
+
+  const toggleProduct = () => {
+    setProductOpen(!isProductOpen);
   };
 
   return (
@@ -19,7 +24,15 @@ const Sidebar = () => {
             <a href="/category/list" className="list-group-item list-group-item-action">Category List</a>
             {/* Add more links for category-related actions here */}
           </div>
-          {/* Add more sidebar items and dropdowns as needed */}
+
+          <button onClick={toggleProduct} className="list-group-item list-group-item-action" data-toggle="collapse" data-target="#productDropdown">
+            PRODUCTS
+          </button>
+          <div id="productDropdown" className={`collapse ${isProductOpen ? 'show' : ''}`}>
+            <a href="/product/create" className="list-group-item list-group-item-action">Create Product</a>
+            <a href="/product/list" className="list-group-item list-group-item-action">Product List</a>
+          </div>
+          
         </div>
       </div>
     </div>

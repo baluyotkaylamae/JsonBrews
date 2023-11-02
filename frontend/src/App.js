@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import Header from './Components/Layouts/Header';
+import Footer from './Components/Layouts/Footer'
 import CreateCategory from './Components/Admin/Category/Create';
+import CreateProduct from './Components/Admin/productCreate';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UpdateCategory from './Components/Admin/Category/Update';
 import CategoryList from './Components/Admin/Category/Category';
@@ -35,10 +37,16 @@ function App() {
           <Route path="/category/update/:id" element={<UpdateCategory />} end />
           <Route path="/category/list" element={<CategoryList />} end />
 
+          {/* <Route path="admin/product/create" element={<CreateProduct />} exact="true" /> */}
+
+          <Route path="/product/create" element={<CreateProduct />} end  />
+          {/* <Route path="/admin/products" element={<ProductsList />}  /> */}
+
           <Route path="/dashboard" element={<Dashboard />}  />
           {/* for admin */}
           <Route path="/sidebar" element={<Sidebar />} end />
         </Routes>
+        <Footer />
       </Router>
     </div>
   );

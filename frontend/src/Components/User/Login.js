@@ -11,6 +11,8 @@ import { getUser } from '../../utils/helpers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import '../Layouts/FH.css';
+
 const Login = () => {
 
     const [email, setEmail] = useState('');
@@ -61,10 +63,10 @@ const Login = () => {
 
                     <div className="row wrapper">
                         <div className="col-10 col-lg-5">
-                            <form className="shadow-lg" 
+                            <form className="shadow-lg" class='Json-Login-Form' 
                             onSubmit={submitHandler}
                             >
-                                <h1 className="mb-3">Login</h1>
+                                <h1 className="mb-3" style={{ fontWeight: '500' }}>LOGIN</h1>
                                 <div className="form-group">
                                     <label htmlFor="email_field">Email</label>
                                     <input
@@ -87,7 +89,9 @@ const Login = () => {
                                     />
                                 </div>
 
-                                <Link to="/password/forgot" className="float-right mb-4">Forgot Password?</Link>
+                                <Link to="/password/forgot" className="float-right mb-4"
+                                class='Json-Login-Form' >
+                                Forgot Password?</Link>
 
                                 <button
                                     id="login_button"
@@ -97,7 +101,9 @@ const Login = () => {
                                     LOGIN
                                 </button>
 
-                                <Link to="/register" className="float-right mt-3">New User?</Link>
+                                <Link to="/register" 
+                                className="float-right mt-3"
+                                class='Json-Login-Form' >New User?</Link>
                             </form>
                         </div>
                         <ToastContainer />

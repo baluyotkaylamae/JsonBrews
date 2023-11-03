@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Sidebar from './Sidebar';
 
 const CreateProduct = () => {
   const [product, setProduct] = useState({
@@ -94,6 +95,12 @@ const CreateProduct = () => {
 
   return (
     <div className="container mt-5">
+    <div className="row">
+      <div className="col-md-3">
+        <Sidebar /> {/* Add the Sidebar component here */}
+      </div>
+      <div className="col-md-9">
+        <h2>Create Product</h2>
       <form onSubmit={submitForm}>
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
@@ -179,6 +186,8 @@ const CreateProduct = () => {
           Create Product
         </button>
       </form>
+    </div>
+    </div>
     </div>
   );
 };

@@ -2,11 +2,11 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './Components/Layouts/Header';
 import Footer from './Components/Layouts/Footer'
-import CreateCategory from './Components/Admin/Category/Create';
+import CreateCategory from './Components/Admin/CreateCategory';
 import CreateProduct from './Components/Admin/productCreate';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import UpdateCategory from './Components/Admin/Category/Update';
-import CategoryList from './Components/Admin/Category/Category';
+import UpdateCategory from './Components/Admin/UpdateCategory';
+import CategoryList from './Components/Admin/Category';
 import Sidebar from './Components/Admin/Sidebar';
 import Login from './Components/User/Login'
 import Register from './Components/User/Register';

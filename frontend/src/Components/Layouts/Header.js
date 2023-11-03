@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { getUser, logout } from '../../utils/helpers';
 import './FH.css';
-import SearchIcon from '@mui/icons-material/Search';
+
 
 
 const pages = ['Home', 'Products', 'About'];

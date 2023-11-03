@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import {authenticate} from '../../utils/helpers'
 import { getUser } from '../../utils/helpers';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
 
@@ -98,6 +100,7 @@ const Login = () => {
                                 <Link to="/register" className="float-right mt-3">New User?</Link>
                             </form>
                         </div>
+                        <ToastContainer />
                     </div>
 
 

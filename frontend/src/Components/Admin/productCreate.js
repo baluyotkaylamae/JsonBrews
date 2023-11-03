@@ -7,7 +7,7 @@ const CreateProduct = () => {
     description: '',
     price: 0,
     category: '',
-    image: null,
+    images: null,
   });
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
@@ -49,7 +49,7 @@ const CreateProduct = () => {
       .get('http://localhost:4001/api/categories')
       .then((response) => {
         console.log('Categories data:', response.data); 
-        setCategories(response.data);
+         setCategories(response.data.categories);
       })
       .catch((error) => {
         console.error('Failed to fetch categories:', error);
@@ -66,11 +66,11 @@ const CreateProduct = () => {
     formData.append('category', product.category);
 
     images.forEach((image) => {
-      formData.append('image', image);
+      formData.append('images', image);
     });
 
     try {
-      await axios.post('http://localhost:4001/api/products', formData, {
+      await axios.post('http://localhost:4001/api/product/new', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -82,7 +82,7 @@ const CreateProduct = () => {
         description: '',
         price: 0,
         category: '',
-        image: null,
+        images: null,
       });
       setImages([]); 
       setImagesPreview([]); 
@@ -166,7 +166,7 @@ const CreateProduct = () => {
             type="file"
             className="form-control"
             id="image"
-            name="image"
+            name="images"
             required
             onChange={handleChange}
             multiple

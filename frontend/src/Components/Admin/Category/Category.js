@@ -6,13 +6,14 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const CategoryList = () => {
     const [categories, setCategories] = useState([]);
-
+    console.log(categories)
     useEffect(() => {
         // Fetch a list of categories from your API
         axios
             .get('http://localhost:4001/api/categories')
             .then((res) => {
-                setCategories(res.data);
+                setCategories(res.data.categories);
+                console.log(categories);
             })
             .catch((err) => {
                 console.error(err);
@@ -50,24 +51,30 @@ const CategoryList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {categories.map((category) => (
-                        <tr key={category._id}>
-                            <td>{category._id}</td>
-                            <td>{category.name}</td>
-                            <td>{category.description}</td>
-                            <td>
-                                <Link to={`/category/update/${category._id}`} className="btn btn-primary">
-                                    Edit
-                                </Link>
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={() => handleDelete(category._id)}
-                                >
-                                    Delete
-                                </button>
-                            </td>
+                    {Array.isArray(categories) && categories.length > 0 ? (
+                        categories.map((category) => (
+                            <tr key={category._id}>
+                                <td>{category._id}</td>
+                                <td>{category.name}</td>
+                                <td>{category.description}</td>
+                                <td>
+                                    <Link to={`/category/update/${category._id}`} className="btn btn-primary">
+                                        Edit
+                                    </Link>
+                                    <button
+                                        className="btn btn-danger"
+                                        onClick={() => handleDelete(category._id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="4">No categories available</td>
                         </tr>
-                    ))}
+                    )}
                 </tbody>
             </table>
             <ToastContainer />

@@ -1,5 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom'
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,21 +15,17 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { getUser, logout } from '../../utils/helpers';
 
-
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['Profile', 'Account', 'Dashboard', ];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [userAuthenticated, setUserAuthenticated] = useState(false); // User authentication status
-
+  const [user, setUser] = useState(getUser()); // Get the user's data
+  const userAuthenticated = !!user; // Check if the user is authenticated
 
   useEffect(() => {
-    if (getUser()) {
-
-      setUserAuthenticated(true);
-    }
+    setUser(getUser());
   }, []);
 
   const handleOpenNavMenu = (event) => {
@@ -48,15 +44,10 @@ const Header = () => {
     setAnchorElUser(null);
   };
 
-  // const handleLogin = () => {
-
-  //   return <Link to="/login" className="btn ml-4" id="login_btn">Login</Link>;
-  // };
-
   const handleLogout = () => {
-    // Implement your logout logic here and set the userAuthenticated state accordingly
-  
-    setUserAuthenticated(false);
+    // Implement your logout logic here and set the user state to null
+    logout();
+    setUser(null);
   };
 
   return (
@@ -153,7 +144,13 @@ const Header = () => {
             {userAuthenticated ? (
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                  {user.avatar ? (
+                    <Avatar
+                      src={user.avatar.url}
+                      alt={user.name}
+                      sx={{ borderRadius: '50%' }} // Apply circular border-radius
+                    />
+                  ) : null}
                 </IconButton>
               </Tooltip>
             ) : (
@@ -177,21 +174,18 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              {settings.map((setting, index) => (
+                <MenuItem key={index} onClick={handleCloseUserMenu}>
+                  {index === 0 ? (
+                    <Link to="/me" style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </Link>
+                  ) : (
+                    <Typography textAlign="center">{setting}</Typography>
+                  )}
                 </MenuItem>
-              ))} */}
-              <MenuItem key={1} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Profile</Typography>
-              </MenuItem>
-              <MenuItem key={2} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Account</Typography>
-              </MenuItem>
-              <MenuItem key={3} onClick={handleCloseUserMenu}>
-                <Typography textAlign="center">Dashboard</Typography>
-              </MenuItem>
-              <MenuItem key={4} onClick={logout}>
+              ))}
+              <MenuItem key={4} onClick={handleLogout}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>

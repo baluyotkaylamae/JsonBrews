@@ -14,8 +14,11 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { getUser, logout } from '../../utils/helpers';
+import './FH.css';
+import SearchIcon from '@mui/icons-material/Search';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+
+const pages = ['Home', 'Products', 'About'];
 const settings = ['Profile', 'Account', 'Dashboard', ];
 
 const Header = () => {
@@ -50,9 +53,12 @@ const Header = () => {
     setUser(null);
   };
 
+
+  
+
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+    <AppBar position="static" >
+      <Container maxWidth="xl" className='JsonHeader'>
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
@@ -70,7 +76,7 @@ const Header = () => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            JSONBREWS
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -154,8 +160,8 @@ const Header = () => {
                 </IconButton>
               </Tooltip>
             ) : (
-              <Link to="/login" className="btn ml-4" id="login_btn">
-                <Button sx={{ color: 'white' }}>Login</Button>
+              <Link to="/login" className="btn ml-4 Json-BTN" id="login_btn">
+                <Button className='Json-BTN'>Login</Button>
               </Link>
             )}
             <Menu

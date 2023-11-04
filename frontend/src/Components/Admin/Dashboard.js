@@ -52,14 +52,14 @@ const Dashboard = () => {
         }
     };
 
-    const getProducts = async () => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${getToken()}`
-                }
-            };
+    // const getProducts = async () => {
+    //     try {
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data',
+    //                 'Authorization': `Bearer ${getToken()}`
+    //             }
+    //         };
 
     //         const { data } = await axios.get(`http://localhost:4001/api/product`, config);
     //         setUsers(data.products);

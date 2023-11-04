@@ -5,7 +5,27 @@ const cloudinary = require('cloudinary')
 
 exports.newProduct = async (req, res, next) => {
 
+	let imagesLinks = [];
+	let images = []
 	
+	if (req.files.length > 0) {
+		req.files.forEach(image => {
+			images.push(image.path)
+		})
+	}
+
+	if (req.file) {
+		images.push(req.file.path);
+	}
+
+	if (req.body.images) {
+		if (typeof req.body.images === 'string') {
+			images.push(req.body.images)
+		} else {
+			images = req.body.images
+		}
+	}
+
 	for (let i = 0; i < images.length; i++) {
 		let imageDataUri = images[i]
 		try {

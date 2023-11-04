@@ -135,11 +135,12 @@ const Register = () => {
                             />
                         </div>
 
-                        <div className='form-group'>
-                            <label htmlFor='avatar_upload'>Avatar</label>
+                        <div className='form-group '>
+                            <label htmlFor='avatar_upload'
+                            style={{paddingTop: '30px' }}>Avatar</label>
                             <div className='d-flex align-items-center'>
                                 <div>
-                                    <figure className='avatar mr-3 item-rtl'>
+                                    <figure className='avatar mr-3 item-rtl '>
                                         <img
                                             src={avatarPreview}
                                             className='rounded-circle'
@@ -149,6 +150,7 @@ const Register = () => {
                                 </div>
                                 <div className='custom-file'>
                                     <input
+                                        
                                         type='file'
                                         name='avatar'
                                         className='custom-file-input'

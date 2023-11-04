@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';
+import { useParams, useNavigate } from 'react-router-dom';
 
-const CreateProduct = () => {
-  
+const UpdateProduct = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+   
+
   const [product, setProduct] = useState({
     name: '',
     description: '',
@@ -11,6 +15,7 @@ const CreateProduct = () => {
     category: '',
     images: null,
   });
+
   const [categories, setCategories] = useState([]);
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
@@ -46,17 +51,35 @@ const CreateProduct = () => {
   };
 
   useEffect(() => {
-    console.log('Fetching categories...');
+    axios
+      .get(`http://localhost:4001/api/product/${id}`)
+      .then((res) => {
+        const fetchedProduct = res.data;
+        setProduct(fetchedProduct);
+  
+        if (fetchedProduct.images) {
+          const imagePreviews = fetchedProduct.images.map((image) =>
+            URL.createObjectURL(image)
+          );
+          setImagesPreview(imagePreviews);
+        } else {
+         
+          setImagesPreview([]);
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to fetch product:', error);
+      });
+  
     axios
       .get('http://localhost:4001/api/categories')
       .then((response) => {
-        console.log('Categories data:', response.data);
         setCategories(response.data.categories);
       })
       .catch((error) => {
         console.error('Failed to fetch categories:', error);
       });
-  }, []);
+  }, [id]);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -69,29 +92,19 @@ const CreateProduct = () => {
     images.forEach((image) => {
       formData.append('images', image);
     });
-    // console.log(e.target.images.value);
-    console.log(images);
+
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       };
+      await axios.put(`http://localhost:4001/api/product/${id}`, formData, config);
 
-      await axios.post('http://localhost:4001/api/product/new', formData, config);
-
-      alert('Product created successfully');
-      setProduct({
-        name: '',
-        description: '',
-        price: 0,
-        category: '',
-        images: null,
-      });
-      setImages([]);
-      setImagesPreview([]);
+      alert('Product updated successfully');
+      navigate('/product/list'); 
     } catch (error) {
-      alert('Failed to create product');
+      alert('Failed to update product');
       console.error(error);
     }
   };
@@ -103,7 +116,7 @@ const CreateProduct = () => {
           <Sidebar />
         </div>
         <div className="col-md-9">
-          <h2>Create Product</h2>
+          <h2>Update Product</h2>
           <form onSubmit={submitForm}>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">
@@ -181,11 +194,18 @@ const CreateProduct = () => {
                 multiple
               />
               {imagesPreview.map((img) => (
-                <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
+                <img
+                  src={img}
+                  key={img}
+                  alt="Images Preview"
+                  className="mt-3 mr-2"
+                  width="55"
+                  height="52"
+                />
               ))}
             </div>
             <button type="submit" className="btn btn-primary">
-              Create Product
+              Update Product
             </button>
           </form>
         </div>
@@ -194,4 +214,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

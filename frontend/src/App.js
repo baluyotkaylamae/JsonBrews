@@ -4,6 +4,8 @@ import Header from './Components/Layouts/Header';
 import Footer from './Components/Layouts/Footer'
 import CreateCategory from './Components/Admin/CreateCategory';
 import CreateProduct from './Components/Admin/productCreate';
+import UpdateProduct from './Components/Admin/UpdateProduct';
+import ProductList from './Components/Admin/ProductList';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import UpdateCategory from './Components/Admin/UpdateCategory';
 import CategoryList from './Components/Admin/Category';
@@ -40,6 +42,8 @@ function App() {
           {/* <Route path="admin/product/create" element={<CreateProduct />} exact="true" /> */}
 
           <Route path="/product/create" element={<CreateProduct />} end  />
+          <Route path="/product/update/:id" element={<UpdateProduct />} end  />
+          <Route path="/product/list" element={<ProductList />} end  />
           {/* <Route path="/admin/products" element={<ProductsList />}  /> */}
 
           <Route path="/dashboard" element={<Dashboard />}  />

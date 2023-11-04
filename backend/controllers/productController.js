@@ -1,17 +1,30 @@
 const Product = require('../models/product');
 const mongoose = require('mongoose');
+const APIFeatures = require('../utils/apiFeatures');
 const cloudinary = require('cloudinary')
 
 exports.newProduct = async (req, res, next) => {
 
+	let imagesLinks = [];
 	let images = []
-	if (typeof req.body.images === 'string') {
-		images.push(req.body.images)
-	} else {
-		images = req.body.images
+	
+	if (req.files.length > 0) {
+		req.files.forEach(image => {
+			images.push(image.path)
+		})
 	}
 
-	let imagesLinks = [];
+	if (req.file) {
+		images.push(req.file.path);
+	}
+
+	if (req.body.images) {
+		if (typeof req.body.images === 'string') {
+			images.push(req.body.images)
+		} else {
+			images = req.body.images
+		}
+	}
 
 	for (let i = 0; i < images.length; i++) {
 		let imageDataUri = images[i]
@@ -21,16 +34,16 @@ exports.newProduct = async (req, res, next) => {
 				width: 150,
 				crop: "scale",
 			});
-	
-			 imagesLinks.push({
+
+			imagesLinks.push({
 				public_id: result.public_id,
 				url: result.secure_url
 			})
-			
+
 		} catch (error) {
 			console.log(error)
 		}
-		
+
 	}
 
 	req.body.images = imagesLinks
@@ -51,54 +64,52 @@ exports.newProduct = async (req, res, next) => {
 }
 
 exports.updateProduct = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedProduct = req.body;
+	try {
+		const { id } = req.params;
+		const updatedProduct = req.body;
 
-    const product = await Product.findByIdAndUpdate(id, updatedProduct, { new: true });
+		const product = await Product.findByIdAndUpdate(id, updatedProduct, { new: true });
 
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
+		if (!product) {
+			return res.status(404).json({ message: 'Product not found' });
+		}
 
-    return res.json(product);
-  } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
-  }
+		return res.json(product);
+	} catch (error) {
+		return res.status(500).json({ error: 'Internal server error' });
+	}
 };
 
 exports.deleteProduct = async (req, res) => {
-  try {
-    const { id } = req.params;
+	try {
+		const { id } = req.params;
 
-    const product = await Product.findByIdAndDelete(id);
+		const product = await Product.findByIdAndDelete(id);
 
-    if (!product) {
-      return res.status(404).json({ message: 'Product not found' });
-    }
+		if (!product) {
+			return res.status(404).json({ message: 'Product not found' });
+		}
 
-    return res.json({ message: 'Product deleted successfully' });
-  } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
-  }
+		return res.json({ message: 'Product deleted successfully' });
+	} catch (error) {
+		return res.status(500).json({ error: 'Internal server error' });
+	}
 };
 
-exports.getProducts = async (req,res,next) => {
-	const resPerPage = 4;
-	const productsCount = await Product.countDocuments();
-	const apiFeatures = new APIFeatures(Product.find(),req.query).search().filter(); 
-
-	apiFeatures.pagination(resPerPage);
-	const products = await apiFeatures.query;
-	let filteredProductsCount = products.length;
-	res.status(200).json({
+exports.getProducts = async (req, res, next) => {
+	try {
+	  const products = await Product.find();
+	  res.status(200).json({
 		success: true,
-		filteredProductsCount,
-		productsCount,
-		products,
-		resPerPage,
-	})
-}
+		products: products,
+	  });
+	} catch (error) {
+	  console.error(error);
+	  res.status(500).json({ success: false, message: 'Failed to get products' });
+	}
+  };
+  
+  
 
 exports.getSingleProduct = async (req, res, next) => {
 	const product = await Product.findById(req.params.id);
@@ -114,7 +125,24 @@ exports.getSingleProduct = async (req, res, next) => {
 	})
 }
 
-exports.getAdminProducts = async (req, res, next) => {
+exports.getProductById = async (req, res) => {
+	try {
+	  const { id } = req.params;
+  
+	  const product = await Product.findById(id);
+  
+	  if (!product) {
+		return res.status(404).json({ message: 'Product not found' });
+	  }
+  
+	  return res.json(product);
+	} catch (error) {
+	  return res.status(500).json({ error: 'Internal server error' });
+	}
+  };
+  
+
+exports.getAdminProduct = async (req, res, next) => {
 
 	const products = await Product.find();
 

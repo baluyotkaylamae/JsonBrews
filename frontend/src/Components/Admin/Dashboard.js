@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Dashboard = () => {
     const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -50,6 +51,25 @@ const Dashboard = () => {
             // Handle the error as needed
         }
     };
+
+    const getProducts = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            };
+
+    //         const { data } = await axios.get(`http://localhost:4001/api/product`, config);
+    //         setUsers(data.products);
+    //         console.log(data.products);
+    //     } catch (error) {
+    //         console.error(error);
+    //         // Handle the error as needed
+    //     }
+    // };
+
 
     useEffect(() => {
         getCategories();
@@ -100,6 +120,7 @@ const Dashboard = () => {
                                                 <i className="fa fa-angle-right"></i>
                                             </span>
                                         </Link>
+
                                     </div>
                                 </div>
                             </div>

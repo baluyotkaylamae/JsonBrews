@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Metadata from '../Layouts/Metadata'
 import axios from 'axios'
 
+import '../Layouts/FH.css';
 const Register = () => {
 
     const [user, setUser] = useState({
@@ -95,8 +96,8 @@ const Register = () => {
 
             <div className="row wrapper">
                 <div className="col-10 col-lg-5">
-                    <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                        <h1 className="mb-3">Register</h1>
+                    <form className="shadow-lg Json-Register-Form" onSubmit={submitHandler} encType='multipart/form-data'>
+                        <h1 className="mb-3">REGISTER</h1>
 
                         <div className="form-group">
                             <label htmlFor="email_field">Name</label>
@@ -162,14 +163,17 @@ const Register = () => {
                             </div>
                         </div>
 
+
+                        <div className="d-flex justify-content-center mt-2">
                         <button
                             id="register_button"
                             type="submit"
-                            className="btn btn-block py-3"
+                            className="btn btn-block py-3 Json-Register-BTN"
                             // disabled={loading ? false : true}
                         >
                             REGISTER
                         </button>
+                        </div>
                     </form>
                 </div>
             </div>

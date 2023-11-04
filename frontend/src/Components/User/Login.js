@@ -6,7 +6,7 @@ import Metadata from '../Layouts/Metadata'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import {authenticate} from '../../utils/helpers'
+import { authenticate } from '../../utils/helpers'
 import { getUser } from '../../utils/helpers';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,7 +18,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false)
-    
+
     const navigate = useNavigate()
     let location = useLocation();
     const redirect = location.search ? new URLSearchParams(location.search).get('redirect') : ''
@@ -37,7 +37,7 @@ const Login = () => {
             console.log(data)
             authenticate(data, () => navigate("/"))
             window.location.reload();
-            
+
         } catch (error) {
             toast.error("invalid user or password", {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -50,8 +50,8 @@ const Login = () => {
     }
 
     useEffect(() => {
-        if (getUser() && redirect === 'shipping' ) {
-             navigate(`/${redirect}`)
+        if (getUser() && redirect === 'shipping') {
+            navigate(`/${redirect}`)
         }
     }, [])
 
@@ -60,11 +60,9 @@ const Login = () => {
             {loading ? <Loader /> : (
                 <Fragment>
                     <Metadata title={'Login'} />
-
                     <div className="row wrapper">
-                        <div className="col-10 col-lg-5">
-                            <form className="shadow-lg" class='Json-Login-Form' 
-                            onSubmit={submitHandler}
+                        <div className="col-10 col-lg-5" style={{ paddingBottom: '50px' }}>
+                            <form className="shadow-lg Json-Login-Form" onSubmit={submitHandler}
                             >
                                 <h1 className="mb-3" style={{ fontWeight: '500' }}>LOGIN</h1>
                                 <div className="form-group">
@@ -89,21 +87,20 @@ const Login = () => {
                                     />
                                 </div>
 
-                                <Link to="/password/forgot" className="float-right mb-4"
-                                class='Json-Login-Form' >
-                                Forgot Password?</Link>
-
-                                <button
-                                    id="login_button"
-                                    type="submit"
-                                    className="btn btn-block py-3"
-                                >
-                                    LOGIN
-                                </button>
-
-                                <Link to="/register" 
-                                className="float-right mt-3"
-                                class='Json-Login-Form' >New User?</Link>
+                                <div className="d-flex justify-content-between mb-2">
+                                    <Link to="/password/forgot" className="float-left Json-Login-Form">Forgot Password?</Link>
+                                    <Link to="/register" className="float-right Json-Login-Form">New User?</Link>
+                                </div>
+                                <div className="d-flex justify-content-center mt-2">
+                                    <button
+                                        id="login_button"
+                                        type="submit"
+                                        className="Json-Login-BTN btn btn-block py-3 "
+                                        style={{ padding: '20px' }}
+                                    >
+                                        LOGIN
+                                    </button>
+                                </div>
                             </form>
                         </div>
                         <ToastContainer />

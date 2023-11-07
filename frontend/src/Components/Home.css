@@ -1,0 +1,4 @@
+.product-image {
+    height: 200px; /* Adjust the height as needed to make the images uniform */
+    object-fit: cover; /* Ensures the entire image is displayed within the fixed height */
+  }

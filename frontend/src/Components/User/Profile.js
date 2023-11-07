@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
 
+
 const Profile = () => {
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState('')

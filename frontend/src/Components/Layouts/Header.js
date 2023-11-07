@@ -15,6 +15,57 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { getUser, logout } from '../../utils/helpers';
 import './FH.css';
+import CoffeeIcon from '@mui/icons-material/Coffee';
+
+
+import SearchIcon from '@mui/icons-material/Search';
+import { styled, alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  margin: '0 auto', // Center the search bar
+  width: '50%', // Adjust the width to control the size
+  [theme.breakpoints.up('sm')]: {
+    width: 'auto', // Restore auto width on larger screens
+  },
+}));
+
+
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
 
 
 
@@ -60,7 +111,7 @@ const Header = () => {
     <AppBar position="static" >
       <Container maxWidth="xl" className='JsonHeader'>
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+           <CoffeeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 
           <Typography
             variant="h6"
             noWrap
@@ -114,6 +165,8 @@ const Header = () => {
                 </MenuItem>
               ))}
             </Menu>
+
+
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
@@ -145,6 +198,17 @@ const Header = () => {
               </Button>
             ))}
           </Box>
+
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
+
 
           <Box sx={{ flexGrow: 0 }}>
             {userAuthenticated ? (
@@ -180,6 +244,11 @@ const Header = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
+
+
+
+
+
               {settings.map((setting, index) => (
                 <MenuItem key={index} onClick={handleCloseUserMenu}>
                   {index === 0 ? (
@@ -190,12 +259,18 @@ const Header = () => {
                     <Typography textAlign="center">{setting}</Typography>
                   )}
                 </MenuItem>
+
+                
+
               ))}
               <MenuItem key={4} onClick={handleLogout}>
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
           </Box>
+      
+      
+
         </Toolbar>
       </Container>
     </AppBar>

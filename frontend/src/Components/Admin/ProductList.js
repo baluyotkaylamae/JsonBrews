@@ -67,6 +67,7 @@ const ProductList = () => {
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
+                <th>Stock</th>
                 <th>Category</th>
                 <th>Actions</th>
               </tr>
@@ -79,6 +80,7 @@ const ProductList = () => {
                     <td>{product.name}</td>
                     <td>{product.description}</td>
                     <td>{product.price}</td>
+                    <td>{product.stock}</td>
                     <td>
                       {categories.find((category) => category._id === product.category)?.name}
                     </td>

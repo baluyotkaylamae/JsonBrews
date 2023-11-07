@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';
+import { useNavigate } from 'react-router-dom';
 
 const CreateProduct = () => {
-  
+  const navigate = useNavigate();
   const [product, setProduct] = useState({
     name: '',
     description: '',
     price: 0,
+    stock: 0,
     category: '',
     images: null,
   });
@@ -64,6 +66,7 @@ const CreateProduct = () => {
     formData.append('name', product.name);
     formData.append('description', product.description);
     formData.append('price', product.price);
+    formData.append('stock', product.stock);
     formData.append('category', product.category);
 
     images.forEach((image) => {
@@ -85,11 +88,13 @@ const CreateProduct = () => {
         name: '',
         description: '',
         price: 0,
+        stock: 0,
         category: '',
         images: null,
       });
       setImages([]);
       setImagesPreview([]);
+      navigate('/product/list');
     } catch (error) {
       alert('Failed to create product');
       console.error(error);
@@ -142,6 +147,21 @@ const CreateProduct = () => {
                 name="price"
                 required
                 value={product.price}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="stock" className="form-label">
+                Stock
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="stock"
+                name="stock"
+                required
+                value={product.stock}
                 onChange={handleChange}
               />
             </div>

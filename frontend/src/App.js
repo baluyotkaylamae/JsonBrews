@@ -29,7 +29,7 @@ import Payment from './Components/Cart/Payment';
 import OrderSuccess from './Components/Cart/OrderSuccess';
 import ListOrders from './Components/Order/ListOrders';
 import OrderDetails from './Components/Order/OrderDetails';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
 
@@ -45,40 +45,47 @@ function App() {
   const addItemToCart = async (id, quantity) => {
     console.log(id, quantity)
     try {
-      const { data } = await axios.get(`http://localhost:4001/api/v1/product/${id}`)
+      const { data } = await axios.get(`http://localhost:4001/api/product/${id}`)
+      console.log(data)
       const item = {
-        product: data.product._id,
-        name: data.product.name,
-        price: data.product.price,
-        image: data.product.images[0].url,
-        stock: data.product.stock,
+        product: data._id,
+        name: data.name,
+        price: data.price,
+        image: data.images[0].url,
+        stock: data.stock,
         quantity: quantity
       }
 
-      const isItemExist = state.cartItems.find(i => i.product === item.product)
+      const isItemExist = state.cartItems.find(i => i.products === item.product)
       console.log(isItemExist, state)
       // setState({
       //   ...state,
       //   cartItems: [...state.cartItems, item]
       // })
       if (isItemExist) {
+        console.log("asdsad")
         setState({
           ...state,
-          cartItems: state.cartItems.map(i => i.product === isItemExist.product ? item : i)
+          cartItems: state.cartItems.map(i => i.products === isItemExist.product ? item : i)
         })
       }
       else {
+        console.log("ADSAD")
         setState({
           ...state,
           cartItems: [...state.cartItems, item]
+
         })
+        localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
       }
 
+      console.log(state.cartItems)
       toast.success('Item Added to Cart', {
         position: toast.POSITION.BOTTOM_RIGHT
       })
 
     } catch (error) {
+      console.log(error)
       toast.error(error, {
         position: toast.POSITION.TOP_LEFT
       });
@@ -87,13 +94,26 @@ function App() {
 
   }
 
-  const removeItemFromCart = async (id) => {
+  // const removeItemFromCart = async (id) => {
+  //   setState({
+  //     ...state,
+  //     cartItems: state.cartItems.filter(i => i.products !== id)
+  //   })
+  //   localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
+  // }
+  const removeItemFromCart = (id) => {
+    // Filter out the item with the given id and update the state
     setState({
-      ...state,
-      cartItems: state.cartItems.filter(i => i.product !== id)
-    })
-    localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
-  }
+        ...state,
+        cartItems: state.cartItems.filter(item => item.product !== id)
+    });
+
+    // Update the localStorage to persist the changes
+    localStorage.setItem(
+        'cartItems',
+        JSON.stringify(state.cartItems.filter(item => item.product !== id))
+    );
+}
 
   const saveShippingInfo = async (data) => {
     setState({
@@ -113,11 +133,11 @@ function App() {
           <Route path="/" element={<Home />} exact="true" />
           {/* <Route path="/product/:id" element={<ProductDetails  />} exact="true" /> */}
           <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" />
-          
+
           <Route path="/login" element={<Login />} exact="true" />
           <Route path="/register" element={<Register />} exact="true" />
           <Route path="/me" element={<Profile />} exact="true" />
-          <Route path="/me/update" element={<UpdateProfile />} exact="true"/>
+          <Route path="/me/update" element={<UpdateProfile />} exact="true" />
           <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
           <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
           <Route path="/password/update" element={<UpdatePassword />} />
@@ -129,13 +149,13 @@ function App() {
             saveShippingInfo={saveShippingInfo}
           />}
           />
-          <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />}  />
-          <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />}  />
-          <Route path="/success" element={<OrderSuccess />}  />
+          <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
+          <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
+          <Route path="/success" element={<OrderSuccess />} />
 
           {/* orders */}
-          <Route path="/orders/me" element={<ListOrders />}  />
-          <Route path="/order/:id" element={<OrderDetails />}  />
+          <Route path="/orders/me" element={<ListOrders />} />
+          <Route path="/order/:id" element={<OrderDetails />} />
 
           {/* category */}
           <Route path="/category/create" element={<CreateCategory />} end />
@@ -144,17 +164,18 @@ function App() {
 
           {/* <Route path="admin/product/create" element={<CreateProduct />} exact="true" /> */}
 
-          <Route path="/product/create" element={<CreateProduct />} end  />
-          <Route path="/product/update/:id" element={<UpdateProduct />} end  />
-          <Route path="/product/list" element={<ProductList />} end  />
+          <Route path="/product/create" element={<CreateProduct />} end />
+          <Route path="/product/update/:id" element={<UpdateProduct />} end />
+          <Route path="/product/list" element={<ProductList />} end />
           {/* <Route path="/admin/products" element={<ProductsList />}  /> */}
 
-          <Route path="/dashboard" element={<Dashboard />}  />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* for admin */}
           <Route path="/sidebar" element={<Sidebar />} end />
         </Routes>
         <Footer />
       </Router>
+      <ToastContainer autoClose={3000} />
     </div>
   );
 }

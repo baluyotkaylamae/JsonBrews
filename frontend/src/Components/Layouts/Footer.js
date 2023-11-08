@@ -24,16 +24,16 @@ export default function App() {
             </MDBCol> */}
 
             <MDBCol md="6" lg="6" xl="6" className='mx-auto mb-2'>
-              <h6 className='text-uppercase fw-bold mb-4'class='text-header-Json'>CREATORS</h6>
-              <p class='text-Json'>Baluyot, Kayla Mae B.</p>
-              <p class='text-Json'>Elumba, Bea Clarisse B.</p>
-              <p class='text-Json'>Gracia, Arman Steven D.</p>
-              <p class='text-Json'>Pagalan, Mary Angeleen</p>
+              <h6 className='text-uppercase fw-bold mb-4 text-header-Json'>CREATORS</h6>
+              <p className='text-Json'>Baluyot, Kayla Mae B.</p>
+              <p className='text-Json'>Elumba, Bea Clarisse B.</p>
+              <p className='text-Json'>Gracia, Arman Steven D.</p>
+              <p className='text-Json'>Pagalan, Mary Angeleen</p>
             </MDBCol>
 
             <MDBCol md="3" lg="3" xl="3" className='mx-auto mb-md-0 mb-3'>
-              <h6 className='text-uppercase fw-bold mb-4'class='text-header-Json'>CONTACT</h6>
-              <p class='text-Json'>
+              <h6 className='text-uppercase fw-bold mb-4 text-header-Json'>CONTACT</h6>
+              <p className='text-Json'>
                 <MDBIcon icon="home" className="me-1" />
                 Taguig City, Philippines
               </p>

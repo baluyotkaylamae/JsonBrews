@@ -57,7 +57,7 @@ const Home = () => {
       ) : Array.isArray(products) && products.length > 0 ? (
         <div className="row">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product._id} product={product} />
           ))}
         </div>
       ) : (

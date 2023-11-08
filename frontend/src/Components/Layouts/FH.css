@@ -108,3 +108,23 @@ font-family: Roboto, Arial, Helvetica, sans-serif;
     background-color: #E4D1B9 !important;
     color: #FAF8F1;
 }
+
+
+.short-input {
+    width: 100px; 
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .carousel-item {
+    height: 500px; 
+    width: 700px; 
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  
+  .carousel-item img {
+    object-fit: contain; 
+    height: 100%; 
+    width: 100%;
+  }

@@ -4,6 +4,7 @@ import { Carousel } from 'react-bootstrap';
 import axios from 'axios';
 import Loader from '../Layouts/Loader';
 import MetaData from '../Layouts/Metadata';
+import '../Layouts/FH.css';
 
 const ProductDetails = ({ addItemToCart, cartItems }) => {
   const [loading, setLoading] = useState(true);
@@ -72,7 +73,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               <p id="product_price">${product.price}</p>
               <div className="stockCounter d-inline">
                 <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
-                <input type="number" className="form-control count d-inline" value={quantity} readOnly />
+                <input type="number" className="form-control count d-inline short-input" value={quantity} readOnly />
                 <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
               </div>
               <button
@@ -81,6 +82,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
                 className="btn btn-primary d-inline ml-4"
                 disabled={product.stock === 0}
                 onClick={addToCart}
+                style={{marginLeft: '10px'}}
               >
                 Add to Cart
               </button>

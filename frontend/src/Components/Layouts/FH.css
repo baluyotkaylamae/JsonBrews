@@ -60,3 +60,51 @@ font-family: Roboto, Arial, Helvetica, sans-serif;
     color: #FAF8F1 !important;
 
 }
+
+
+
+
+.sidebar-JSON
+{
+    width: 245px;
+    container: center;
+    text-align: center;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    color:#A97155 !important;
+    
+    
+}
+
+.dashboard-category
+{
+    background: linear-gradient(to bottom, #F8DE22, #F11A7B);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(241, 233, 233, 0.3);
+    text-align: center;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+.dashboard-product
+{
+    background: linear-gradient(to bottom, #00FFD1, #40128B);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(241, 233, 233, 0.3);
+    text-align: center;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+.dashboard-title
+{
+
+    font-weight: 700;
+    font-family: monospace;
+    color:#A97155 !important;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.sidebar-dashboard
+{
+    background-color: #E4D1B9 !important;
+    color: #FAF8F1;
+}

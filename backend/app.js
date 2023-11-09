@@ -5,6 +5,7 @@ const categories = require('./routes/category');
 const products = require('./routes/product');
 const auth = require('./routes/auth');
 const order = require('./routes/order');
+const addons = require('./routes/addon');
 const orderController = require('./controllers/orderController');
 
 const app = express();
@@ -24,5 +25,6 @@ app.use('/api', categories);
 app.use('/api', products);
 app.use('/api', auth);
 app.use('/api', order);
+app.use('/api', addons)
 
 module.exports = app;

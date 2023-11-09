@@ -5,7 +5,10 @@ const categories = require('./routes/category');
 const products = require('./routes/product');
 const auth = require('./routes/auth');
 const order = require('./routes/order');
+<<<<<<< HEAD
 const addons = require('./routes/addon')
+=======
+>>>>>>> deb72e30c9e7a939e8ad5302444ee8551459d01b
 const orderController = require('./controllers/orderController');
 
 const app = express();
@@ -25,6 +28,11 @@ app.use('/api', categories);
 app.use('/api', products);
 app.use('/api', auth);
 app.use('/api', order);
+<<<<<<< HEAD
 app.use('/api', addons)
 
 module.exports = app;
+=======
+
+module.exports = app;
+>>>>>>> deb72e30c9e7a939e8ad5302444ee8551459d01b

@@ -69,8 +69,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 
+
 const pages = ['Home', 'Products', 'About'];
-const settings = ['Profile', 'Account', 'Dashboard', ];
+const settings = ['Profile', 'Orders'];
+
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -256,7 +258,9 @@ const Header = () => {
                       <Typography textAlign="center">{setting}</Typography>
                     </Link>
                   ) : (
-                    <Typography textAlign="center">{setting}</Typography>
+                    <Link to="/orders/me" style={{ textDecoration: 'none', color: 'inherit' }}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </Link>
                   )}
                 </MenuItem>
 

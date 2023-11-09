@@ -16,7 +16,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
   const productDetails = async (id) => {
     try {
       const response = await axios.get(`http://localhost:4001/api/product/${id}`);
-      setProduct(response.data); // Use response.data.product
+      setProduct(response.data); 
       setLoading(false);
     } catch (err) {
       setError('Product not found');

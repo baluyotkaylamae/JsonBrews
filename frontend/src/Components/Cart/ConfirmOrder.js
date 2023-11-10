@@ -3,26 +3,45 @@ import { Link, useNavigate } from 'react-router-dom'
 import MetaData from '../Layouts/Metadata'
 import CheckoutSteps from './CheckoutSteps'
 import { getUser } from '../../utils/helpers'
-const ConfirmOrder = ({cartItems, shippingInfo}) => {
-    const [user, setUser] = useState(getUser() ? getUser() : {})
+const ConfirmOrder = ({ cartItems, shippingInfo }) => {
+    const [user, setUser] = useState(getUser() ? getUser() : {});
     let navigate = useNavigate();
+
     // Calculate Order Prices
-    const itemsPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
-    const shippingPrice = itemsPrice > 200 ? 0 : 25
-    const taxPrice = Number((0.05 * itemsPrice).toFixed(2))
-    const totalPrice = (itemsPrice + shippingPrice + taxPrice).toFixed(2)
+    const itemsPrice = cartItems.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+    );
+
+    const addonsPrice = cartItems.reduce(
+        (acc, item) =>
+            acc +
+            item.addons.reduce((addonAcc, addon) => addonAcc + addon.price, 0) *
+            item.quantity,
+        0
+    );
+
+    const shippingPrice = itemsPrice + addonsPrice > 200 ? 0 : 25;
+    const taxPrice = Number((0.05 * (itemsPrice + addonsPrice)).toFixed(2));
+    const totalPrice = (
+        itemsPrice +
+        addonsPrice +
+        shippingPrice +
+        taxPrice
+    ).toFixed(2);
 
     const processToPayment = () => {
         const data = {
             itemsPrice: itemsPrice.toFixed(2),
+            addonsPrice: addonsPrice.toFixed(2),
             shippingPrice,
             taxPrice,
-            totalPrice
-        }
+            totalPrice,
+        };
 
-        sessionStorage.setItem('orderInfo', JSON.stringify(data))
-        navigate('/payment')
-    }
+        sessionStorage.setItem('orderInfo', JSON.stringify(data));
+        navigate('/payment');
+    };
 
     return (
         <Fragment>
@@ -68,16 +87,30 @@ const ConfirmOrder = ({cartItems, shippingInfo}) => {
                     <div id="order_summary">
                         <h4>Order Summary</h4>
                         <hr />
-                        <p>Subtotal:  <span className="order-summary-values">${itemsPrice}</span></p>
-                        <p>Shipping: <span className="order-summary-values">${shippingPrice}</span></p>
-                        <p>Tax:  <span className="order-summary-values">${taxPrice}</span></p>
-
+                        <p>
+                            Subtotal: <span className="order-summary-values">${itemsPrice}</span>
+                        </p>
+                        <p>
+                            Addons: <span className="order-summary-values">${addonsPrice}</span>
+                        </p>
+                        <p>
+                            Shipping: <span className="order-summary-values">${shippingPrice}</span>
+                        </p>
+                        <p>
+                            Tax: <span className="order-summary-values">${taxPrice}</span>
+                        </p>
                         <hr />
-
-                        <p>Total: <span className="order-summary-values">${totalPrice}</span></p>
-
+                        <p>
+                            Total: <span className="order-summary-values">${totalPrice}</span>
+                        </p>
                         <hr />
-                        <button id="checkout_btn" className="btn btn-primary btn-block" onClick={processToPayment}>Proceed to Payment</button>
+                        <button
+                            id="checkout_btn"
+                            className="btn btn-primary btn-block"
+                            onClick={processToPayment}
+                        >
+                            Proceed to Payment
+                        </button>
                     </div>
                 </div>
 

@@ -9,20 +9,37 @@ import '../Layouts/FH.css';
 const ProductDetails = ({ addItemToCart, cartItems }) => {
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState({});
+  const [addons, setAddons] = useState([]);
   const [error, setError] = useState('');
   const [quantity, setQuantity] = useState(1); // Default quantity is 1
+  const [selectedAddons, setSelectedAddons] = useState([]);
 
   let { id } = useParams();
 
   const productDetails = async (id) => {
     try {
       const response = await axios.get(`http://localhost:4001/api/product/${id}`);
-      setProduct(response.data); 
+      setProduct(response.data);
       setLoading(false);
     } catch (err) {
       setError('Product not found');
       setLoading(false);
     }
+  };
+
+  const fetchAddons = async () => {
+    try {
+      const response = await axios.get('http://localhost:4001/api/addons');
+      setAddons(response.data.addons);
+    } catch (error) {
+      console.error('Error fetching addons:', error);
+    }
+  };
+
+  const [selectedSugarLevel, setSelectedSugarLevel] = useState('');
+
+  const handleSugarLevelChange = (level) => {
+    setSelectedSugarLevel(level);
   };
 
   const increaseQty = () => {
@@ -38,11 +55,25 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
   };
 
   const addToCart = async () => {
-    await addItemToCart(id, quantity);
+    await addItemToCart(id, quantity, selectedAddons,selectedSugarLevel);
+  };
+
+  const handleAddonChange = (addonId) => {
+    setSelectedAddons((prevSelectedAddons) => {
+      const index = prevSelectedAddons.indexOf(addonId);
+      if (index !== -1) {
+        // If addonId is already selected, remove it
+        return [...prevSelectedAddons.slice(0, index), ...prevSelectedAddons.slice(index + 1)];
+      } else {
+        // If addonId is not selected, add it
+        return [...prevSelectedAddons, addonId];
+      }
+    });
   };
 
   useEffect(() => {
     productDetails(id);
+    fetchAddons();
   }, [id]);
 
   localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -82,7 +113,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
                 className="btn btn-primary d-inline ml-4"
                 disabled={product.stock === 0}
                 onClick={addToCart}
-                style={{marginLeft: '10px'}}
+                style={{ marginLeft: '10px' }}
               >
                 Add to Cart
               </button>
@@ -95,7 +126,75 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               <hr />
               <h4 className="mt-2">Description:</h4>
               <p>{product.description}</p>
+
+              <div className="col-12 col-lg-5 mt-5">
+                <h4 className="mt-2">Sugar Level:</h4>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    id="sugar_low"
+                    name="sugarLevel"
+                    value="Low"
+                    checked={selectedSugarLevel === 'Low'}
+                    onChange={() => handleSugarLevelChange('Low')}
+                  />
+                  <label className="form-check-label" htmlFor="sugar_low">
+                    Low
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    id="sugar_medium"
+                    name="sugarLevel"
+                    value="Medium"
+                    checked={selectedSugarLevel === 'Medium'}
+                    onChange={() => handleSugarLevelChange('Medium')}
+                  />
+                  <label className="form-check-label" htmlFor="sugar_medium">
+                    Medium
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    id="sugar_high"
+                    name="sugarLevel"
+                    value="High"
+                    checked={selectedSugarLevel === 'High'}
+                    onChange={() => handleSugarLevelChange('High')}
+                  />
+                  <label className="form-check-label" htmlFor="sugar_high">
+                    High
+                  </label>
+                </div>
+              </div>
+
+
+
+
+
               <hr />
+              <h4 className="mt-2">Addons:</h4>
+              <div className="form-check">
+                {addons.map((addon) => (
+                  <div key={addon._id} className="form-check">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id={`addon_${addon._id}`}
+                      checked={selectedAddons.includes(addon._id)}
+                      onChange={() => handleAddonChange(addon._id)}
+                    />
+                    <label className="form-check-label" htmlFor={`addon_${addon._id}`}>
+                      {addon.name} (+₱{addon.price})
+                    </label>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </Fragment>

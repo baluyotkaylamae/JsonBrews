@@ -45,57 +45,58 @@ function App() {
       ? JSON.parse(localStorage.getItem('shippingInfo'))
       : {},
   })
-  const addItemToCart = async (id, quantity) => {
-    console.log(id, quantity)
+  const addItemToCart = async (id, quantity, selectedAddons, selectedSugarLevel) => {
     try {
-      const { data } = await axios.get(`http://localhost:4001/api/product/${id}`)
-      console.log(data)
+      // Fetch product details
+      const productResponse = await axios.get(`http://localhost:4001/api/product/${id}`);
+      const productData = productResponse.data;
+
+      // Fetch addons details
+      const addonsResponse = await axios.get('http://localhost:4001/api/addons');
+      const addonsData = addonsResponse.data.addons;
+
+      // Filter selected addons
+      const selectedAddonsDetails = addonsData.filter((addon) => selectedAddons.includes(addon._id));
+
       const item = {
-        product: data._id,
-        name: data.name,
-        price: data.price,
-        image: data.images[0].url,
-        stock: data.stock,
-        quantity: quantity
-      }
+        product: productData._id,
+        name: productData.name,
+        price: productData.price,
+        image: productData.images[0].url,
+        stock: productData.stock,
+        quantity: quantity,
+        addons: selectedAddonsDetails,
+        sugarLevel: selectedSugarLevel,
+      };
 
-      const isItemExist = state.cartItems.find(i => i.products === item.product)
-      console.log(isItemExist, state)
-      // setState({
-      //   ...state,
-      //   cartItems: [...state.cartItems, item]
-      // })
+      const isItemExist = state.cartItems.find((i) => i.product === item.product);
+
       if (isItemExist) {
-        console.log("asdsad")
         setState({
           ...state,
-          cartItems: state.cartItems.map(i => i.products === isItemExist.product ? item : i)
-        })
-      }
-      else {
-        console.log("ADSAD")
+          cartItems: state.cartItems.map((i) =>
+            i.product === isItemExist.product ? item : i
+          ),
+        });
+      } else {
         setState({
           ...state,
-          cartItems: [...state.cartItems, item]
-
-        })
-        localStorage.setItem('cartItems', JSON.stringify(state.cartItems))
+          cartItems: [...state.cartItems, item],
+        });
       }
 
-      console.log(state.cartItems)
+      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+
       toast.success('Item Added to Cart', {
-        position: toast.POSITION.BOTTOM_RIGHT
-      })
-
-    } catch (error) {
-      console.log(error)
-      toast.error(error, {
-        position: toast.POSITION.TOP_LEFT
+        position: toast.POSITION.BOTTOM_RIGHT,
       });
-      // navigate('/')
+    } catch (error) {
+      console.log(error);
+      toast.error(error, {
+        position: toast.POSITION.TOP_LEFT,
+      });
     }
-
-  }
+  };
 
   // const removeItemFromCart = async (id) => {
   //   setState({

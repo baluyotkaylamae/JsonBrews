@@ -1,4 +1,4 @@
-const Addon = require('../models/addon');
+const Addon = require('../models/addons');
 
 exports.newAddon = async (req, res, next) => {
   const { name, description,category, price } = req.body;

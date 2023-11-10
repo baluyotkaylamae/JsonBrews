@@ -31,6 +31,9 @@ import ListOrders from './Components/Order/ListOrders';
 import OrderDetails from './Components/Order/OrderDetails';
 import { toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import AddonsList from './Components/Admin/AddonsList';
+import CreateAddon from './Components/Admin/AddonsCreate';
+import UpdateAddon from './Components/Admin/AddonUpdate';
 
 
 function App() {
@@ -104,16 +107,16 @@ function App() {
   const removeItemFromCart = (id) => {
     // Filter out the item with the given id and update the state
     setState({
-        ...state,
-        cartItems: state.cartItems.filter(item => item.product !== id)
+      ...state,
+      cartItems: state.cartItems.filter(item => item.product !== id)
     });
 
     // Update the localStorage to persist the changes
     localStorage.setItem(
-        'cartItems',
-        JSON.stringify(state.cartItems.filter(item => item.product !== id))
+      'cartItems',
+      JSON.stringify(state.cartItems.filter(item => item.product !== id))
     );
-}
+  }
 
   const saveShippingInfo = async (data) => {
     setState({
@@ -152,6 +155,11 @@ function App() {
           <Route path="/confirm" element={<ConfirmOrder cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
           <Route path="/payment" element={<Payment cartItems={state.cartItems} shippingInfo={state.shippingInfo} />} />
           <Route path="/success" element={<OrderSuccess />} />
+
+          {/* Addons */}
+          <Route path="/addons/list" element={<AddonsList />} />
+          <Route path="/addons/create" element={<CreateAddon />} />
+          <Route path="/addons/update/:id" element={<UpdateAddon />} />
 
           {/* orders */}
           <Route path="/orders/me" element={<ListOrders />} />

@@ -60,7 +60,7 @@ function App() {
       // Filter selected addons
       const selectedAddonsDetails = addonsData.filter((addon) => selectedAddons.includes(addon._id));
 
-      const item = {
+      const newItem = {
         product: productData._id,
         name: productData.name,
         price: productData.price,
@@ -71,35 +71,40 @@ function App() {
         sugarLevel: selectedSugarLevel,
       };
 
-      const isItemExist = state.cartItems.find((i) => i.product === item.product);
-
-      if (isItemExist) {
-        setState({
-          ...state,
-          cartItems: state.cartItems.map((i) =>
-            i.product === isItemExist.product ? item : i
-          ),
+     // const isItemExist = state.cartItems.find((i) => i.product === item.product);
+        setState(prevState => {
+          const isItemExist = prevState.cartItems.find((i) => i.product === newItem.product);
+    
+          if (isItemExist) {
+            return {
+              ...prevState,
+              cartItems: prevState.cartItems.map((i) =>
+                i.product === isItemExist.product ? newItem : i
+              ),
+            };
+          } else {
+            // Add new item
+            return {
+              ...prevState,
+              cartItems: [...prevState.cartItems, newItem],
+            };
+          }
         });
-      } else {
-        setState({
-          ...state,
-          cartItems: [...state.cartItems, item],
+    
+        toast.success('Item Added to Cart', {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+      } catch (error) {
+        console.log(error);
+        toast.error(error, {
+          position: toast.POSITION.TOP_LEFT,
         });
       }
+    };
 
-      localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+      //localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
 
-      toast.success('Item Added to Cart', {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error(error, {
-        position: toast.POSITION.TOP_LEFT,
-      });
-    }
-  };
-
+      
   // const removeItemFromCart = async (id) => {
   //   setState({
   //     ...state,

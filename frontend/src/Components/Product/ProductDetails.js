@@ -136,6 +136,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               <h4 className="mt-2">Description:</h4>
               <p>{product.description}</p>
               <hr />
+
               <div className="col-12 col-lg-5 mt-3">
                 <h4 className="mt-2">Sugar Level:</h4>
                 <div className="form-check">

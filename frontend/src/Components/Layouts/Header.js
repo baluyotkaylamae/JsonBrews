@@ -71,6 +71,7 @@ const pages = ['Home', 'Products', 'About'];
 const settings = ['Profile', 'Orders'];
 
 const Header = ({ cartItems }) => {
+  const [cartCount, setCartCount] = useState(cartItems.length);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(getUser()); // Get the user's data
@@ -78,7 +79,8 @@ const Header = ({ cartItems }) => {
 
   useEffect(() => {
     setUser(getUser());
-  }, []);
+    setCartCount(cartItems.length);
+  }, [cartItems]);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -193,86 +195,86 @@ const Header = ({ cartItems }) => {
               <Button sx={{ my: 2, color: 'white', display: 'block' }}>
                 Cart ({cartItems.length})
               </Button>
-            </Link>
-          </Box>
+        </Link>
+      </Box>
 
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-
-
-          <Box sx={{ flexGrow: 0 }}>
-            {userAuthenticated ? (
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  {user.avatar ? (
-                    <Avatar
-                      src={user.avatar.url}
-                      alt={user.name}
-                      sx={{ borderRadius: '50%' }} // Apply circular border-radius
-                    />
-                  ) : null}
-                </IconButton>
-              </Tooltip>
-            ) : (
-              <Link to="/login" className="btn ml-4 Json-BTN" id="login_btn">
-                <Button className='Json-BTN'>Login</Button>
-              </Link>
-            )}
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
+      <Search>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ 'aria-label': 'search' }}
+        />
+      </Search>
 
 
+      <Box sx={{ flexGrow: 0 }}>
+        {userAuthenticated ? (
+          <Tooltip title="Open settings">
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              {user.avatar ? (
+                <Avatar
+                  src={user.avatar.url}
+                  alt={user.name}
+                  sx={{ borderRadius: '50%' }} // Apply circular border-radius
+                />
+              ) : null}
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Link to="/login" className="btn ml-4 Json-BTN" id="login_btn">
+            <Button className='Json-BTN'>Login</Button>
+          </Link>
+        )}
+        <Menu
+          sx={{ mt: '45px' }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
 
 
 
-              {settings.map((setting, index) => (
-                <MenuItem key={index} onClick={handleCloseUserMenu}>
-                  {index === 0 ? (
-                    <Link to="/me" style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </Link>
-                  ) : (
-                    <Link to="/orders/me" style={{ textDecoration: 'none', color: 'inherit' }}>
-                      <Typography textAlign="center">{setting}</Typography>
-                    </Link>
-                  )}
-                </MenuItem>
+
+
+          {settings.map((setting, index) => (
+            <MenuItem key={index} onClick={handleCloseUserMenu}>
+              {index === 0 ? (
+                <Link to="/me" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </Link>
+              ) : (
+                <Link to="/orders/me" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Typography textAlign="center">{setting}</Typography>
+                </Link>
+              )}
+            </MenuItem>
 
 
 
-              ))}
-              <MenuItem key={4} onClick={handleLogout}>
-                <Typography textAlign="center">Logout</Typography>
-              </MenuItem>
-            </Menu>
-          </Box>
+          ))}
+          <MenuItem key={4} onClick={handleLogout}>
+            <Typography textAlign="center">Logout</Typography>
+          </MenuItem>
+        </Menu>
+      </Box>
 
 
 
-        </Toolbar>
-      </Container>
-    </AppBar>
+    </Toolbar>
+      </Container >
+    </AppBar >
   );
 };
 

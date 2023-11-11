@@ -74,7 +74,7 @@ const pages = ['Home', 'Products', 'About'];
 const settings = ['Profile', 'Orders'];
 
 
-const Header = () => {
+const Header = ({ cartItems }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(getUser()); // Get the user's data
@@ -107,13 +107,13 @@ const Header = () => {
   };
 
 
-  
+
 
   return (
     <AppBar position="static" >
       <Container maxWidth="xl" className='JsonHeader'>
         <Toolbar disableGutters>
-           <CoffeeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 
+          <CoffeeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -190,15 +190,17 @@ const Header = () => {
             LOOOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button>
+            </Link>
+            <Link to="/products" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>Products</Button>
+            </Link>
+            <Link to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Button sx={{ my: 2, color: 'white', display: 'block' }}>
+                Cart ({cartItems.length})
               </Button>
-            ))}
+            </Link>
           </Box>
 
           <Search>
@@ -264,7 +266,7 @@ const Header = () => {
                   )}
                 </MenuItem>
 
-                
+
 
               ))}
               <MenuItem key={4} onClick={handleLogout}>
@@ -272,8 +274,8 @@ const Header = () => {
               </MenuItem>
             </Menu>
           </Box>
-      
-      
+
+
 
         </Toolbar>
       </Container>

@@ -34,6 +34,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AddonsList from './Components/Admin/AddonsList';
 import CreateAddon from './Components/Admin/AddonsCreate';
 import UpdateAddon from './Components/Admin/AddonUpdate';
+import "./Components/Layouts/CurvedBanner.css";
 
 
 function App() {
@@ -127,10 +128,62 @@ function App() {
     localStorage.setItem('shippingInfo', JSON.stringify(data))
   }
 
+
+  const CurvedBanner = () => {
+    return (
+      <div className="curved-banner">
+        <div className="image-on-banner">
+          <img src='/coffee1.png' className="image-on-banner" alt="Image-on-banner" />
+       
+        </div>
+        <div className="svg">
+          <svg className="wave blend1" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+            <path d="M0,100 C150,200 350,0 500,100 L500,0 L0,0 Z"></path>
+          </svg>
+        </div>
+        <div className="svg">
+          <svg className="wave blend2" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+            <path d="M0,100 C150,300 350,0 500,100 L500,0 L0,0 Z"></path>
+          </svg>
+        </div>
+        <div className="gradient">
+          <svg width="0" height="0">
+            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style={{ stopColor: '#EBEF95' }} />
+              <stop offset="100%" style={{ stopColor: '#B5CDA3' }} />
+            </linearGradient>
+            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style={{ stopColor: '#EBEF95' }} />
+              <stop offset="100%" style={{ stopColor: '#B5CDA3' }} />
+            </linearGradient>
+          </svg>
+        </div>
+
+        <div className="text-on-banner">
+        <h3 className="text-on-banner">
+        Brewing up happiness – 
+        where every cup is 
+       a latte fun! Join us at <strong style={{ fontWeight: 'bold' }}>JSONBREW</strong> for a brewteaful time!
+      <h3 style={{textAlign: 'right'}}>— JSONCREW</h3>
+        </h3 >
+        {/* <button  className="text-on-banner">
+          Count Me In!
+        </button> */}
+      </div>
+
+
+      </div>
+
+
+    );
+};
+
   return (
     <div>
       <Router>
         <Header />
+        <CurvedBanner />
+      {/* <img className="image-on-banner" src="public/coffee1.png" alt="Image on Banner" /> */}
         <Routes>
 
           {/*for login */}

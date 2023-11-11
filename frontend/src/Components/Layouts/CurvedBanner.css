@@ -1,0 +1,126 @@
+.curved-banner {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 500px; /* Adjust the height as needed */
+    margin-top: 4px; /* Adjust the margin-top to bring it down */
+    display: flex;
+  }
+  
+  
+  .svg {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .wave {
+    path {
+      fill: none;
+      stroke: black; /* Set the stroke color for testing */
+    }
+  }
+
+  .quote-container {
+    position: absolute;
+    top: 50%;
+    left: 10px; /* Adjust the left position as needed */
+    transform: translateY(-50%);
+    color: #fff;
+    text-align: left; /* Align text to the left */
+    max-width: 80%; /* Adjust the max-width as needed */
+  }
+  
+  .quote p {
+    font-weight: 700;
+    font-family: monospace;
+    color: #A97155 !important;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 10px;
+  }
+
+  .text-on-banner {
+    position: absolute;
+    top: 20px; /* Adjust the top position as needed */
+    left: 30px; /* Adjust the left position as needed */
+    /* font-weight: 900px; */
+    font-family: 'Hammersmith One', sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 1px;
+    width: 750px;
+    line-height: 90px;
+    background: linear-gradient(45deg, #355C7D, #FC2947); /* Adjust gradient colors as needed */
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  
+  .wave path {
+    stroke: none;
+  }
+  
+  .blend1 path {
+    fill: url(#gradient1);
+  }
+  
+  .blend2 path {
+    fill: url(#gradient2);
+  }
+  
+  
+/* Add this part to your existing CurvedBanner.css file */
+.gradient {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .gradient svg {
+    width: 0;
+    height: 0;
+  }
+  
+  .gradient #gradient1 stop {
+    stop-color: #EBEF95;
+  }
+  
+  .gradient #gradient2 stop {
+    stop-color: #B5CDA3;
+  }
+  
+
+  .image-on-banner {
+
+    /* position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    z-index: 1;  */
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 500px;
+    height: 500px;
+    transform: rotate(10deg);
+    object-fit: cover;
+    z-index: 1; /* Bring the image to the front */
+} 
+
+.banner-image {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+    z-index: -4;
+}

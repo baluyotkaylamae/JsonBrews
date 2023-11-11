@@ -67,12 +67,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
-
-
 const pages = ['Home', 'Products', 'About'];
 const settings = ['Profile', 'Orders'];
-
 
 const Header = ({ cartItems }) => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -105,9 +101,6 @@ const Header = ({ cartItems }) => {
     logout();
     setUser(null);
   };
-
-
-
 
   return (
     <AppBar position="static" >

@@ -109,7 +109,8 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               <p id="product_id">Product # {product._id}</p>
 
               <hr />
-              <p id="product_price">${product.price}</p>
+              <p id="product_price"><strong>₱{product.price}</strong></p>
+              <hr />
               <div className="stockCounter d-inline">
                 <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
                 <input type="number" className="form-control count d-inline short-input" value={quantity} readOnly />
@@ -134,8 +135,8 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               <hr />
               <h4 className="mt-2">Description:</h4>
               <p>{product.description}</p>
-
-              <div className="col-12 col-lg-5 mt-5">
+              <hr />
+              <div className="col-12 col-lg-5 mt-3">
                 <h4 className="mt-2">Sugar Level:</h4>
                 <div className="form-check">
                   <input

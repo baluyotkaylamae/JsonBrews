@@ -37,6 +37,7 @@ import UpdateAddon from './Components/Admin/AddonUpdate';
 
 
 function App() {
+  const [cartItems, setCartItems] = useState([]);
   const [state, setState] = useState({
     cartItems: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
@@ -130,7 +131,7 @@ function App() {
   return (
     <div>
       <Router>
-        <Header />
+      <Header cartItems={state.cartItems} />
         <Routes>
 
           {/*for login */}

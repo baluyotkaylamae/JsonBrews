@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Carousel } from 'react-bootstrap';
 import axios from 'axios';
@@ -27,14 +27,22 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
     }
   };
 
-  const fetchAddons = async () => {
+  const fetchAddons = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:4001/api/addons');
-      setAddons(response.data.addons);
+      const allAddons = response.data.addons;
+
+      const productCategory = product.category || '';
+      const filteredAddons = allAddons.filter(
+        (addon) => addon.category === productCategory
+      );
+
+      console.log('Product Category:', productCategory);
+      setAddons(filteredAddons);
     } catch (error) {
       console.error('Error fetching addons:', error);
     }
-  };
+  }, [product.category]);
 
   const [selectedSugarLevel, setSelectedSugarLevel] = useState('');
 
@@ -55,7 +63,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
   };
 
   const addToCart = async () => {
-    await addItemToCart(id, quantity, selectedAddons,selectedSugarLevel);
+    await addItemToCart(id, quantity, selectedAddons, selectedSugarLevel);
   };
 
   const handleAddonChange = (addonId) => {
@@ -74,7 +82,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
   useEffect(() => {
     productDetails(id);
     fetchAddons();
-  }, [id]);
+  }, [id, fetchAddons]);
 
   localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
@@ -172,10 +180,6 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
                   </label>
                 </div>
               </div>
-
-
-
-
 
               <hr />
               <h4 className="mt-2">Addons:</h4>

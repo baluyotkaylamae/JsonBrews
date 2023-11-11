@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MetaData from '../Layouts/Metadata';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
     const navigate = useNavigate();
@@ -22,10 +23,28 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
         removeItemFromCart(id);
     };
 
+    // const checkoutHandler = () => {
+    //     navigate('/login?redirect=shipping');
+    // };
     const checkoutHandler = () => {
+       
+        cartItems.forEach(async (item) => {
+            const productId = item.product;
+            const newStock = item.stock - item.quantity;
+    
+            try {
+              
+                await axios.patch(`http://localhost:4001/api/product/${productId}`, { stock: newStock });
+    
+               
+            } catch (error) {
+                console.error('Error updating stock:', error);
+              
+            }
+        });
         navigate('/login?redirect=shipping');
     };
-
+    
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
     return (

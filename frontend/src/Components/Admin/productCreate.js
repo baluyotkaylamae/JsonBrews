@@ -9,6 +9,7 @@ const CreateProduct = () => {
     name: '',
     description: '',
     price: 0,
+    cupSize: '',
     stock: 0,
     category: '',
     images: null,
@@ -39,6 +40,23 @@ const CreateProduct = () => {
 
       setImagesPreview(imagePreviews);
       setImages(selectedImages);
+    } else if (name === 'cupSize') {
+      let cupSizePrice = 0;
+      if (value === 'medium') {
+        cupSizePrice = 5;
+      } else if (value === 'large') {
+        cupSizePrice = 15;
+      }
+      setProduct({
+        ...product,
+        [name]: value,
+        price: product.price + cupSizePrice,
+      });
+    } else if (name === 'price') {
+      setProduct({
+        ...product,
+        [name]: parseFloat(value), 
+      });
     } else {
       setProduct({
         ...product,
@@ -66,6 +84,7 @@ const CreateProduct = () => {
     formData.append('name', product.name);
     formData.append('description', product.description);
     formData.append('price', product.price);
+    formData.append('cupSize', product.cupSize);
     formData.append('stock', product.stock);
     formData.append('category', product.category);
 
@@ -88,6 +107,7 @@ const CreateProduct = () => {
         name: '',
         description: '',
         price: 0,
+        cupSize: '',
         stock: 0,
         category: '',
         images: null,
@@ -136,6 +156,7 @@ const CreateProduct = () => {
                 onChange={handleChange}
               ></textarea>
             </div>
+            
             <div className="mb-3">
               <label htmlFor="price" className="form-label">
                 Price
@@ -150,6 +171,24 @@ const CreateProduct = () => {
                 onChange={handleChange}
               />
             </div>
+
+            <div className="mb-3">
+              <label htmlFor="cupSize" className="form-label">
+                Cup Size
+              </label>
+              <select
+                className="form-select"
+                id="cupSize"
+                name="cupSize"
+                value={product.cupSize}
+                onChange={handleChange}
+              >
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </select>
+            </div>
+
 
             <div className="mb-3">
               <label htmlFor="stock" className="form-label">

@@ -13,6 +13,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  cupSize: {
+    type: String,
+    required: false, 
+  },
   stock: {
     type: Number,
     required: true,

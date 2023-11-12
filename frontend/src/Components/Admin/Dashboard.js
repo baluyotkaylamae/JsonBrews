@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Bar } from 'react-chartjs-2';
 import Chart from 'react-apexcharts';
 import 'apexcharts';
 
@@ -82,19 +81,32 @@ const Dashboard = () => {
                 }
             };
             const response = await axios.get(`http://localhost:4001/api/products`, config);
-
+    
             if (response.data && Array.isArray(response.data.products)) {
-                setProducts(response.data.products);
-                console.log(response.data.products);
+                const productsData = response.data.products;
+                setProducts(productsData);
+    
+                // Update productsCount based on the fetched products
+                const productsCountObj = {};
+                productsData.forEach(product => {
+                    const categoryId = product.category;
+                    if (productsCountObj[categoryId]) {
+                        productsCountObj[categoryId]++;
+                    } else {
+                        productsCountObj[categoryId] = 1;
+                    }
+                });
+                setProductsCount(productsCountObj);
+    
+                console.log(productsData);
             } else {
                 console.error('Invalid product data format');
             }
         } catch (error) {
             console.error('Error fetching products:', error);
-
         }
     };
-
+    
 
     useEffect(() => {
         getCategories();
@@ -169,6 +181,7 @@ const Dashboard = () => {
                                     <div className="col-xl-12">
                                         <div className="card">
                                             <div className="card-body">
+                                            {console.log('Rendering Chart:', categoryNames, productsCount)}
                                                 <Chart
                                                     options={{
                                                         chart: {
@@ -181,7 +194,7 @@ const Dashboard = () => {
                                                     series={[
                                                         {
                                                             name: "series-1",
-                                                            data: categoryNames.map(categoryId => productsCount[categoryId] || 0)
+                                                            data: Object.values(productsCount)
                                                         }
                                                     ]}
                                                     type="bar"

@@ -1,5 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Bar } from 'react-chartjs-2';
+import Chart from 'react-apexcharts';
+import 'apexcharts';
 
 import MetaData from '../Layouts/Metadata';
 import Loader from '../Layouts/Loader';
@@ -10,11 +13,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Layouts/FH.css';
 
+
 const Dashboard = () => {
     const [categories, setCategories] = useState([]);
     const [product, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [categoryNames, setCategoryNames] = useState([]);
+    const [productsCount, setProductsCount] = useState({});
 
     const getCategories = async () => {
         try {
@@ -26,8 +32,23 @@ const Dashboard = () => {
             };
 
             const { data } = await axios.get(`http://localhost:4001/api/categories`, config);
+
+            const productsCountObj = {};
+            product.forEach(product => {
+                const categoryId = product.category;
+                if (productsCountObj[categoryId]) {
+                    productsCountObj[categoryId]++;
+                } else {
+                    productsCountObj[categoryId] = 1;
+                }
+            });
+
             setCategories(data.categories);
+            setProductsCount(productsCountObj);
             console.log(data.categories);
+            setLoading(false);
+            const names = data.categories.map(category => category.name);
+            setCategoryNames(names);
             setLoading(false);
         } catch (error) {
             console.error(error);
@@ -61,7 +82,7 @@ const Dashboard = () => {
                 }
             };
             const response = await axios.get(`http://localhost:4001/api/products`, config);
-    
+
             if (response.data && Array.isArray(response.data.products)) {
                 setProducts(response.data.products);
                 console.log(response.data.products);
@@ -70,10 +91,10 @@ const Dashboard = () => {
             }
         } catch (error) {
             console.error('Error fetching products:', error);
-           
+
         }
     };
-    
+
 
     useEffect(() => {
         getCategories();
@@ -89,18 +110,17 @@ const Dashboard = () => {
                 </div>
 
                 <div className="col-12 col-md-10">
-                    <div className="container"> {/* Add a new container */}
+                    <div className="container">
                         <h1 className="my-4 dashboard-title">Dashboard</h1>
 
                         {loading ? (
-                            // Display a loading indicator here if needed
                             <p>Loading...</p>
                         ) : (
                             <Fragment>
                                 <MetaData title={'Admin Dashboard'} />
 
                                 <div className="row pr-4">
-                                    <div className="col-xl-3 col-sm-6 mb-3 ">
+                                    <div className="col-xl-4 col-sm-6 mb-3">
                                         <div className="card text-white bg-success o-hidden h-100 dashboard-category">
                                             <div className="card-body">
                                                 <div className="text-center card-font-size">Categories<br /> <b>{categories.length}</b></div>
@@ -114,7 +134,8 @@ const Dashboard = () => {
                                             </Link>
                                         </div>
                                     </div>
-                                    <div className="col-xl-3 col-sm-6 mb-3">
+
+                                    <div className="col-xl-4 col-sm-6 mb-3">
                                         <div className="card text-white bg-info o-hidden h-100 dashboard-product">
                                             <div className="card-body">
                                                 <div className="text-center card-font-size">Users<br /> <b>{users.length}</b></div>
@@ -129,19 +150,44 @@ const Dashboard = () => {
                                         </div>
                                     </div>
 
-                                    <div className="col-xl-3 col-sm-6 mb-3">
+                                    <div className="col-xl-4 col-sm-6 mb-3">
                                         <div className="card text-white bg-info o-hidden h-100 dashboard-product">
                                             <div className="card-body">
                                                 <div className="text-center card-font-size">Products<br /> <b>{product.length}</b></div>
                                             </div>
 
                                             <Link className="card-footer text-white clearfix small z-1" to="/product">
-                                              
                                                 <span className="float-left">View Details</span>
                                                 <span className="float-right">
                                                     <i className="fa fa-angle-right"></i>
                                                 </span>
                                             </Link>
+                                        </div>
+                                    </div>
+
+                                    {/* Add ApexCharts component */}
+                                    <div className="col-xl-12">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <Chart
+                                                    options={{
+                                                        chart: {
+                                                            id: "basic-bar"
+                                                        },
+                                                        xaxis: {
+                                                            categories: categoryNames // Use categoryNames instead of [category.name]
+                                                        }
+                                                    }}
+                                                    series={[
+                                                        {
+                                                            name: "series-1",
+                                                            data: categoryNames.map(categoryId => productsCount[categoryId] || 0)
+                                                        }
+                                                    ]}
+                                                    type="bar"
+                                                    width="500"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -153,5 +199,4 @@ const Dashboard = () => {
         </Fragment>
     );
 };
-
 export default Dashboard;

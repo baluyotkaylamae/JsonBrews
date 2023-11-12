@@ -46,7 +46,7 @@ const Dashboard = () => {
             setCategories(data.categories);
             setProductsCount(productsCountObj);
             console.log(data.categories);
-            setLoading(false);
+            
             const names = data.categories.map(category => category.name);
             setCategoryNames(names);
             setLoading(false);

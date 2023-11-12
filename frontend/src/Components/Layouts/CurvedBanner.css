@@ -2,7 +2,7 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    height: 500px; /* Adjust the height as needed */
+    height: 600px; /* Adjust the height as needed */
     margin-top: 4px; /* Adjust the margin-top to bring it down */
     display: flex;
   }

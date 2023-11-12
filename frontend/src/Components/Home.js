@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Home.css'
+import "./Layouts/CurvedBanner.css";
+
+
 
 
 
@@ -47,8 +50,65 @@ const Home = () => {
     fetchProducts();
   }, []);
 
+
+
+  const CurvedBanner = () => {
+    return (
+      <div className="curved-banner">
+        <div className="image-on-banner">
+          <img src='/coffee1.png' className="image-on-banner" alt="Image-on-banner" />
+
+        </div>
+        <div className="svg">
+          <svg className="wave blend1" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+            <path d="M0,100 C150,200 350,0 500,100 L500,0 L0,0 Z"></path>
+          </svg>
+        </div>
+        <div className="svg">
+          <svg className="wave blend2" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
+            <path d="M0,100 C150,300 350,0 500,100 L500,0 L0,0 Z"></path>
+          </svg>
+        </div>
+        <div className="gradient">
+          <svg width="0" height="0">
+            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style={{ stopColor: '#EBEF95' }} />
+              <stop offset="100%" style={{ stopColor: '#B5CDA3' }} />
+            </linearGradient>
+            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style={{ stopColor: '#EBEF95' }} />
+              <stop offset="100%" style={{ stopColor: '#B5CDA3' }} />
+            </linearGradient>
+          </svg>
+        </div>
+
+        <div className="text-on-banner">
+          <h3 className="text-on-banner">
+            Brewing up happiness –
+            where every cup is
+            a latte fun! Join us at <strong style={{ fontWeight: 'bold' }}>JSONBREW</strong> for a brewteaful time!
+            <h3 style={{ textAlign: 'right' }}>— JSONCREW</h3>
+          </h3 >
+          {/* <button  className="text-on-banner">
+          Count Me In!
+        </button> */}
+        </div>
+
+
+      </div>
+
+
+    );
+  };
+
   return (
+    // <CurvedBanner />
+   <div>
+    <CurvedBanner />
+
+
     <div className="container mt-4">
+      
       <h1 className="mb-4">Product List</h1>
       {loading ? (
         <p>Loading...</p>
@@ -64,7 +124,9 @@ const Home = () => {
         <p className="no-products-message">No products found.</p>
       )}
     </div>
+    </div>
   );
+
 };
 
 export default Home;

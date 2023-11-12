@@ -34,7 +34,6 @@ import "react-toastify/dist/ReactToastify.css";
 import AddonsList from './Components/Admin/AddonsList';
 import CreateAddon from './Components/Admin/AddonsCreate';
 import UpdateAddon from './Components/Admin/AddonUpdate';
-import "./Components/Layouts/CurvedBanner.css";
 
 
 function App() {
@@ -71,40 +70,40 @@ function App() {
         sugarLevel: selectedSugarLevel,
       };
 
-     // const isItemExist = state.cartItems.find((i) => i.product === item.product);
-        setState(prevState => {
-          const isItemExist = prevState.cartItems.find((i) => i.product === newItem.product);
-    
-          if (isItemExist) {
-            return {
-              ...prevState,
-              cartItems: prevState.cartItems.map((i) =>
-                i.product === isItemExist.product ? newItem : i
-              ),
-            };
-          } else {
-            // Add new item
-            return {
-              ...prevState,
-              cartItems: [...prevState.cartItems, newItem],
-            };
-          }
-        });
-    
-        toast.success('Item Added to Cart', {
-          position: toast.POSITION.BOTTOM_RIGHT,
-        });
-      } catch (error) {
-        console.log(error);
-        toast.error(error, {
-          position: toast.POSITION.TOP_LEFT,
-        });
-      }
-    };
+      // const isItemExist = state.cartItems.find((i) => i.product === item.product);
+      setState(prevState => {
+        const isItemExist = prevState.cartItems.find((i) => i.product === newItem.product);
 
-      //localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        if (isItemExist) {
+          return {
+            ...prevState,
+            cartItems: prevState.cartItems.map((i) =>
+              i.product === isItemExist.product ? newItem : i
+            ),
+          };
+        } else {
+          // Add new item
+          return {
+            ...prevState,
+            cartItems: [...prevState.cartItems, newItem],
+          };
+        }
+      });
 
-      
+      toast.success('Item Added to Cart', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error(error, {
+        position: toast.POSITION.TOP_LEFT,
+      });
+    }
+  };
+
+  //localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+
+
   // const removeItemFromCart = async (id) => {
   //   setState({
   //     ...state,
@@ -135,61 +134,14 @@ function App() {
   }
 
 
-  const CurvedBanner = () => {
-    return (
-      <div className="curved-banner">
-        <div className="image-on-banner">
-          <img src='/coffee1.png' className="image-on-banner" alt="Image-on-banner" />
-       
-        </div>
-        <div className="svg">
-          <svg className="wave blend1" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-            <path d="M0,100 C150,200 350,0 500,100 L500,0 L0,0 Z"></path>
-          </svg>
-        </div>
-        <div className="svg">
-          <svg className="wave blend2" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-            <path d="M0,100 C150,300 350,0 500,100 L500,0 L0,0 Z"></path>
-          </svg>
-        </div>
-        <div className="gradient">
-          <svg width="0" height="0">
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: '#EBEF95' }} />
-              <stop offset="100%" style={{ stopColor: '#B5CDA3' }} />
-            </linearGradient>
-            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: '#EBEF95' }} />
-              <stop offset="100%" style={{ stopColor: '#B5CDA3' }} />
-            </linearGradient>
-          </svg>
-        </div>
-
-        <div className="text-on-banner">
-        <h3 className="text-on-banner">
-        Brewing up happiness – 
-        where every cup is 
-       a latte fun! Join us at <strong style={{ fontWeight: 'bold' }}>JSONBREW</strong> for a brewteaful time!
-      <h3 style={{textAlign: 'right'}}>— JSONCREW</h3>
-        </h3 >
-        {/* <button  className="text-on-banner">
-          Count Me In!
-        </button> */}
-      </div>
-
-
-      </div>
-
-
-    );
-};
+  
 
   return (
     <div>
       <Router>
-        <Header cartItems={state.cartItems}/>
-        <CurvedBanner />
-      {/* <img className="image-on-banner" src="public/coffee1.png" alt="Image on Banner" /> */}
+        <Header cartItems={state.cartItems} />
+       
+        {/* <img className="image-on-banner" src="public/coffee1.png" alt="Image on Banner" /> */}
         <Routes>
 
           {/*for login */}

@@ -12,7 +12,7 @@ import '../Layouts/FH.css';
 
 const Dashboard = () => {
     const [categories, setCategories] = useState([]);
-    const [products, setProducts] = useState([]);
+    const [product, setProducts] = useState([]);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -52,10 +52,33 @@ const Dashboard = () => {
             // Handle the error as needed
         }
     };
+    const getProducts = async () => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    // 'Authorization': `Bearer ${getToken()}`
+                }
+            };
+            const response = await axios.get(`http://localhost:4001/api/products`, config);
+    
+            if (response.data && Array.isArray(response.data.products)) {
+                setProducts(response.data.products);
+                console.log(response.data.products);
+            } else {
+                console.error('Invalid product data format');
+            }
+        } catch (error) {
+            console.error('Error fetching products:', error);
+           
+        }
+    };
+    
 
     useEffect(() => {
         getCategories();
         getUsers();
+        getProducts();
     }, []);
 
     return (
@@ -98,6 +121,22 @@ const Dashboard = () => {
                                             </div>
 
                                             <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
+                                                <span className="float-left">View Details</span>
+                                                <span className="float-right">
+                                                    <i className="fa fa-angle-right"></i>
+                                                </span>
+                                            </Link>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-xl-3 col-sm-6 mb-3">
+                                        <div className="card text-white bg-info o-hidden h-100 dashboard-product">
+                                            <div className="card-body">
+                                                <div className="text-center card-font-size">Products<br /> <b>{product.length}</b></div>
+                                            </div>
+
+                                            <Link className="card-footer text-white clearfix small z-1" to="/product">
+                                              
                                                 <span className="float-left">View Details</span>
                                                 <span className="float-right">
                                                     <i className="fa fa-angle-right"></i>

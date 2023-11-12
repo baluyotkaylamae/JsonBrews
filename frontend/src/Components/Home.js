@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
           className="card-img-top product-image"
         />
         <div className="card-body">
-          <h5 className="card-title" style={{ paddingBottom: "20px" }}>{product.name}</h5>
+          <h5 className="card-title" style={{ paddingBottom: "20px", fontWeight: "bold"}}>{product.name}</h5>
           <p className="card-text" >Price: ₱{product.price}</p>
           <Link to={`/product/${product._id}`} className="btn jsonbrew-button">
             Details

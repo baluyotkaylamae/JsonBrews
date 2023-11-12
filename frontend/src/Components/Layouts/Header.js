@@ -32,6 +32,7 @@ const Search = styled('div')(({ theme }) => ({
   },
   margin: '0 auto', // Center the search bar
   width: '50%', // Adjust the width to control the size
+  marginRight: '40px', // Add padding to the right
   [theme.breakpoints.up('sm')]: {
     width: 'auto', // Restore auto width on larger screens
   },

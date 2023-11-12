@@ -2,3 +2,27 @@
     height: 200px; /* Adjust the height as needed to make the images uniform */
     object-fit: cover; /* Ensures the entire image is displayed within the fixed height */
   }
+
+.product-jsonbrew
+{
+  font-family: 'Hammersmith One', sans-serif;
+  color: #A97155 !important;
+  text-transform: uppercase;
+}
+
+.product-cart-text
+{
+  font-family: 'Hammersmith One', sans-serif;
+  color: #A97155 !important;
+  text-transform: capitalize;
+
+}
+
+.jsonbrew-button
+{
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+  background-color: #2c96c7 !important;
+  color:#FFF4F4!important;
+}

@@ -11,16 +11,16 @@ import "./Layouts/CurvedBanner.css";
 const ProductCard = ({ product }) => {
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <div className="card">
+      <div className="card product-cart-text" style={{ height: "450px" }}>
       <img
           src={product.images[0].url}
           alt={product.name}
           className="card-img-top product-image"
         />
         <div className="card-body">
-          <h5 className="card-title">{product.name}</h5>
-          <p className="card-text">Price: ₱{product.price}</p>
-          <Link to={`/product/${product._id}`} className="btn btn-primary">
+          <h5 className="card-title" style={{ paddingBottom: "20px" }}>{product.name}</h5>
+          <p className="card-text" >Price: ₱{product.price}</p>
+          <Link to={`/product/${product._id}`} className="btn jsonbrew-button">
             Details
           </Link>
         </div>
@@ -109,7 +109,7 @@ const Home = () => {
 
     <div className="container mt-4">
       
-      <h1 className="mb-4">Product List</h1>
+      <h1 className="mb-4 product-jsonbrew">Product List</h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (

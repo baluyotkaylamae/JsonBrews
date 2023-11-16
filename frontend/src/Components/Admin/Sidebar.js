@@ -3,13 +3,17 @@ import React, { useState } from 'react';
 const Sidebar = () => {
   const [isCategoryOpen, setCategoryOpen] = useState(false);
   const [isProductOpen, setProductOpen] = useState(false); // State for managing product dropdown
-
+  const [isAddonsOpen, setAddonsOpen] = useState(false);
   const toggleCategory = () => {
     setCategoryOpen(!isCategoryOpen);
   };
 
   const toggleProduct = () => {
     setProductOpen(!isProductOpen);
+  };
+
+  const toggleAddons = () => {
+    setAddonsOpen(!isAddonsOpen);
   };
 
   return (
@@ -29,11 +33,20 @@ const Sidebar = () => {
           sidebar-dashboard" data-toggle="collapse" data-target="#productDropdown">
             PRODUCTS
           </button>
-          <div id="productDropdown" className={`collapse ${isProductOpen ? 'show' : ''}`}>
+          <div id="productDropdown" className={`collapse ${isAddonsOpen ? 'show' : ''}`}>
             <a href="/product/create" className="list-group-item list-group-item-action sidebar-dashboard">Create Product</a>
             <a href="/product/list" className="list-group-item list-group-item-action sidebar-dashboard">Product List</a>
           </div>
-          
+
+
+          <button onClick={toggleProduct} className="list-group-item list-group-item-action
+          sidebar-dashboard" data-toggle="collapse" data-target="#productDropdown">
+            ADD-ONS
+          </button>
+          <div id="productDropdown" className={`collapse ${isProductOpen ? 'show' : ''}`}>
+            <a href="/addons/create" className="list-group-item list-group-item-action sidebar-dashboard">Create Add-Ons</a>
+            <a href="/addons/list" className="list-group-item list-group-item-action sidebar-dashboard">Add-Ons List</a>
+          </div>
         </div>
       </div>
     </div>

@@ -34,7 +34,8 @@ import "react-toastify/dist/ReactToastify.css";
 import AddonsList from './Components/Admin/AddonsList';
 import CreateAddon from './Components/Admin/AddonsCreate';
 import UpdateAddon from './Components/Admin/AddonUpdate';
-
+import { getUser } from './utils/helpers';
+import ProtectedRoute from './Components/Route/ProtectedRoute';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -47,6 +48,14 @@ function App() {
       : {},
   })
   const addItemToCart = async (id, quantity, selectedAddons, selectedSugarLevel) => {
+
+    if (!getUser()) {
+      toast.error("Login first EHEHE", {
+        position: toast.POSITION.TOP_CENTER
+      });
+      return;
+    }
+
     try {
       // Fetch product details
       const productResponse = await axios.get(`http://localhost:4001/api/product/${id}`);
@@ -134,13 +143,13 @@ function App() {
   }
 
 
-  
+
 
   return (
     <div>
       <Router>
         <Header cartItems={state.cartItems} />
-       
+
         {/* <img className="image-on-banner" src="public/coffee1.png" alt="Image on Banner" /> */}
         <Routes>
 
@@ -169,29 +178,79 @@ function App() {
           <Route path="/success" element={<OrderSuccess />} />
 
           {/* Addons */}
-          <Route path="/addons/list" element={<AddonsList />} />
-          <Route path="/addons/create" element={<CreateAddon />} />
-          <Route path="/addons/update/:id" element={<UpdateAddon />} />
+          <Route path="/addons/list" element={
+            <ProtectedRoute isAdmin={true}>
+              <AddonsList />
+            </ProtectedRoute>
+          } />
+          <Route path="/addons/create" element={
+            <ProtectedRoute isAdmin={true}>
+              <CreateAddon />
+            </ProtectedRoute>
+          } />
+          <Route path="/addons/update/:id" element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateAddon />
+            </ProtectedRoute>
+          } />
 
           {/* orders */}
           <Route path="/orders/me" element={<ListOrders />} />
           <Route path="/order/:id" element={<OrderDetails />} />
 
           {/* category */}
-          <Route path="/category/create" element={<CreateCategory />} end />
-          <Route path="/category/update/:id" element={<UpdateCategory />} end />
-          <Route path="/category/list" element={<CategoryList />} end />
+          <Route path="/category/create" element={
+            <ProtectedRoute isAdmin={true}>
+              <CreateCategory />
+            </ProtectedRoute>
+          } end />
+          <Route path="/category/update/:id" element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateCategory />
+            </ProtectedRoute>
+          } end />
+          <Route path="/category/list" element={
+            <ProtectedRoute isAdmin={true}>
+              <CategoryList />
+            </ProtectedRoute>
+          } end />
 
           {/* <Route path="admin/product/create" element={<CreateProduct />} exact="true" /> */}
 
-          <Route path="/product/create" element={<CreateProduct />} end />
-          <Route path="/product/update/:id" element={<UpdateProduct />} end />
-          <Route path="/product/list" element={<ProductList />} end />
+          <Route path="/product/create" element={
+            <ProtectedRoute isAdmin={true}>
+              <CreateProduct />
+            </ProtectedRoute>
+          } />
+
+          <Route path="/product/update/:id" element={
+            <ProtectedRoute isAdmin={true}>
+              <UpdateProduct />
+            </ProtectedRoute>
+          } end />
+
+          <Route path="/product/list" element={
+            <ProtectedRoute isAdmin={true}>
+              <ProductList />
+            </ProtectedRoute>
+          } end />
           {/* <Route path="/admin/products" element={<ProductsList />}  /> */}
 
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute isAdmin={true}>
+              <Dashboard />
+            </ProtectedRoute>
+          } />
           {/* for admin */}
-          <Route path="/sidebar" element={<Sidebar />} end />
+
+
+          <Route path="/sidebar" element={
+            <ProtectedRoute isAdmin={true}>
+              <Dashboard />
+              <Sidebar />
+            </ProtectedRoute>
+          } end />
+
         </Routes>
         <Footer />
       </Router>

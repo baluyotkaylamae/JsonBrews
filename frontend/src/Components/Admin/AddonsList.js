@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Sidebar from './Sidebar';
 
 const AddonsList = () => {
   const [addons, setAddons] = useState([]);
@@ -39,6 +40,7 @@ const AddonsList = () => {
 
   return (
     <div className="container mt-5">
+        <Sidebar />
       <h2>Addons List</h2>
       <table className="table">
         <thead>

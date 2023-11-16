@@ -106,7 +106,7 @@ const Header = ({ cartItems }) => {
   };
 
   return (
-    <AppBar position="static" >
+    <AppBar position="static" sx={{ backgroundColor: '#A97155', display: 'flex', justifyContent: 'space-between' }}>
       <Container maxWidth="xl" className='JsonHeader'>
         <Toolbar disableGutters>
           <CoffeeIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

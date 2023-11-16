@@ -64,8 +64,8 @@ body {
   margin-top: 5rem;
   font-weight: 700;
   /* background-image: url('/boba.png'); Corrected: use url() */
-  background-size: cover;
-  height: 60vh;
+
+ 
 }
 
 .wrapper form {

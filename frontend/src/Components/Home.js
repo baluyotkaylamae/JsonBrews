@@ -12,14 +12,17 @@ const ProductCard = ({ product }) => {
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
       <div className="card product-cart-text" style={{ height: "450px" }}>
-      <img
+        <img
           src={product.images[0].url}
           alt={product.name}
           className="card-img-top product-image"
         />
         <div className="card-body">
-          <h5 className="card-title" style={{ paddingBottom: "20px", fontWeight: "bold"}}>{product.name}</h5>
-          <p className="card-text" >Price: ₱{product.price}</p>
+          <h5 className="card-title" style={{ paddingBottom: "20px", fontWeight: "bold" }}>
+            {product.name}
+          </h5>
+          <p className="card-text">Price: ₱{product.price}</p>
+          <p className="card-text">{product.description}</p> 
           <Link to={`/product/${product._id}`} className="btn jsonbrew-button">
             Details
           </Link>
@@ -28,6 +31,9 @@ const ProductCard = ({ product }) => {
     </div>
   );
 };
+
+
+
 
 const Home = () => {
   const [loading, setLoading] = useState(true);

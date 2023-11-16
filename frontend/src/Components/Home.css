@@ -18,11 +18,11 @@
 
 }
 
-.jsonbrew-button
-{
+.jsonbrew-button {
   position: absolute;
   bottom: 30px;
   left: 10px;
   background-color: #2c96c7 !important;
-  color:#FFF4F4!important;
+  color: #FFF4F4 !important;
+  transition: background-color 0.3s ease; 
 }

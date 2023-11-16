@@ -266,7 +266,7 @@ const Header = ({ cartItems }) => {
 
           ))}
           <MenuItem key={4} onClick={handleLogout}>
-            <Typography textAlign="center">Logout</Typography>
+            <Typography textAlign="center" color="red">Logout</Typography>
           </MenuItem>
         </Menu>
       </Box>

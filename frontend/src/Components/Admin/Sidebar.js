@@ -19,7 +19,10 @@ const Sidebar = () => {
   return (
     <div className="container sidebar-JSON ">
       <div className="bg-light border-right " id="sidebar">
+    
         <div className="list-group list-group-flush ">
+        <a href="/dashboard" className="list-group-item list-group-item-action sidebar-dashboard">DASHBOARD</a>
+
           <button onClick={toggleCategory} className="list-group-item list-group-item-action sidebar-dashboard" data-toggle="collapse" data-target="#categoryDropdown">
             CATEGORY
           </button>

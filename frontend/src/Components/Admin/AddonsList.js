@@ -40,48 +40,56 @@ const AddonsList = () => {
 
   return (
     <div className="container mt-5">
-        <Sidebar />
-      <h2>Addons List</h2>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {addons.map((addon) => (
-            <tr key={addon._id}>
-              <td>{addon.name}</td>
-              <td>{addon.description}</td>
-              <td>
-                {categories.find((category) => category._id === addon.category)?.name}
-              </td>
-              <td>{addon.price}</td>
-              <td>
-                <Link
-                  to={{
-                    pathname: `/addons/update/${addon._id}`,
-                    state: { addon },
-                  }}
-                  className="btn btn-primary"
-                >
-                  Edit
-                </Link>{' '}
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleDelete(addon._id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="row">
+        <div className="col-md-3">
+          {/* Sidebar component */}
+          <Sidebar />
+        </div>
+        <div className="col-md-9">
+          {/* AddonsList component */}
+          <h2>Addons List</h2>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {addons.map((addon) => (
+                <tr key={addon._id}>
+                  <td>{addon.name}</td>
+                  <td>{addon.description}</td>
+                  <td>
+                    {categories.find((category) => category._id === addon.category)?.name}
+                  </td>
+                  <td>{addon.price}</td>
+                  <td>
+                    <Link
+                      to={{
+                        pathname: `/addons/update/${addon._id}`,
+                        state: { addon },
+                      }}
+                      className="btn btn-primary"
+                    >
+                      Edit
+                    </Link>{' '}
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(addon._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

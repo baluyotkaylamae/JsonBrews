@@ -20,6 +20,10 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [categoryNames, setCategoryNames] = useState([]);
     const [productsCount, setProductsCount] = useState({});
+    const [addons, setAddons] = useState([]);
+
+
+
 
     const getCategories = async () => {
         try {
@@ -45,7 +49,7 @@ const Dashboard = () => {
             setCategories(data.categories);
             setProductsCount(productsCountObj);
             console.log(data.categories);
-            
+
             const names = data.categories.map(category => category.name);
             setCategoryNames(names);
             setLoading(false);
@@ -81,11 +85,11 @@ const Dashboard = () => {
                 }
             };
             const response = await axios.get(`http://localhost:4001/api/products`, config);
-    
+
             if (response.data && Array.isArray(response.data.products)) {
                 const productsData = response.data.products;
                 setProducts(productsData);
-    
+
                 // Update productsCount based on the fetched products
                 const productsCountObj = {};
                 productsData.forEach(product => {
@@ -97,7 +101,7 @@ const Dashboard = () => {
                     }
                 });
                 setProductsCount(productsCountObj);
-    
+
                 console.log(productsData);
             } else {
                 console.error('Invalid product data format');
@@ -106,7 +110,7 @@ const Dashboard = () => {
             console.error('Error fetching products:', error);
         }
     };
-    
+
 
     useEffect(() => {
         getCategories();
@@ -138,7 +142,7 @@ const Dashboard = () => {
                                                 <div className="text-center card-font-size">Categories<br /> <b>{categories.length}</b></div>
                                             </div>
 
-                                            <Link className="card-footer text-white clearfix small z-1" to="/admin/categories">
+                                            <Link className="card-footer text-white clearfix small z-1" to="/category/list">
                                                 <span className="float-left">View Details</span>
                                                 <span className="float-right">
                                                     <i className="fa fa-angle-right"></i>
@@ -163,12 +167,12 @@ const Dashboard = () => {
                                     </div>
 
                                     <div className="col-xl-4 col-sm-6 mb-3">
-                                        <div className="card text-white bg-info o-hidden h-100 dashboard-product">
+                                        <div className="card text-white bg-info o-hidden h-100 dashboard-user">
                                             <div className="card-body">
                                                 <div className="text-center card-font-size">Products<br /> <b>{product.length}</b></div>
                                             </div>
 
-                                            <Link className="card-footer text-white clearfix small z-1" to="/product">
+                                            <Link className="card-footer text-white clearfix small z-1" to="/product/list">
                                                 <span className="float-left">View Details</span>
                                                 <span className="float-right">
                                                     <i className="fa fa-angle-right"></i>
@@ -177,11 +181,28 @@ const Dashboard = () => {
                                         </div>
                                     </div>
 
+                                    {/* <div className="col-xl-4 col-sm-6 mb-3">
+                                        <div className="card text-white bg-info o-hidden h-100 dashboard-product">
+                                            <div className="card-body">
+                                                <div className="text-center card-font-size">Addons<br /> <b>{addons.length}</b></div>
+                                            </div>
+
+                                            <Link className="card-footer text-white clearfix small z-1" to="/addons/list">
+                                                <span className="float-left">View Details</span>
+                                                <span className="float-right">
+                                                    <i className="fa fa-angle-right"></i>
+                                                </span>
+                                            </Link>
+                                        </div>
+                                    </div> */}
+
+
+
                                     {/* Add ApexCharts component */}
                                     <div className="col-xl-12">
                                         <div className="card">
                                             <div className="card-body">
-                                            {console.log('Rendering Chart:', categoryNames, productsCount)}
+                                                {console.log('Rendering Chart:', categoryNames, productsCount)}
                                                 <Chart
                                                     options={{
                                                         chart: {

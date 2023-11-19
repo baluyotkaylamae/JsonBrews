@@ -22,29 +22,48 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
     const removeCartItemHandler = (id) => {
         removeItemFromCart(id);
     };
+    const calculateTotalPrice = (basePrice, addons, quantity, cupSize) => {
+        let total = basePrice;
+
+        // Add addon prices
+        total += addons.reduce((acc, addon) => acc + addon.price, 0);
+
+        // Adjust price based on cup size
+        if (cupSize === 'Medium') {
+            total += 5;
+        } else if (cupSize === 'Large') {
+            total += 10;
+        }
+
+        // Multiply by quantity
+        total *= quantity;
+
+        return total;
+    };
+
 
     // const checkoutHandler = () => {
     //     navigate('/login?redirect=shipping');
     // };
     const checkoutHandler = () => {
-       
+
         cartItems.forEach(async (item) => {
             const productId = item.product;
             const newStock = item.stock - item.quantity;
-    
+
             try {
-              
+
                 await axios.patch(`http://localhost:4001/api/product/${productId}`, { stock: newStock });
-    
-               
+
+
             } catch (error) {
                 console.error('Error updating stock:', error);
-              
+
             }
         });
         navigate('/login?redirect=shipping');
     };
-    
+
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
     return (
@@ -88,13 +107,13 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                                                     </div>
                                                 )}
                                                 <p>Sugar Level: {item.sugarLevel}</p>
-                                                
+                                                <p>Cup Size: {item.cupSize}</p>
+
                                                 {/* Calculate and display the total price for the item and its addons */}
                                                 <p id="card_item_price">
                                                     Total: ₱
                                                     {(
-                                                        item.price +
-                                                        item.addons.reduce((acc, addon) => acc + addon.price, 0)
+                                                        calculateTotalPrice(item.price, item.addons, item.quantity, item.cupSize)
                                                     ).toFixed(2)}
                                                 </p>
                                             </div>
@@ -139,18 +158,16 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                                 </p>
 
 
-
                                 <p>
                                     Est. total: ₱
                                     {cartItems.reduce(
                                         (acc, item) =>
                                             acc +
                                             item.quantity *
-                                            (item.price + item.addons.reduce((addonAcc, addon) => addonAcc + addon.price, 0)),
+                                            calculateTotalPrice(item.price, item.addons, 1, item.cupSize), // Consistent with calculateTotalPrice
                                         0
                                     ).toFixed(2)}
                                 </p>
-
                                 <hr />
                                 <button id="checkout_btn" className="btn btn-primary btn-block" onClick={checkoutHandler}>
                                     Check out

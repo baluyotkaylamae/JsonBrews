@@ -9,7 +9,11 @@ const ConfirmOrder = ({ cartItems, shippingInfo }) => {
 
     // Calculate Order Prices
     const itemsPrice = cartItems.reduce(
-        (acc, item) => acc + item.price * item.quantity,
+        (acc, item) => {
+            // Include cup size adjustment for each item
+            const itemPrice = item.price + (item.cupSize === 'Medium' ? 5 : item.cupSize === 'Large' ? 10 : 0);
+            return acc + itemPrice * item.quantity;
+        },
         0
     );
 
@@ -58,27 +62,28 @@ const ConfirmOrder = ({ cartItems, shippingInfo }) => {
                     <h4 className="mt-4">Your Cart Items:</h4>
 
                     {cartItems.map(item => (
-                        <Fragment>
-                            <hr />
-                            <div className="cart-item my-1" key={item.product}>
-                                <div className="row">
-                                    <div className="col-4 col-lg-2">
-                                        <img src={item.image} alt="Laptop" height="45" width="65" />
-                                    </div>
-
-                                    <div className="col-5 col-lg-6">
-                                        <Link to={`/product/${item.product}`}>{item.name}</Link>
-                                    </div>
-
-
-                                    <div className="col-4 col-lg-4 mt-4 mt-lg-0">
-                                        <p>{item.quantity} x ₱{item.price} = <b>${(item.quantity * item.price).toFixed(2)}</b></p>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <hr />
-                        </Fragment>
+                         <Fragment>
+                         <hr />
+                         <div className="cart-item my-1" key={item.product}>
+                             <div className="row">
+                                 <div className="col-4 col-lg-2">
+                                     <img src={item.image} alt="Laptop" height="45" width="65" />
+                                 </div>
+ 
+                                 <div className="col-5 col-lg-6">
+                                     <Link to={`/product/${item.product}`}>{item.name}</Link>
+                                     <p>Cup Size: {item.cupSize}</p> 
+                                 </div>
+ 
+                                 <p>
+                        {item.quantity} x ₱{item.price + (item.cupSize === 'Medium' ? 5 : item.cupSize === 'Large' ? 10 : 0)} ={' '}
+                        <b>${(item.quantity * (item.price + (item.cupSize === 'Medium' ? 5 : item.cupSize === 'Large' ? 10 : 0))).toFixed(2)}</b>
+                    </p>
+ 
+                             </div>
+                         </div>
+                         <hr />
+                     </Fragment>
                     ))}
 
                 </div>

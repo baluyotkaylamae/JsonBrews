@@ -172,7 +172,7 @@ const CreateProduct = () => {
               />
             </div>
 
-            <div className="mb-3">
+            {/* <div className="mb-3">
               <label htmlFor="cupSize" className="form-label">
                 Cup Size
               </label>
@@ -187,7 +187,7 @@ const CreateProduct = () => {
                 <option value="medium">Medium</option>
                 <option value="large">Large</option>
               </select>
-            </div>
+            </div> */}
 
 
             <div className="mb-3">

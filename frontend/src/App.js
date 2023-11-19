@@ -47,7 +47,8 @@ function App() {
       ? JSON.parse(localStorage.getItem('shippingInfo'))
       : {},
   })
-  const addItemToCart = async (id, quantity, selectedAddons, selectedSugarLevel) => {
+  const addItemToCart = async (id, quantity, selectedAddons, selectedSugarLevel, selectedCupSize) => {
+
 
     if (!getUser()) {
       toast.error("Login first EHEHE", {
@@ -77,6 +78,7 @@ function App() {
         quantity: quantity,
         addons: selectedAddonsDetails,
         sugarLevel: selectedSugarLevel,
+        cupSize: selectedCupSize,
       };
 
       // const isItemExist = state.cartItems.find((i) => i.product === item.product);

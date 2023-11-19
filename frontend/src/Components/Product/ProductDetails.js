@@ -26,6 +26,11 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
       setLoading(false);
     }
   };
+  const [selectedCupSize, setSelectedCupSize] = useState('Small');
+
+  const handleCupSizeChange = (size) => {
+    setSelectedCupSize(size);
+  };
 
   const fetchAddons = useCallback(async () => {
     try {
@@ -63,8 +68,8 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
   };
 
   const addToCart = async () => {
-    await addItemToCart(id, quantity, selectedAddons, selectedSugarLevel);
-  };
+    await addItemToCart(id, quantity, selectedAddons, selectedSugarLevel, selectedCupSize);
+};
 
   const handleAddonChange = (addonId) => {
     setSelectedAddons((prevSelectedAddons) => {
@@ -95,7 +100,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
           <MetaData title={product.name} />
           <div className="row d-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
-              <Carousel pause='hover'>
+              <Carousel >
                 {product.images.map((image, index) => (
                   <Carousel.Item key={index}>
                     <img className="d-block w-100" src={image.url} alt={product.name} />
@@ -136,6 +141,51 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               <h4 className="mt-2">Description:</h4>
               <p>{product.description}</p>
               <hr />
+              <div className="col-12 col-lg-5 mt-3">
+              <h4 className="mt-2">Cup Size:</h4>
+            <div className="form-check">
+              <input
+                type="radio"
+                className="form-check-input"
+                id="cup_size_small"
+                name="cupSize"
+                value="Small"
+                checked={selectedCupSize === 'Small'}
+                onChange={() => handleCupSizeChange('Small')}
+              />
+              <label className="form-check-label" htmlFor="cup_size_small">
+                Small
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                type="radio"
+                className="form-check-input"
+                id="cup_size_medium"
+                name="cupSize"
+                value="Medium"
+                checked={selectedCupSize === 'Medium'}
+                onChange={() => handleCupSizeChange('Medium')}
+              />
+              <label className="form-check-label" htmlFor="cup_size_medium">
+                Medium
+              </label>
+            </div>
+            <div className="form-check">
+              <input
+                type="radio"
+                className="form-check-input"
+                id="cup_size_large"
+                name="cupSize"
+                value="Large"
+                checked={selectedCupSize === 'Large'}
+                onChange={() => handleCupSizeChange('Large')}
+              />
+              <label className="form-check-label" htmlFor="cup_size_large">
+                Large
+              </label>
+            </div>
+            </div>
 
               <div className="col-12 col-lg-5 mt-3">
                 <h4 className="mt-2">Sugar Level:</h4>

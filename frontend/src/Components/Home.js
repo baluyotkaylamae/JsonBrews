@@ -8,7 +8,7 @@ import "./Layouts/CurvedBanner.css";
 const ProductCard = ({ product }) => {
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <div className="card product-cart-text" style={{ height: "450px" }}>
+      <div className="card product-cart-text" style={{ height: "600px" }}>
         <img
           src={product.images[0].url}
           alt={product.name}

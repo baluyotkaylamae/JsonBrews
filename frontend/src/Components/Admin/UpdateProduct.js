@@ -221,6 +221,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';
 import { useParams, useNavigate } from 'react-router-dom';
+import './CRUD.css';
 
 const UpdateProduct = () => {
   const { id } = useParams();
@@ -334,8 +335,8 @@ const UpdateProduct = () => {
         <div className="col-md-3">
           <Sidebar />
         </div>
-        <div className="col-md-9">
-          <h2>Update Product</h2>
+        <div className="col-md-9 text-crud" style={{paddingBottom:'50px'}}>
+          <h2 className='title-crud'>Update Product</h2>
           <form onSubmit={submitForm}>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">
@@ -423,7 +424,7 @@ const UpdateProduct = () => {
                 />
               ))}
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-crud">
               Update Product
             </button>
           </form>

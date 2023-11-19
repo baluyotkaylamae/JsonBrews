@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from './Sidebar';
+import './CRUD.css';
 
 const CategoryList = () => {
     const [categories, setCategories] = useState([]);
@@ -42,8 +43,8 @@ const CategoryList = () => {
                 <div className="col-md-3">
                     <Sidebar />
                 </div>
-                <div className="col-md-9">
-                    <h2>Categories</h2>
+                <div className="col-md-9" style={{color:'#A97155'}}>
+                    <h2 className='title-crud'>List of Categories</h2>
                     <Link to="/category/create" className="btn btn-primary mb-3">
                         Create Category
                     </Link>

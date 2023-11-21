@@ -16,22 +16,44 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
 
   let { id } = useParams();
 
-  const productDetails = async (id) => {
-    try {
-      const response = await axios.get(`http://localhost:4001/api/product/${id}`);
-      setProduct(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError('Product not found');
-      setLoading(false);
-    }
-  };
+  // const productDetails = async (id) => {
+  //   try {
+  //     const response = await axios.get(`http://localhost:4001/api/product/${id}`);
+  //     setProduct(response.data);
+  //     setLoading(false);
+  //   } catch (err) {
+  //     setError('Product not found');
+  //     setLoading(false);
+  //   }
+  // };
   const [selectedCupSize, setSelectedCupSize] = useState('Small');
 
   const handleCupSizeChange = (size) => {
     setSelectedCupSize(size);
   };
 
+  const productDetails = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:4001/api/product/${id}`);
+      setProduct(response.data);
+      setLoading(false);
+    } catch (err) {
+      if (err.response) {
+        // The request was made, but the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Server responded with an error:', err.response.data);
+      } else if (err.request) {
+        // The request was made but no response was received
+        console.error('No response received from the server:', err.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', err.message);
+      }
+      setError('Product not found');
+      setLoading(false);
+    }
+  };
+  
   const fetchAddons = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:4001/api/addons');

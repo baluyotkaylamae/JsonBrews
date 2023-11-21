@@ -30,11 +30,11 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  margin: '0 auto', // Center the search bar
-  width: '50%', // Adjust the width to control the size
-  marginRight: '40px', // Add padding to the right
+  margin: '0 auto', 
+  width: '50%', 
+  marginRight: '40px', 
   [theme.breakpoints.up('sm')]: {
-    width: 'auto', // Restore auto width on larger screens
+    width: 'auto', 
   },
 }));
 
@@ -55,7 +55,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -75,8 +74,8 @@ const Header = ({ cartItems }) => {
   const [cartCount, setCartCount] = useState(cartItems.length);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const [user, setUser] = useState(getUser()); // Get the user's data
-  const userAuthenticated = !!user; // Check if the user is authenticated
+  const [user, setUser] = useState(getUser()); 
+  const userAuthenticated = !!user; 
 
   useEffect(() => {
     setUser(getUser());
@@ -100,7 +99,7 @@ const Header = ({ cartItems }) => {
   };
 
   const handleLogout = () => {
-    // Implement your logout logic here and set the user state to null
+
     logout();
     setUser(null);
   };
@@ -199,15 +198,15 @@ const Header = ({ cartItems }) => {
         </Link>
       </Box>
 
-      <Search>
+      {/* <Search>
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
           placeholder="Search…"
           inputProps={{ 'aria-label': 'search' }}
-        />
-      </Search>
+        /> */}
+      <Search/>
 
 
       <Box sx={{ flexGrow: 0 }}>
@@ -244,9 +243,6 @@ const Header = ({ cartItems }) => {
           open={Boolean(anchorElUser)}
           onClose={handleCloseUserMenu}
         >
-
-
-
 
 
           {settings.map((setting, index) => (

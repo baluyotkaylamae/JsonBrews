@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { MDBDataTable } from 'mdbreact'
-
 import MetaData from '../Layouts/Metadata'
 import Loader from '../Layouts/Loader'
 import axios from 'axios'
@@ -18,7 +17,7 @@ const ListOrders = () => {
         try {
             const config = {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                    // 'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${getToken()}`
                 }
             }

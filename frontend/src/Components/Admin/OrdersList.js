@@ -22,6 +22,52 @@ const OrdersList = () => {
         position: toast.POSITION.BOTTOM_CENTER
     });
 
+    // const listOrders = async () => {
+    //     try {
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${getToken()}`
+    //             }
+    //         }
+    //         const { data } = await axios.get(`http://localhost:4001/api/admin/orders`, config)
+    //         setAllOrders(data.orders)
+    //         setLoading(false)
+    //     } catch (error) {
+    //         setError(error.response.data.message)
+    //     }
+    // }
+    // const deleteOrder = async (id) => {
+    //     try {
+    //         const config = {
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${getToken()}`
+    //             }
+    //         }
+    //         const { data } = await axios.delete(`htp://localhost:4001/api/admin/orders/${id}`, config)
+    //         setIsDeleted(data.success)
+    //         setLoading(false)
+    //     } catch (error) {
+    //         setError(error.response.data.message)
+
+    //     }
+    // }
+    // useEffect(() => {
+    //     listOrders()
+    //     if (error) {
+    //         errMsg(error)
+    //         setError('')
+    //     }
+    //     if (isDeleted) {
+    //         successMsg('Order deleted successfully');
+    //         navigate('/admin/orders');
+    //     }
+    // }, [error, isDeleted])
+    // const deleteOrderHandler = (id) => {
+    //     deleteOrder(id)
+    // }
+
     const listOrders = async () => {
         try {
             const config = {
@@ -30,43 +76,55 @@ const OrdersList = () => {
                     'Authorization': `Bearer ${getToken()}`
                 }
             }
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/admin/orders`, config)
+            const { data } = await axios.get(`http://localhost:4001/api/admin/orders`, config)
             setAllOrders(data.orders)
             setLoading(false)
         } catch (error) {
-            setError(error.response.data.message)
+            console.error('Error fetching orders:', error.response || error.message); 
+            setError(error.response ? error.response.data.message : error.message);
         }
     }
-    const deleteOrder = async (id) => {
+    
+    const deleteOrderHandler = async (id) => {
         try {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getToken()}`
+                    'Authorization': `Bearer ${getToken()}` 
                 }
             }
-            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/admin/order/${id}`, config)
+            const { data } = await axios.delete(`http://localhost:4001/api/admin/order/${id}`, config)
             setIsDeleted(data.success)
             setLoading(false)
         } catch (error) {
-            setError(error.response.data.message)
+            console.error('Error deleting order:', error.response || error.message); 
+            setError(error.response ? error.response.data.message : error.message);
+        }
+    }
+    
 
-        }
-    }
     useEffect(() => {
-        listOrders()
-        if (error) {
-            errMsg(error)
-            setError('')
-        }
-        if (isDeleted) {
-            successMsg('Order deleted successfully');
-            navigate('/admin/orders');
-        }
-    }, [error, isDeleted])
-    const deleteOrderHandler = (id) => {
-        deleteOrder(id)
-    }
+        const fetchData = async () => {
+            try {
+                console.log('Fetching orders...');
+                await listOrders();
+                console.log('Orders fetched successfully.');
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                errMsg(error.message);
+                setError('');
+            }
+            if (isDeleted) {
+                console.log('Order deleted successfully.');
+                successMsg('Order deleted successfully');
+                navigate('/order/list');
+            }
+        };
+    
+        fetchData();
+    }, [error, isDeleted, navigate]);
+    
+    
     const setOrders = () => {
         const data = {
             columns: [

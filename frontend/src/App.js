@@ -36,6 +36,7 @@ import CreateAddon from './Components/Admin/AddonsCreate';
 import UpdateAddon from './Components/Admin/AddonUpdate';
 import { getUser } from './utils/helpers';
 import ProtectedRoute from './Components/Route/ProtectedRoute';
+import OrdersList from './Components/Admin/OrdersList';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -144,9 +145,6 @@ function App() {
     localStorage.setItem('shippingInfo', JSON.stringify(data))
   }
 
-
-
-
   return (
     <div>
       <Router>
@@ -159,6 +157,7 @@ function App() {
           <Route path="/" element={<Home />} exact="true" />
           {/* <Route path="/product/:id" element={<ProductDetails  />} exact="true" /> */}
           <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" />
+          <Route path="/search/:keyword" element={<Home/>} exact="true" />
 
           <Route path="/login" element={<Login />} exact="true" />
           <Route path="/register" element={<Register />} exact="true" />
@@ -199,6 +198,7 @@ function App() {
           {/* orders */}
           <Route path="/orders/me" element={<ListOrders />} />
           <Route path="/order/:id" element={<OrderDetails />} />
+          <Route path="/admin/order" element={<OrdersList />} />
 
           {/* category */}
           <Route path="/category/create" element={

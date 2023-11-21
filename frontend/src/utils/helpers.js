@@ -1,3 +1,6 @@
+import { toast } from 'react-toastify';
+
+
 export const authenticate = (data, next) => {
     if (window !== 'undefined') {
         // console.log('authenticate', response)
@@ -37,3 +40,10 @@ export const logout = next => {
     // next();
     window.location.reload();
 };
+
+export const errMsg = (message = '') => toast.error(message, {
+    position: toast.POSITION.BOTTOM_CENTER
+});
+export const successMsg = (message = '') => toast.success(message, {
+    position: toast.POSITION.BOTTOM_CENTER
+});

@@ -5,6 +5,7 @@ import CheckoutSteps from './CheckoutSteps';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getToken } from '../../utils/helpers';
+import axios from 'axios';
 
 const Payment = ({ cartItems, shippingInfo }) => {
   const [loading, setLoading] = useState(true);
@@ -22,19 +23,48 @@ const Payment = ({ cartItems, shippingInfo }) => {
     order.totalPrice = orderInfo.totalPrice;
   }
 
-  const createOrder = async (order) => {
-    try {
+  // const createOrder = async (order) => {
+  //   try {
 
-      toast.success('Order created', {
+  //     toast.success('Order created', {
+  //       position: toast.POSITION.BOTTOM_RIGHT,
+  //     });
+  //     navigate('/success');
+  //   } catch (error) {
+  //     toast.error(error.response?.data?.message || 'Failed to create order', {
+  //       position: toast.POSITION.BOTTOM_RIGHT,
+  //     });
+  //   }
+  // };
+
+const createOrder = async (order) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${getToken()}`,
+      },
+    };
+
+    const { data } = await axios.post('http://localhost:4001/api/order/new', order, config);
+
+    toast.success('Order created', {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
+
+    console.log('Order created:', data); 
+
+    navigate('/success');
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || 'Failed to create order',
+      {
         position: toast.POSITION.BOTTOM_RIGHT,
-      });
-      navigate('/success');
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Failed to create order', {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
-    }
-  };
+      }
+    );
+  }
+};
+
 
   const submitHandler = async (e) => {
     e.preventDefault();

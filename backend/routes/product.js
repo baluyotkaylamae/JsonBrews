@@ -20,7 +20,6 @@ router.post('/product/new', upload.array('images'), newProduct);
 
 router.get('/admin/product', getAdminProduct);
 
-// this is route for updating stocks when checkout
 router.patch('/product/:id', async (req, res) => {
     const { id } = req.params;
     const { stock } = req.body;

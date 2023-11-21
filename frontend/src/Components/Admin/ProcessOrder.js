@@ -37,7 +37,7 @@ const ProcessOrder = () => {
                 }
             }
 
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/order/${id}`, config)
+            const { data } = await axios.get(`http://localhost:4001/api/order/${id}`, config)
             setOrder(data.order)
             setLoading(false)
         } catch (error) {
@@ -53,7 +53,7 @@ const ProcessOrder = () => {
                     'Authorization': `Bearer ${getToken()}`
                 }
             }
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/admin/order/${id}`, formData, config)
+            const { data } = await axios.put(`http://localhost:4001/api/admin/order/${id}`, formData, config)
             setIsUpdated(data.success)
             
 

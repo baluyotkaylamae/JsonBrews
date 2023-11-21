@@ -93,6 +93,14 @@ font-family: Roboto, Arial, Helvetica, sans-serif;
     font-family: Roboto, Arial, Helvetica, sans-serif;
 }
 
+.dashboard-user
+{
+    background: linear-gradient(to bottom, #f7ff59, #477027);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(241, 233, 233, 0.3);
+    text-align: center;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
 .dashboard-title
 {
 

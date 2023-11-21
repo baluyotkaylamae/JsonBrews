@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import './CRUD.css';
+import Sidebar from './Sidebar';
+
 
 const UpdateAddon = () => {
   const { id } = useParams();
@@ -33,7 +36,7 @@ const UpdateAddon = () => {
       .catch((error) => {
         console.error('Error fetching categories:', error);
       });
-  }, [id]); 
+  }, [id]);
 
   const onChange = (e) => {
     setAddon({ ...addon, [e.target.name]: e.target.value });
@@ -47,7 +50,7 @@ const UpdateAddon = () => {
       .put(`http://localhost:4001/api/addons/${id}`, { name, description, category, price })
       .then((res) => {
         console.log(res.data);
-        
+
         navigate('/addons/list');
       })
       .catch((err) => {
@@ -57,71 +60,81 @@ const UpdateAddon = () => {
 
   return (
     <div className="container mt-5">
-      <h2>Update Addon</h2>
-      <form>
-        <div className="mb-3">
-          <label htmlFor="name" className="form-label">
-            Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="name"
-            name="name"
-            required
-            onChange={onChange}
-            value={name}
-          />
+      <div className="row">
+        <div className="col-md-3">
+          <Sidebar />
+
         </div>
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
-          <textarea
-            className="form-control"
-            id="description"
-            name="description"
-            onChange={onChange}
-            value={description}
-          ></textarea>
+        <div className="col-md-9 text-crud" style={{ paddingBottom: '50px' }}>
+
+          <h2>Update Addon</h2>
+          <form>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-label">
+                Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="name"
+                name="name"
+                required
+                onChange={onChange}
+                value={name}
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="description" className="form-label">
+                Description
+              </label>
+              <textarea
+                className="form-control"
+                id="description"
+                name="description"
+                onChange={onChange}
+                value={description}
+              ></textarea>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="category" className="form-label">
+                Category
+              </label>
+              <select
+                className="form-control"
+                id="category"
+                name="category"
+                required
+                onChange={onChange}
+                value={category}
+              >
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="price" className="form-label">
+                Price
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                id="price"
+                name="price"
+                required
+                onChange={onChange}
+                value={price}
+              />
+            </div>
+            <button className="btn btn-crud" onClick={submitForm}>
+              Update
+            </button>
+          </form>
         </div>
-        <div className="mb-3">
-          <label htmlFor="category" className="form-label">
-            Category
-          </label>
-          <select
-            className="form-control"
-            id="category"
-            name="category"
-            required
-            onChange={onChange}
-            value={category}
-          >
-            {categories.map((category) => (
-              <option key={category._id} value={category._id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="price" className="form-label">
-            Price
-          </label>
-          <input
-            type="number"
-            className="form-control"
-            id="price"
-            name="price"
-            required
-            onChange={onChange}
-            value={price}
-          />
-        </div>
-        <button className="btn btn-primary" onClick={submitForm}>
-          Update
-        </button>
-      </form>
+      </div>
+
     </div>
   );
 };

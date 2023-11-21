@@ -56,7 +56,7 @@ const ProductList = () => {
           <Sidebar />
         </div>
         <div className="col-md-9">
-          <h2>List of Products</h2>
+          <h2 className='title-crud'>List of Products</h2>
           <Link to="/product/create" className="btn btn-primary mb-3">
             Create Product
           </Link>

@@ -4,6 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar'; // Import the Sidebar component
+import './CRUD.css';
+
 
 const CreateAddon = () => {
   const navigate = useNavigate();
@@ -58,8 +60,8 @@ const CreateAddon = () => {
         <div className="col-md-3">
           <Sidebar /> {/* Add the Sidebar component here */}
         </div>
-        <div className="col-md-9">
-          <h2>Create Addon</h2>
+        <div className="col-md-9 text-crud" style={{paddingBottom:'50px'}}>
+          <h2 className='title-crud'>Create Add-on</h2>
           <form>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">
@@ -121,7 +123,7 @@ const CreateAddon = () => {
                 value={price}
               />
             </div>
-            <button className="btn btn-primary" onClick={submitForm}>
+            <button className="btn btn-crud" onClick={submitForm}>
               Submit
             </button>
           </form>

@@ -19,7 +19,10 @@ const Sidebar = () => {
   return (
     <div className="container sidebar-JSON ">
       <div className="bg-light border-right " id="sidebar">
+    
         <div className="list-group list-group-flush ">
+        <a href="/dashboard" className="list-group-item list-group-item-action sidebar-dashboard">DASHBOARD</a>
+
           <button onClick={toggleCategory} className="list-group-item list-group-item-action sidebar-dashboard" data-toggle="collapse" data-target="#categoryDropdown">
             CATEGORY
           </button>
@@ -33,17 +36,17 @@ const Sidebar = () => {
           sidebar-dashboard" data-toggle="collapse" data-target="#productDropdown">
             PRODUCTS
           </button>
-          <div id="productDropdown" className={`collapse ${isAddonsOpen ? 'show' : ''}`}>
+          <div id="productDropdown" className={`collapse ${isProductOpen ? 'show' : ''}`}>
             <a href="/product/create" className="list-group-item list-group-item-action sidebar-dashboard">Create Product</a>
             <a href="/product/list" className="list-group-item list-group-item-action sidebar-dashboard">Product List</a>
           </div>
 
 
-          <button onClick={toggleProduct} className="list-group-item list-group-item-action
+          <button onClick={toggleAddons} className="list-group-item list-group-item-action
           sidebar-dashboard" data-toggle="collapse" data-target="#productDropdown">
             ADD-ONS
           </button>
-          <div id="productDropdown" className={`collapse ${isProductOpen ? 'show' : ''}`}>
+          <div id="addonsDropdown" className={`collapse ${isAddonsOpen ? 'show' : ''}`}>
             <a href="/addons/create" className="list-group-item list-group-item-action sidebar-dashboard">Create Add-Ons</a>
             <a href="/addons/list" className="list-group-item list-group-item-action sidebar-dashboard">Add-Ons List</a>
           </div>

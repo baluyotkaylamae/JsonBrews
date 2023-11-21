@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
+import './CRUD.css';
 
 const CreateProduct = () => {
   const navigate = useNavigate();
@@ -124,8 +125,8 @@ const CreateProduct = () => {
         <div className="col-md-3">
           <Sidebar />
         </div>
-        <div className="col-md-9">
-          <h2>Create Product</h2>
+        <div className="col-md-9 text-crud" style={{paddingBottom:'50px'}}>
+          <h2 className='title-crud'>Create Product</h2>
           <form onSubmit={submitForm}>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">
@@ -222,7 +223,7 @@ const CreateProduct = () => {
                 <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
               ))}
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-crud">
               Create Product
             </button>
           </form>

@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-
 import MetaData from '../Layouts/Metadata'
 import Loader from '../Layouts/Loader'
 import axios from 'axios'
@@ -27,7 +26,7 @@ const OrderDetails = () => {
                 }
             }
 
-            const { data } = await axios.get(`http://localhost:4001/order/${id}`, config)
+            const { data } = await axios.get(`http://localhost:4001/order/${id}`, config);
             setOrder(data.order)
             setLoading(false)
 

@@ -90,12 +90,27 @@ exports.updateOrder = async (req, res, next) => {
         success: true,
     })
 }
-
 async function updateStock(id, quantity) {
-    const product = await Product.findById(id);
-    product.stock = product.stock - quantity;
-    await product.save({ validateBeforeSave: false })
+    try {
+        const product = await Product.findById(id);
+
+        if (!product) {
+            throw new Error('Product not found');
+        }
+
+        if (product.stock < quantity) {
+            throw new Error('Insufficient stock');
+        }
+
+        product.stock = product.stock - quantity;
+        await product.save({ validateBeforeSave: false });
+    } catch (error) {
+        
+        console.error(`Error updating stock: ${error.message}`);
+        throw error; 
+    }
 }
+
 
 exports.deleteOrder = async (req, res, next) => {
     const order = await Order.findById(req.params.id)

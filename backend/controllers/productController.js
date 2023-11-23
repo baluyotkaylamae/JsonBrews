@@ -159,64 +159,139 @@ exports.getAdminProduct = async (req, res, next) => {
 		product
 	})
 }
-
 exports.updateProduct = async (req, res, next) => {
+    try {
+        console.log(req.body);
+        let product = await Product.findById(req.params.id);
 
-    console.log(req.body)
-    let product = await product.findById(req.params.id);
-
-    if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: 'Product not found'
-        })
-    }
-
-    if (req.body.images) {
-
-        let images = [];
-
-        if (typeof req.body.images === 'string') {
-            images.push(req.body.images)
-        } else {
-            images = req.body.images
-        }
-    
-        if (images !== undefined) {
-            for (let i = 0; i < product.images.length; i++) {
-                const result = await cloudinary.v2.uploader.destroy(products.images[i].public_id)
-            }
-        }
-
-        let imagesLinks = [];
-
-        for (let i = 0; i < images.length; i++) {
-            console.log(images[i])
-            const result = await cloudinary.v2.uploader.upload(images[i], {
-                folder: 'baghub/product'
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: 'Product not found'
             });
-
-            imagesLinks.push({
-                public_id: result.public_id,
-                url: result.secure_url
-            })
-
         }
-        req.body.images = imagesLinks
+
+        if (req.body.images) {
+            let images = [];
+
+            if (typeof req.body.images === 'string') {
+                images.push(req.body.images);
+            } else {
+                images = req.body.images;
+            }
+
+            if (images && images.length > 0) {
+                for (let i = 0; i < product.images.length; i++) {
+                    const result = await cloudinary.uploader.destroy(product.images[i].public_id);
+                }
+            }
+
+            let imagesLinks = [];
+
+            for (let i = 0; i < images.length; i++) {
+                const result = await cloudinary.uploader.upload(images[i], {
+                    folder: 'baghub/product'
+                });
+
+                imagesLinks.push({
+                    public_id: result.public_id,
+                    url: result.secure_url
+                });
+            }
+
+            req.body.images = imagesLinks;
+        }
+
+        product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        });
+
+        return res.status(200).json({
+            success: true,
+            product
+        });
+    } catch (error) {
+        console.error('Error updating product:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'Internal Server Error'
+        });
     }
+};
 
-    product = await product.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true,
-        useFindandModify: false
-    })
-
-    return res.status(200).json({
-        success: true,
-        product
-    })
-
+exports.getSingleProduct = async (req, res, next) => {
+	const product = await Product.findById(req.params.id);
+	if (!product) {
+		return res.status(404).json({
+			success: false,
+			message: 'Product not found'
+		})
+	}
+	res.status(200).json({
+		success: true,
+		product
+	})
 }
+
+// exports.updateProduct = async (req, res, next) => {
+
+//     console.log(req.body)
+//     let product = await product.findById(req.params.id);
+
+//     if (!product) {
+//         return res.status(404).json({
+//             success: false,
+//             message: 'Product not found'
+//         })
+//     }
+
+//     if (req.body.images) {
+
+//         let images = [];
+
+//         if (typeof req.body.images === 'string') {
+//             images.push(req.body.images)
+//         } else {
+//             images = req.body.images
+//         }
+    
+//         if (images !== undefined) {
+//             for (let i = 0; i < product.images.length; i++) {
+//                 const result = await cloudinary.v2.uploader.destroy(products.images[i].public_id)
+//             }
+//         }
+
+//         let imagesLinks = [];
+
+//         for (let i = 0; i < images.length; i++) {
+//             console.log(images[i])
+//             const result = await cloudinary.v2.uploader.upload(images[i], {
+//                 folder: 'baghub/product'
+//             });
+
+//             imagesLinks.push({
+//                 public_id: result.public_id,
+//                 url: result.secure_url
+//             })
+
+//         }
+//         req.body.images = imagesLinks
+//     }
+
+//     product = await product.findByIdAndUpdate(req.params.id, req.body, {
+//         new: true,
+//         runValidators: true,
+//         useFindandModify: false
+//     })
+
+//     return res.status(200).json({
+//         success: true,
+//         product
+//     })
+
+// }
 
 
 

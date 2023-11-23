@@ -13,6 +13,10 @@ const Payment = ({ cartItems, shippingInfo }) => {
   const order = {
     orderItems: cartItems,
     shippingInfo,
+    paymentInfo: {
+      status: 'paid', 
+      method: 'Cash on Delivery (COD)',
+    },
   };
 
   const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
@@ -23,53 +27,40 @@ const Payment = ({ cartItems, shippingInfo }) => {
     order.totalPrice = orderInfo.totalPrice;
   }
 
-  // const createOrder = async (order) => {
-  //   try {
+  const createOrder = async (order) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getToken()}`,
+        },
+      };
 
-  //     toast.success('Order created', {
-  //       position: toast.POSITION.BOTTOM_RIGHT,
-  //     });
-  //     navigate('/success');
-  //   } catch (error) {
-  //     toast.error(error.response?.data?.message || 'Failed to create order', {
-  //       position: toast.POSITION.BOTTOM_RIGHT,
-  //     });
-  //   }
-  // };
+      const { data } = await axios.post('http://localhost:4001/api/order/new', order, config);
 
-const createOrder = async (order) => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${getToken()}`,
-      },
-    };
-
-    const { data } = await axios.post('http://localhost:4001/api/order/new', order, config);
-
-    toast.success('Order created', {
-      position: toast.POSITION.BOTTOM_RIGHT,
-    });
-
-    console.log('Order created:', data); 
-
-    navigate('/success');
-  } catch (error) {
-    toast.error(
-      error.response?.data?.message || 'Failed to create order',
-      {
+      toast.success('Order created', {
         position: toast.POSITION.BOTTOM_RIGHT,
-      }
-    );
-  }
-};
+      });
 
+      console.log('Order created:', data);
+
+      navigate('/success');
+    } catch (error) {
+      toast.error(
+        error.response?.data?.message || 'Failed to create order',
+        {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        }
+      );
+    }
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
     document.querySelector('#pay_btn').disabled = true;
-    
+
+    console.log('Order Info:', order);
+   
     createOrder(order);
   };
 
@@ -80,15 +71,22 @@ const createOrder = async (order) => {
       <div className="row wrapper">
         <div className="col-10 col-lg-5">
           <form className="shadow-lg" onSubmit={submitHandler}>
-            <h1 className="mb-4">Payment Method</h1>
-            <p>Cash on Delivery (COD)</p>
-            <button
-              id="pay_btn"
-              type="submit"
-              className="btn btn-block py-3"
-            >
-              Place Order - {`₱${orderInfo && orderInfo.totalPrice}`}
-            </button>
+            <h1 className="mb-4">Payment</h1>
+
+            <div className="text-center">
+              <p>Cash on Delivery (COD)</p>
+            </div>
+
+            <div className="text-center">
+              <button
+                id="pay_btn"
+                type="submit"
+                className="btn btn-block py-3"
+                style={{ backgroundColor: '#8B4513', color: 'white', fontFamily: 'Calibiri, sans-serif' }}
+              >
+                Place Order - {`₱${orderInfo && orderInfo.totalPrice}`}
+              </button>
+            </div>
           </form>
         </div>
       </div>

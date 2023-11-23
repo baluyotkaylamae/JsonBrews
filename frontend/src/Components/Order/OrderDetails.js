@@ -48,7 +48,8 @@ const OrderDetails = () => {
 
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
 
-    const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
+    // const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
+    const isPaid = paymentInfo && paymentInfo.status === 'paid' ? true : false;
 
     return (
         <Fragment>

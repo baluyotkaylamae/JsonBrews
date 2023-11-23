@@ -53,7 +53,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
       setLoading(false);
     }
   };
-  
+
   const fetchAddons = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:4001/api/addons');
@@ -91,7 +91,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
 
   const addToCart = async () => {
     await addItemToCart(id, quantity, selectedAddons, selectedSugarLevel, selectedCupSize);
-};
+  };
 
   const handleAddonChange = (addonId) => {
     setSelectedAddons((prevSelectedAddons) => {
@@ -136,11 +136,23 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               <p id="product_id">Product # {product._id}</p>
 
               <hr />
-              <p id="product_price"><strong>₱{product.price}</strong></p>
+              <p id="product_price"><strong>Amount: ₱{product.price}</strong></p>
               <hr />
-              <div className="stockCounter d-inline">
+              {/* <div className="stockCounter d-inline">
                 <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
                 <input type="number" className="form-control count d-inline short-input" value={quantity} readOnly />
+                <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
+              </div> */}
+              <div className="stockCounter d-inline">
+                <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
+                <input
+                  type="text"
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  className="form-control count d-inline short-input"
+                  value={quantity}
+                  readOnly
+                />
                 <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
               </div>
               <button
@@ -149,7 +161,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
                 className="btn btn-primary d-inline ml-4"
                 disabled={product.stock === 0}
                 onClick={addToCart}
-                style={{ marginLeft: '10px' }}
+                style={{ backgroundColor: '#8B4513', color: 'white', fontFamily: 'Calibiri, sans-serif' }}
               >
                 Add to Cart
               </button>
@@ -164,50 +176,50 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               <p>{product.description}</p>
               <hr />
               <div className="col-12 col-lg-5 mt-3">
-              <h4 className="mt-2">Cup Size:</h4>
-            <div className="form-check">
-              <input
-                type="radio"
-                className="form-check-input"
-                id="cup_size_small"
-                name="cupSize"
-                value="Small"
-                checked={selectedCupSize === 'Small'}
-                onChange={() => handleCupSizeChange('Small')}
-              />
-              <label className="form-check-label" htmlFor="cup_size_small">
-                Small
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="radio"
-                className="form-check-input"
-                id="cup_size_medium"
-                name="cupSize"
-                value="Medium"
-                checked={selectedCupSize === 'Medium'}
-                onChange={() => handleCupSizeChange('Medium')}
-              />
-              <label className="form-check-label" htmlFor="cup_size_medium">
-                Medium
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                type="radio"
-                className="form-check-input"
-                id="cup_size_large"
-                name="cupSize"
-                value="Large"
-                checked={selectedCupSize === 'Large'}
-                onChange={() => handleCupSizeChange('Large')}
-              />
-              <label className="form-check-label" htmlFor="cup_size_large">
-                Large
-              </label>
-            </div>
-            </div>
+                <h4 className="mt-2">Cup Size:</h4>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    id="cup_size_small"
+                    name="cupSize"
+                    value="Small"
+                    checked={selectedCupSize === 'Small'}
+                    onChange={() => handleCupSizeChange('Small')}
+                  />
+                  <label className="form-check-label" htmlFor="cup_size_small">
+                    Small
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    id="cup_size_medium"
+                    name="cupSize"
+                    value="Medium"
+                    checked={selectedCupSize === 'Medium'}
+                    onChange={() => handleCupSizeChange('Medium')}
+                  />
+                  <label className="form-check-label" htmlFor="cup_size_medium">
+                    Medium
+                  </label>
+                </div>
+                <div className="form-check">
+                  <input
+                    type="radio"
+                    className="form-check-input"
+                    id="cup_size_large"
+                    name="cupSize"
+                    value="Large"
+                    checked={selectedCupSize === 'Large'}
+                    onChange={() => handleCupSizeChange('Large')}
+                  />
+                  <label className="form-check-label" htmlFor="cup_size_large">
+                    Large
+                  </label>
+                </div>
+              </div>
 
               <div className="col-12 col-lg-5 mt-3">
                 <h4 className="mt-2">Sugar Level:</h4>

@@ -97,7 +97,7 @@ const Register = () => {
             <div className="row wrapper">
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg Json-Register-Form" onSubmit={submitHandler} encType='multipart/form-data'>
-                        <h1 className="mb-3">REGISTER</h1>
+                        <h2 className="mb-3">REGISTER</h2>
 
                         <div className="form-group">
                             <label htmlFor="email_field">Name</label>

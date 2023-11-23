@@ -74,7 +74,7 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
             ) : (
                 <Fragment>
                     <h2 className="mt-5">
-                        Your Cart: <b>{cartItems.length} items</b>
+                        Your Cart: <b>{cartItems.length} Items </b>
                     </h2>
 
                     <div className="row d-flex justify-content-between">
@@ -86,14 +86,14 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                                     <div className="cart-item">
                                         <div className="row">
                                             <div className="col-4 col-lg-3">
-                                                <img src={item.image} alt="Laptop" height="90" width="115" />
+                                                <img src={item.image} alt="Jsbrew" height="90" width="115" />
                                             </div>
 
                                             <div className="col-5 col-lg-3">
                                                 <Link to={`/products/${item.product}`}>{item.name}</Link>
                                             </div>
                                             <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                                                <p id="card_item_price">₱{item.price}</p>
+                                                <p id="card_item_price">Amount: ₱{item.price}</p>
                                                 {item.addons && item.addons.length > 0 && (
                                                     <div>
                                                         <strong>Addons:</strong>

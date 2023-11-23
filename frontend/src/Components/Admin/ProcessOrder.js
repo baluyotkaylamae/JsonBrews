@@ -82,7 +82,11 @@ const ProcessOrder = () => {
     }
 
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
-    const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
+    //const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
+    const isPaid = paymentInfo && paymentInfo.status === 'paid' ? true : false;
+
+
+    console.log('Payment Information:', paymentInfo);
 
     // return (
     //     <Fragment>
@@ -175,10 +179,12 @@ const ProcessOrder = () => {
                                     <p><b>Customer: </b> {user && user.name}</p>
                                     <p><b>Contact Number: </b> {shippingInfo && shippingInfo.phoneNo}</p>
                                     <p className="mb-4"><b>Address: </b>{shippingDetails}</p>
-                                    <p><b>Amount of Order: </b> ${totalPrice}</p>
+                                    <p><b>Amount of Order: </b> ₱{totalPrice}</p>
                                     <hr />
+
                                     <h4 className="my-4">Payment Status</h4>
                                     <p className={isPaid ? "greenColor" : "redColor"}><b>{isPaid ? "PAID" : "NOT PAID"}</b></p>
+                                   
                                     <h4 className="my-4">Stripe ID</h4>
                                     <p>{paymentInfo && paymentInfo.id}</p>
 
@@ -216,13 +222,16 @@ const ProcessOrder = () => {
                                             value={status}
                                             onChange={(e) => setStatus(e.target.value)}
                                         >
-                                            <option value="Processing">Processing</option>
-                                            <option value="Shipped">Shipped</option>
+                                            <option value="Preparing">Preparing</option>
+                                            <option value="Shipping">Shipping</option>
                                             <option value="Delivered">Delivered</option>
                                         </select>
                                     </div>
-                                    <button className="btn btn-primary btn-block update-status-btn" onClick={() => updateOrderHandler(order._id)}>
-                                        Update Status
+                                    <button className="btn btn-primary btn-block update-status-btn" 
+                                    onClick={() => updateOrderHandler(order._id)}
+                                    style={{ backgroundColor: '#8B4513', color: 'white', fontFamily: 'Calibiri, sans-serif' }}>
+                                       
+                                        Confirm Status
                                     </button>
                                 </div>
                             </div>

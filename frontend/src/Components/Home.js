@@ -29,7 +29,33 @@ const ProductCard = ({ product }) => {
     </div>
   );
 };
+const Pagination = ({ productsPerPage, totalProducts, currentPage, paginate }) => {
+  const pageNumbers = Math.ceil(totalProducts / productsPerPage);
 
+  return (
+    <nav>
+      <ul className="pagination">
+        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+          <button onClick={() => paginate(currentPage - 1)} className="page-link">
+            Previous
+          </button>
+        </li>
+        {Array.from({ length: pageNumbers }, (_, index) => (
+          <li key={index + 1} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+            <button onClick={() => paginate(index + 1)} className="page-link">
+              {index + 1}
+            </button>
+          </li>
+        ))}
+        <li className={`page-item ${currentPage === pageNumbers ? 'disabled' : ''}`}>
+          <button onClick={() => paginate(currentPage + 1)} className="page-link">
+            Next
+          </button>
+        </li>
+      </ul>
+    </nav>
+  );
+};
 
 
 
@@ -37,6 +63,8 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(4);
 
   useEffect(() => {
     // Fetch products from your API
@@ -55,7 +83,12 @@ const Home = () => {
   }, []);
 
 
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
   const CurvedBanner = () => {
     return (
       <div className="curved-banner">
@@ -112,22 +145,28 @@ const Home = () => {
 
 
     <div className="container mt-4">
-      
-      <h1 className="mb-4 product-jsonbrew">Product List</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className="error-message">Error: {error.message}</p>
-      ) : Array.isArray(products) && products.length > 0 ? (
-        <div className="row">
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </div>
-      ) : (
-        <p className="no-products-message">No products found.</p>
-      )}
-    </div>
+        <h1 className="mb-4 product-jsonbrew">Product List</h1>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="error-message">Error: {error.message}</p>
+        ) : Array.isArray(products) && products.length > 0 ? (
+          <div>
+            <div className="row">
+              {currentProducts.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+            <Pagination
+              productsPerPage={productsPerPage}
+              totalProducts={products.length}
+              paginate={paginate}
+            />
+          </div>
+        ) : (
+          <p className="no-products-message">No products found.</p>
+        )}
+      </div>
     </div>
   );
 

@@ -3,6 +3,8 @@
     "apexcharts": "^3.44.0",
     "countries-list": "^3.0.6",
     "react-apexcharts": "^1.4.1",
-    "recharts": "^2.9.3"
+    "react-slick": "^0.29.0",
+    "recharts": "^2.9.3",
+    "slick-carousel": "^1.8.1"
   }
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import './Layouts/CurvedBanner.css';
 import Product from './Product/Product';
-import ProductPage from './ProductPage.css';
+import './ProductPage.css';
 
 const ProductCard = ({ product, category }) => {
     const randomStarRating = Math.floor(Math.random() * (5 - 3 + 1)) + 3;

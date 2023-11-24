@@ -20,6 +20,7 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [categoryNames, setCategoryNames] = useState([]);
     const [productsCount, setProductsCount] = useState({});
+    const [userRegistrationDates, setUserRegistrationDates] = useState({});
     const [addons, setAddons] = useState([]);
 
 
@@ -70,12 +71,22 @@ const Dashboard = () => {
 
             const { data } = await axios.get(`http://localhost:4001/api/admin/users`, config);
             setUsers(data.users);
+
+            // Extract user registration dates
+            const registrationDates = data.users.map(user => user.createdAt.split('T')[0]);
+            const registrationDatesCount = registrationDates.reduce((acc, date) => {
+                acc[date] = (acc[date] || 0) + 1;
+                return acc;
+            }, {});
+            setUserRegistrationDates(registrationDatesCount);
+
             console.log(data.users);
         } catch (error) {
             console.error(error);
             // Handle the error as needed
         }
     };
+
     const getProducts = async () => {
         try {
             const config = {
@@ -216,6 +227,31 @@ const Dashboard = () => {
                                                         {
                                                             name: "series-1",
                                                             data: Object.values(productsCount)
+                                                        }
+                                                    ]}
+                                                    type="bar"
+                                                    width="500"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-12">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                {console.log('Rendering User Registration Chart:', Object.keys(userRegistrationDates), Object.values(userRegistrationDates))}
+                                                <Chart
+                                                    options={{
+                                                        chart: {
+                                                            id: "user-registration-chart"
+                                                        },
+                                                        xaxis: {
+                                                            categories: Object.keys(userRegistrationDates)
+                                                        }
+                                                    }}
+                                                    series={[
+                                                        {
+                                                            name: "users-registered",
+                                                            data: Object.values(userRegistrationDates)
                                                         }
                                                     ]}
                                                     type="bar"

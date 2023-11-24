@@ -8,7 +8,6 @@ body {
   overflow-x: hidden;
 }
 
-
 .App {
   text-align: center;
 }
@@ -86,30 +85,98 @@ body {
 }
 
 /* Avatar */
+.profile {
+  margin: 50px auto;
+  background-color: #fff;
+  border-radius: 40px;
+  width: 800px;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Montserrat", sans-serif;
+  color: #000; /* Font color set to black */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.background-page {
+  font-family: "Montserrat", sans-serif;
+  background: #f2994a;
+  background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
+  background: linear-gradient(to right, #eae4cf, #ebb585);
+  padding: 1px;
+  color: #000; /* Font color set to black */
+}
 .avatar {
   display: inline-block;
   margin-bottom: 0;
   height: 3rem;
   width: 3rem;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
+  -webkit-border-radius: 60%;
+  -moz-border-radius: 60%;
+  border-radius: 60%;
+  font-family: "Montserrat", sans-serif;
+  color: #000; /* Font color set to black */
 }
-
+.user-info {
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  color: #000; /* Font color set to black */
+}
 .avatar img {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
+  border-radius: 30px;
+  border: 15px solid rgba(#f6f2ff, 0.7);
   object-fit: cover;
 }
-
-.rounded-circle {
-  border-radius: 50% !important;
+.username {
+  margin-top: 0px;
+  margin-right: 10px;
+  font-size: 22px;
+  font-family: "Montserrat", sans-serif;
+  text-align: left;
+  color: #000; /* Font color set to black */
+}
+.user-details h4 {
+  font-family: "Montserrat", sans-serif;
+  text-align: left;
+  color: #000; /* Font color set to black */
+}
+.useremail {
+  margin-top: 0px;
+  margin-left: 10px;
+  font-size: 22px;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  color: #000; /* Font color set to black */
+}
+.userdate {
+  margin-top: 0px;
+  margin-left: 10px;
+  font-size: 22px;
+  text-align: left;
+  font-family: "Montserrat", sans-serif;
+  color: #000; /* Font color set to black */
+}
+.button-container {
+  display: flex;
+  margin-top: 1rem;
 }
 
-.btn.focus,
-.btn:focus {
-  outline: 0;
-  box-shadow: none;
+.button {
+  width: calc(48% - 5%); /* Adjust the width and margin as needed */
+  margin-right: 5%; /* Set the right margin between buttons */
+}
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 20px; /* Make it pill-shaped by setting border-radius */
+}
+
+.btn-primary:hover {
+  /* Add your hover styles for primary button here */
+  background-color: #0056b3;
 }
 
 /* Header User Profile */

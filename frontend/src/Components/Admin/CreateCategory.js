@@ -21,10 +21,17 @@ const CreateCategory = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
+  
+  //validation
+    if (!name || !description) {
+      toast.error('Please fill out all fields');
+      return;
+    }
+  
     axios
       .post('http://localhost:4001/api/categories/new', { name, description })
       .then((res) => {
-        // toast.success("Successfully Created");
+        toast.success('Successfully Created');
         navigate('/category/list');
         setCategory({
           name: '',

@@ -147,6 +147,7 @@ function App() {
     })
     localStorage.setItem('shippingInfo', JSON.stringify(data))
   }
+  
 
   return (
     <div>

@@ -90,7 +90,7 @@ const orderSchema = mongoose.Schema({
     orderStatus: {
         type: String,
         required: true,
-        default: 'Preparing'
+        default: 'To Pay'
     },
     deliveredAt: {
         type: Date

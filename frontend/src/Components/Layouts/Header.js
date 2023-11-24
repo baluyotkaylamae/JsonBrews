@@ -188,7 +188,7 @@ const Header = ({ cartItems }) => {
             <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Button sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button>
             </Link>
-            <Link to="/products" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to="/ProductsPage" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Button sx={{ my: 2, color: 'white', display: 'block' }}>Products</Button>
             </Link>
             <Link to="/cart" style={{ textDecoration: 'none', color: 'inherit' }}>

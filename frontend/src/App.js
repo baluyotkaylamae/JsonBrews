@@ -39,6 +39,8 @@ import ProtectedRoute from './Components/Route/ProtectedRoute';
 import OrdersList from './Components/Admin/OrdersList';
 import ProcessOrder from './Components/Admin/ProcessOrder';
 import Homee from './Components/Homee';
+import ProductsPage from './Components/ProductsPage';
+
 
 
 function App() {
@@ -160,7 +162,7 @@ function App() {
           {/*for login */}
           <Route path="/" element={<Home />} exact="true" />
           <Route path="/Homee" element={<Homee />} exact="true" />
-          {/* <Route path="/product/:id" element={<ProductDetails  />} exact="true" /> */}
+          <Route path="/ProductsPage" element={<ProductsPage  />} exact="true" /> 
           <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" />
           <Route path="/search/:keyword" element={<Home />} exact="true" />
 

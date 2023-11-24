@@ -19,6 +19,7 @@
     "mdb-react-ui-kit": "^6.3.0",
     "mdbreact": "^5.2.0",
     "moment": "^2.29.4",
+    "pdfkit": "^0.14.0",
     "rc-slider": "^10.4.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",

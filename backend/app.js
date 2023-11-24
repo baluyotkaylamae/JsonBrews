@@ -17,10 +17,24 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser());
 
-// Define a POST route for creating a new order
 app.post('/api/create-order', orderController.newOrder);
+// app.post('/api/order/generate-pdf/:orderId', async (req, res) => {
+//     try {
+//         const orderId = req.params.orderId;
+//         const order = await Order.findById(orderId);
 
-// Define your other routes
+//         if (!order) {
+//             return res.status(404).json({ message: `No Order found with this ID` });
+//         }
+
+//         const pdfPath = generateOrderPDF(order);
+//         res.json({ path: pdfPath });
+//     } catch (error) {
+//         console.error('Error generating PDF:', error);
+//         res.status(500).json({ message: 'Failed to generate PDF' });
+//     }
+// });
+
 app.use('/api', categories);
 app.use('/api', products);
 app.use('/api', auth);

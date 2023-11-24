@@ -5,6 +5,7 @@ import Loader from '../Layouts/Loader'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// import PDFDocument from 'pdfkit';
 
 import { getToken } from '../../utils/helpers'
 
@@ -46,6 +47,17 @@ const OrderDetails = () => {
         }
     }, [error, id])
 
+    // const handlePrintButtonClick = async () => {
+    //     try {
+    //         const { data } = await axios.post(`http://localhost:4001/api/order/generate-pdf/${order._id}`);
+    
+    //         window.open(data.path, '_blank');
+    //     } catch (error) {
+    //         console.error('Error generating PDF:', error);
+    //     }
+    // };
+    
+
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
 
     // const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
@@ -76,6 +88,15 @@ const OrderDetails = () => {
 
                             <h4 className="my-4">Order Status:</h4>
                             <p className={order.orderStatus && String(order.orderStatus).includes('Delivered') ? "greenColor" : "redColor"} ><b>{orderStatus}</b></p>
+                           
+                            {/* {order.orderStatus === 'Delivered' && (
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={handlePrintButtonClick}
+                                >
+                                    Print Order
+                                </button>
+                            )} */}
 
 
                             <h4 className="my-4">Ordered Product:</h4>

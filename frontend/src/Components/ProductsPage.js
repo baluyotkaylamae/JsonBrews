@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Home.css'
-import "./Layouts/CurvedBanner.css";
+import './Home.css';
+import './Layouts/CurvedBanner.css';
 import Product from './Product/Product';
 
-
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, category }) => {
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
       <div className="card product-cart-text" style={{ height: "600px" }}>
@@ -20,7 +19,7 @@ const ProductCard = ({ product }) => {
             {product.name}
           </h5>
           <p className="card-text">Price: ₱{product.price}</p>
-          <p className="card-text">{product.description}</p> 
+          <p className="card-text">Category: {category}</p>
           <Link to={`/product/${product._id}`} className="btn jsonbrew-button">
             Details
           </Link>
@@ -30,20 +29,23 @@ const ProductCard = ({ product }) => {
   );
 };
 
-
-
-
-const ProductsPage= () => {
+const ProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [maxPriceFilter, setMaxPriceFilter] = useState('');
 
   useEffect(() => {
-    // Fetch products from your API
-    const fetchProducts = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4001/api/products');
-        setProducts(response.data.products);
+        const productsResponse = await axios.get('http://localhost:4001/api/products');
+        setProducts(productsResponse.data.products);
+
+        const categoriesResponse = await axios.get('http://localhost:4001/api/categories');
+        setCategories(categoriesResponse.data.categories);
+
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -51,86 +53,78 @@ const ProductsPage= () => {
       }
     };
 
-    fetchProducts();
+    fetchData();
   }, []);
 
-
-
-  const CurvedBanner = () => {
-    return (
-      <div className="curved-banner">
-        <div className="image-on-banner">
-          <img src='/coffee1.png' className="image-on-banner" alt="Image-on-banner" />
-
-        </div>
-        <div className="svg">
-          <svg className="wave blend1" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-            <path d="M0,100 C150,200 350,0 500,100 L500,0 L0,0 Z"></path>
-          </svg>
-        </div>
-        <div className="svg">
-          <svg className="wave blend2" viewBox="0 0 500 500" preserveAspectRatio="xMinYMin meet">
-            <path d="M0,100 C150,300 350,0 500,100 L500,0 L0,0 Z"></path>
-          </svg>
-        </div>
-        <div className="gradient">
-          <svg width="0" height="0">
-            <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: '#EBEF95' }} />
-              <stop offset="100%" style={{ stopColor: '#B5CDA3' }} />
-            </linearGradient>
-            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style={{ stopColor: '#EBEF95' }} />
-              <stop offset="100%" style={{ stopColor: '#B5CDA3' }} />
-            </linearGradient>
-          </svg>
-        </div>
-
-        <div className="text-on-banner">
-          <h3 className="text-on-banner">
-            Brewing up happiness –
-            where every cup is
-            a latte fun! Join us at <strong style={{ fontWeight: 'bold' }}>JSONBREW</strong> for a brewteaful time!
-            <h3 style={{ textAlign: 'right' }}>— JSONCREW</h3>
-          </h3 >
-          {/* <button  className="text-on-banner">
-          Count Me In!
-        </button> */}
-        </div>
-
-
-      </div>
-
-
-    );
+  const getCategoryName = (categoryId) => {
+    const category = categories.find((cat) => cat._id === categoryId);
+    return category ? category.name : 'Unknown Category';
   };
 
+  const handleCategoryFilter = (category) => {
+    setSelectedCategory(category);
+  };
+
+  const handlePriceFilter = (price) => {
+    setMaxPriceFilter(price);
+  };
+
+  const resetFilters = () => {
+    setSelectedCategory(null);
+    setMaxPriceFilter('');
+  };
+
+  const filteredProducts = products.filter((product) => {
+    const categoryMatches = selectedCategory
+      ? product.category === selectedCategory
+      : true;
+
+    const priceMatches = maxPriceFilter === '' || product.price <= parseFloat(maxPriceFilter);
+
+    return categoryMatches && priceMatches;
+  });
+
   return (
-    // <CurvedBanner />
-   <div>
-    {/* <CurvedBanner /> */}
-
-
-    <div className="container mt-4">
-      
-      <h1 className="mb-4 product-jsonbrew">Product List</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className="error-message">Error: {error.message}</p>
-      ) : Array.isArray(products) && products.length > 0 ? (
-        <div className="row">
-          {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
+    <div>
+      <div className="container mt-4">
+        <h1 className="mb-4 product-jsonbrew">Product List</h1>
+        <div className="filters">
+          <div className="category-filter">
+            <button onClick={() => handleCategoryFilter(null)}>All</button>
+            {categories.map((category) => (
+              <button key={category._id} onClick={() => handleCategoryFilter(category._id)}>
+                {category.name}
+              </button>
+            ))}
+          </div>
+          <input
+            type="number"
+            placeholder="Filter by max price"
+            value={maxPriceFilter}
+            onChange={(e) => handlePriceFilter(e.target.value)}
+          />
+          <button onClick={resetFilters}>Reset</button>
         </div>
-      ) : (
-        <p className="no-products-message">No products found.</p>
-      )}
-    </div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="error-message">Error: {error.message}</p>
+        ) : Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
+          <div className="row">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                category={getCategoryName(product.category)}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="no-products-message">No products found.</p>
+        )}
+      </div>
     </div>
   );
-
 };
 
 export default ProductsPage;

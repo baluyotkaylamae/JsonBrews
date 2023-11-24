@@ -1,3 +1,4 @@
+
 import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Chart from 'react-apexcharts';
@@ -21,9 +22,8 @@ const Dashboard = () => {
     const [categoryNames, setCategoryNames] = useState([]);
     const [productsCount, setProductsCount] = useState({});
     const [userRegistrationDates, setUserRegistrationDates] = useState({});
+    const [orderStatusCounts, setOrderStatusCounts] = useState({});
     const [addons, setAddons] = useState([]);
-
-
 
 
     const getCategories = async () => {
@@ -122,12 +122,26 @@ const Dashboard = () => {
         }
     };
 
+    const getOrderStatusCounts = () => {
+        // Count the occurrences of each order status
+        const statusCounts = {};
+        product.forEach(order => {
+            const status = order.status;
+            statusCounts[status] = (statusCounts[status] || 0) + 1;
+        });
+        setOrderStatusCounts(statusCounts);
+    };
 
     useEffect(() => {
         getCategories();
         getUsers();
         getProducts();
     }, []);
+
+    useEffect(() => {
+        // Fetch order status counts when products change
+        getOrderStatusCounts();
+    }, [product]);
 
     return (
         <Fragment>
@@ -252,6 +266,31 @@ const Dashboard = () => {
                                                         {
                                                             name: "users-registered",
                                                             data: Object.values(userRegistrationDates)
+                                                        }
+                                                    ]}
+                                                    type="bar"
+                                                    width="500"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-12">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                {console.log('Rendering Order Status Chart:', Object.keys(orderStatusCounts), Object.values(orderStatusCounts))}
+                                                <Chart
+                                                    options={{
+                                                        chart: {
+                                                            id: "order-status-chart"
+                                                        },
+                                                        xaxis: {
+                                                            categories: Object.keys(orderStatusCounts)
+                                                        }
+                                                    }}
+                                                    series={[
+                                                        {
+                                                            name: "order-status",
+                                                            data: Object.values(orderStatusCounts)
                                                         }
                                                     ]}
                                                     type="bar"

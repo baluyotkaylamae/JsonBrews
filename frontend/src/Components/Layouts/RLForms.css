@@ -1,0 +1,163 @@
+ /* .form-json
+{
+  border: 2px solid #A97155;
+  border-radius: 10px;
+  margin-bottom: 100px;
+} */
+
+.form-json
+{
+  border-left: 2px solid #8e5f47;
+}
+
+.btn-json
+{
+
+  width: 400px;
+  height: 50px;
+  border: 2px solid #8e5f47;
+
+  background-color: #8e5f47 !important;
+  margin-top: 50px;
+  color: whitesmoke;
+  margin-bottom: 0;
+  border-radius: 15px !important;
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+
+}
+
+
+.btn-json:hover
+{
+  background: #e7bd3e !important;
+    color: #8e5f47 !important;
+}
+
+.rl-des {
+
+  font-family: 'Open Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  color: #8e5f47 !important;
+}
+
+.rl-title-des {
+  color: #8e5f47;
+  padding-bottom: 20px;
+  padding-bottom: 5px;
+  text-transform: uppercase;
+  font-family: 'Hammersmith One', sans-serif;
+  font-weight: 500;
+
+} 
+
+
+
+.register-photo-json {
+  padding: 80px 0;
+}
+
+.form-container{
+
+  height: 80vh;
+  margin-left: 400px !important;
+}
+.register-photo-json .form-container {
+
+  border-radius: 10px;
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(40deg, #EBEF95, #B5CDA3);
+  border: 2px solid #8e5f47;
+ 
+}
+
+.register-photo-json .image-holder-reg {
+  flex: 1;
+  background: url('../../../public/coffee2.png');
+  background-size: contain; /* Change this to 'cover' or '100%' based on your preference */
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: -60px !important;
+}
+
+.register-photo-json  {
+  
+  /* border-right: 2px  solid #8e5f47; */
+  margin-left: -55px !important; /* Adjust this value as needed */
+
+
+
+}
+
+.image-holder-log
+{
+  flex: 1; 
+  background: url('../../../public/coffee3.png');
+  background-size:contain;
+  transform: rotate(330deg);
+}
+
+
+.register-photo-json form {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 40px 60px;
+  color: #505e6c;
+}
+
+.register-photo-json form h1 {
+  font-size: 24px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.register-photo-json form .form-control {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #dfe7f1;
+  border-radius: 0;
+  box-shadow: none;
+  outline: none;
+  color: inherit;
+  text-indent: 0px;
+  height: 40px;
+}
+
+.register-photo-json form .form-check {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.register-photo-json form .btn-json {
+  background: green;
+  border: none;
+  border-radius: 4px;
+  padding: 11px;
+  box-shadow: none;
+  margin-top: 35px;
+  text-shadow: none;
+  outline: none !important;
+}
+
+.register-photo-json form .btn-json:hover,
+.register-photo-json form .btn-json:active {
+  background: green;
+}
+
+.register-photo-json form .btn-json:active {
+  transform: translateY(1px);
+}
+
+.register-photo-json form .already {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  color: #6f7a85;
+  opacity: 0.9;
+  text-decoration: none;
+}

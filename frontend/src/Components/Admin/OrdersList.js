@@ -137,7 +137,7 @@ const OrdersList = () => {
                 },
 
                 {
-                    label: 'No of Items',
+                    label: 'Number of Items',
                     field: 'numofItems',
                     sort: 'asc'
                 },

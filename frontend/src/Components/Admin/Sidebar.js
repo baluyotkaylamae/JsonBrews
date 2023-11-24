@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 
 const Sidebar = () => {
   const [isCategoryOpen, setCategoryOpen] = useState(false);
-  const [isProductOpen, setProductOpen] = useState(false); // State for managing product dropdown
+  const [isProductOpen, setProductOpen] = useState(false); 
   const [isAddonsOpen, setAddonsOpen] = useState(false);
+  const [isAllOrderOpen, setAllOrdersOpen] = useState(false);
+
   const toggleCategory = () => {
     setCategoryOpen(!isCategoryOpen);
   };
@@ -14,6 +16,9 @@ const Sidebar = () => {
 
   const toggleAddons = () => {
     setAddonsOpen(!isAddonsOpen);
+  };
+  const toggleAllOrders = () => {
+    setAllOrdersOpen(!isAllOrderOpen);
   };
 
   return (
@@ -50,6 +55,16 @@ const Sidebar = () => {
             <a href="/addons/create" className="list-group-item list-group-item-action sidebar-dashboard">Create Add-Ons</a>
             <a href="/addons/list" className="list-group-item list-group-item-action sidebar-dashboard">Add-Ons List</a>
           </div>
+
+          <button onClick={toggleAllOrders} className="list-group-item list-group-item-action
+          sidebar-dashboard" data-toggle="collapse" data-target="#productDropdown">
+            ALL ORDERS
+          </button>
+          <div id="addonsDropdown" className={`collapse ${isAllOrderOpen ? 'show' : ''}`}>
+            <a href="/admin/order" className="list-group-item list-group-item-action sidebar-dashboard">LIST OF ORDERS</a>
+           
+          </div>
+
         </div>
       </div>
     </div>

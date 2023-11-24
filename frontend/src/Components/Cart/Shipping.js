@@ -30,7 +30,7 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
                         className="shadow-lg"
                         onSubmit={submitHandler}
                     >
-                        <h1 className="mb-4">Shipping Info</h1>
+                        <h1 className="mb-4">Shipping Information</h1>
                         <div className="form-group">
                             <label htmlFor="address_field">Address</label>
                             <input
@@ -56,7 +56,7 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="phone_field">Phone No</label>
+                            <label htmlFor="phone_field">Phone Number</label>
                             <input
                                 type="phone"
                                 id="phone_field"
@@ -67,7 +67,7 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
                             />
                         </div>
 
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label htmlFor="postal_code_field">Postal Code</label>
                             <input
                                 type="number"
@@ -77,8 +77,21 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
                                 onChange={(e) => setPostalCode(e.target.value)}
                                 required
                             />
-                        </div>
+                        </div> */}
 
+                        <div className="form-group">
+                            <label htmlFor="postal_code_field">Postal Code</label>
+                            <input
+                                type="text"  
+                                id="postal_code_field"
+                                className="form-control"
+                                value={postalCode}
+                                onChange={(e) => setPostalCode(e.target.value)}
+                                inputMode="numeric"  
+                                pattern="[0-9]*" 
+                                required
+                            />
+                        </div>
                         <div className="form-group">
                             <label htmlFor="country_field">Country</label>
                             <select
@@ -102,9 +115,11 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
                             id="shipping_btn"
                             type="submit"
                             className="btn btn-block py-3"
+                            style={{ backgroundColor: '#8B4513', color: 'white', fontFamily: 'Roboto, sans-serif' }}
                         >
-                            CONTINUE
+                            PROCEED
                         </button>
+
                     </form>
                 </div>
             </div>

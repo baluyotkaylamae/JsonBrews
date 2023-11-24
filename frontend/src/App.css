@@ -303,7 +303,7 @@ ul.CTAs a {
 /* loader.css */
 
 /* Add the CSS styles for the loader component here */
-.loader-container {
+/* .loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -322,7 +322,7 @@ ul.CTAs a {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
+} */
 
 /* ProcessOrder.css */
 
@@ -360,5 +360,80 @@ ul.CTAs a {
 .update-status-btn:hover {
   background-color: #0056b3;
 }
+
+/* loader */
+:root {
+  --body-color: #ffffff00;
+  --base-color: #141414;
+  --base-size: 10vw;
+  --coffee: #c86528b2;
+}
+
+h1 {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 3vw;
+  font-weight: 700;
+  color: var(--base-color);
+}
+
+.cup {
+  border-radius: 0.5vw;
+  background: var(--base-color);
+  width: var(--base-size);
+  height: calc(var(--base-size) * 1.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 500;
+}
+
+.cup:before,
+.cup:after {
+  content: "";
+  position: absolute;
+  border-radius: 50% 15% 15% 50%;
+  background: inherit;
+  z-index: -1;
+}
+
+.cup:before {
+  --size: calc(var(--base-size) / 2);
+  width: var(--size);
+  height: var(--size);
+  top: calc(var(--base-size) / 5);
+  left: calc(-1 * var(--base-size) / 2.8);
+}
+
+.cup:after {
+  background: var(--body-color);
+  --size: calc(var(--base-size) / 3);
+  width: calc(var(--size) / 1.3);
+  height: var(--size);
+  top: calc(var(--base-size) / 3.5);
+  left: calc(-1 * var(--base-size) / 3.6);
+}
+
+.coffee {
+  background: var(--coffee);
+  position: absolute;
+  top: 5%;
+  bottom: 0.8vw;
+  left: 0.8vw;
+  right: 0.8vw;
+  animation: coffeeGoesUp infinite forwards 2s linear;
+}
+
+@keyframes coffeeGoesUp {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: 5%;
+  }
+  
+}
+
 
 

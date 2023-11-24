@@ -48,7 +48,7 @@ const ListOrders = () => {
                     sort: 'asc'
                 },
                 {
-                    label: 'Num of Items',
+                    label: 'Number of Items',
                     field: 'numOfItems',
                     sort: 'asc'
                 },

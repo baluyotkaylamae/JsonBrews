@@ -64,7 +64,7 @@ const Login = () => {
                         <div className="col-10 col-lg-5" style={{ paddingBottom: '50px' }}>
                             <form className="shadow-lg Json-Login-Form" onSubmit={submitHandler}
                             >
-                                <h1 className="mb-3" style={{ fontWeight: '500' }}>LOGIN</h1>
+                                <h2 className="mb-3" style={{ fontWeight: '500' }}>LOGIN</h2>
                                 <div className="form-group">
                                     <label htmlFor="email_field">Email</label>
                                     <input

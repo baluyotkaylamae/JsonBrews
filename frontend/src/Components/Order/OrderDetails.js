@@ -26,7 +26,7 @@ const OrderDetails = () => {
                 }
             }
 
-            const { data } = await axios.get(`http://localhost:4001/order/${id}`, config);
+            const { data } = await axios.get(`http://localhost:4001/api/order/${id}`, config);
             setOrder(data.order)
             setLoading(false)
 
@@ -48,7 +48,8 @@ const OrderDetails = () => {
 
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
 
-    const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
+    // const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
+    const isPaid = paymentInfo && paymentInfo.status === 'paid' ? true : false;
 
     return (
         <Fragment>
@@ -61,15 +62,15 @@ const OrderDetails = () => {
 
                             <h1 className="my-5">Order # {order._id}</h1>
 
-                            <h4 className="mb-4">Shipping Info</h4>
-                            <p><b>Name:</b> {user && user.name}</p>
-                            <p><b>Phone:</b> {shippingInfo && shippingInfo.phoneNo}</p>
-                            <p className="mb-4"><b>Address:</b>{shippingDetails}</p>
-                            <p><b>Amount:</b> ${totalPrice}</p>
+                            <h4 className="mb-4">Shipping Information</h4>
+                            <p><b>Customer: </b> {user && user.name}</p>
+                            <p><b>Contact Number: </b> {shippingInfo && shippingInfo.phoneNo}</p>
+                            <p className="mb-4"><b>Address: </b>{shippingDetails}</p>
+                            <p><b>Amount of Item: </b> ₱{totalPrice}</p>
 
                             <hr />
 
-                            <h4 className="my-4">Payment</h4>
+                            <h4 className="my-4">Payment Status</h4>
                             <p className={isPaid ? "greenColor" : "redColor"}><b>{isPaid ? "PAID" : "NOT PAID"}</b></p>
 
 
@@ -77,7 +78,7 @@ const OrderDetails = () => {
                             <p className={order.orderStatus && String(order.orderStatus).includes('Delivered') ? "greenColor" : "redColor"} ><b>{orderStatus}</b></p>
 
 
-                            <h4 className="my-4">Order Items:</h4>
+                            <h4 className="my-4">Ordered Product:</h4>
 
                             <hr />
                             <div className="cart-item my-1">
@@ -88,16 +89,16 @@ const OrderDetails = () => {
                                         </div>
 
                                         <div className="col-5 col-lg-5">
-                                            <Link to={`/products/${item.product}`}>{item.name}</Link>
+                                        <p>Item Name:</p><Link to={`/products/${item.product}`}>{item.name}</Link>
                                         </div>
 
 
                                         <div className="col-4 col-lg-2 mt-4 mt-lg-0">
-                                            <p>${item.price}</p>
+                                            <p>Item Price: ₱{item.price}</p>
                                         </div>
 
                                         <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                                            <p>{item.quantity} Piece(s)</p>
+                                            <p>Quantity: {item.quantity}</p>
                                         </div>
                                     </div>
                                 ))}

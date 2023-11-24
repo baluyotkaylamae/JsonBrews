@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './Home.css'
 import "./Layouts/CurvedBanner.css";
-import Product from './Product/Product';
+
 
 
 const ProductCard = ({ product }) => {
@@ -62,16 +62,18 @@ const Pagination = ({ productsPerPage, totalProducts, currentPage, paginate }) =
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState([]);
+  const [originalProducts, setOriginalProducts] = useState([]);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(4);
 
+
   useEffect(() => {
-    // Fetch products from your API
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:4001/api/products');
         setProducts(response.data.products);
+        setOriginalProducts(response.data.products);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -82,13 +84,12 @@ const Home = () => {
     fetchProducts();
   }, []);
 
-
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  
+
   const CurvedBanner = () => {
     return (
       <div className="curved-banner">
@@ -140,11 +141,15 @@ const Home = () => {
 
   return (
     // <CurvedBanner />
+    
    <div>
+ 
     <CurvedBanner />
 
 
     <div className="container mt-4">
+   
+
         <h1 className="mb-4 product-jsonbrew">Product List</h1>
         {loading ? (
           <p>Loading...</p>
@@ -160,6 +165,7 @@ const Home = () => {
             <Pagination
               productsPerPage={productsPerPage}
               totalProducts={products.length}
+              currentPage={currentPage}
               paginate={paginate}
             />
           </div>

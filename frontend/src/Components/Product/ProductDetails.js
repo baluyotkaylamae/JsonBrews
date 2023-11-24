@@ -280,7 +280,7 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
                       onChange={() => handleAddonChange(addon._id)}
                     />
                     <label className="form-check-label" htmlFor={`addon_${addon._id}`}>
-                      {addon.name} (+₱{addon.price})
+                      {addon.name} (+₱ {addon.price})
                     </label>
                   </div>
                 ))}

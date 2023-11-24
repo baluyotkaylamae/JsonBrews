@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
           <h5 className="card-title" style={{ paddingBottom: "20px", fontWeight: "bold" }}>
             {product.name}
           </h5>
-          <p className="card-text">Price: ₱{product.price}</p>
+          <p className="card-text">Price: ₱ {product.price}</p>
           <p className="card-text">{product.description}</p> 
           <Link to={`/product/${product._id}`} className="btn jsonbrew-button">
             Details
@@ -150,7 +150,7 @@ const Home = () => {
     <div className="container mt-4">
    
 
-        <h1 className="mb-4 product-jsonbrew">Product List</h1>
+        <h2 className="mb-4 product-jsonbrew">Product List</h2>
         {loading ? (
           <p>Loading...</p>
         ) : error ? (

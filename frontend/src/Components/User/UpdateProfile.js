@@ -47,7 +47,7 @@ const UpdateProfile = () => {
         };
 
         try {
-            const { data } = await axios.put(`${process.env.REACT_APP_API}/api/me/update`, userData, config);
+            const { data } = await axios.put(`http://localhost:4001/api/me/update`, userData, config);
             setIsUpdated(data.success);
             setLoading(false);
             toast.success('User updated', {
@@ -55,10 +55,29 @@ const UpdateProfile = () => {
             });
             navigate('/me', { replace: true });
         } catch (error) {
-            console.log(error);
-            toast.error('User not found', {
-                position: toast.POSITION.BOTTOM_RIGHT,
-            });
+            console.error('Error updating profile:', error);
+
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.error('Server response:', error.response.data);
+                console.error('Status code:', error.response.status);
+                toast.error(error.response.data.message || 'User update failed', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('No response received from the server');
+                toast.error('No response received from the server', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error('Error setting up the request:', error.message);
+                toast.error('Error setting up the request', {
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                });
+            }
         }
     };
 

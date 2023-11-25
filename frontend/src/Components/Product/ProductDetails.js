@@ -5,8 +5,12 @@ import axios from 'axios';
 import Loader from '../Layouts/Loader';
 import MetaData from '../Layouts/Metadata';
 import '../Layouts/FH.css';
+import './ProdDet.css';
+
 
 const ProductDetails = ({ addItemToCart, cartItems }) => {
+  const randomStarRating = Math.floor(Math.random() * (5 - 3 + 1)) + 3;
+
   const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState({});
   const [addons, setAddons] = useState([]);
@@ -58,13 +62,13 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
     try {
       const response = await axios.get('http://localhost:4001/api/addons');
       const allAddons = response.data.addons;
-
+  
       const productCategory = product.category || '';
-      const filteredAddons = allAddons.filter(
-        (addon) => addon.category === productCategory
-      );
-
+      const filteredAddons = allAddons.filter((addon) => addon.category === productCategory);
+  
       console.log('Product Category:', productCategory);
+      console.log('Filtered Addons:', filteredAddons); // Add this line
+  
       setAddons(filteredAddons);
     } catch (error) {
       console.error('Error fetching addons:', error);
@@ -132,33 +136,73 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
             </div>
 
             <div className="col-12 col-lg-5 mt-5">
-              <h3>{product.name}</h3>
-              <p id="product_id">Product # {product._id}</p>
+              <h2 className='title-prod-pd'>{product.name}</h2>
+              <i>
+                <p id="product_id" className='card-title-des-pd'>Product No. 
+                  <span
+                    style={{
+                      fontFamily: 'Open Sans, sans-serif',
+                    paddingLeft:'5px'
+                    }
+                  }
+                  >
+                     {product._id}
+                  </span>
+                </p>
+              </i>
 
-              <hr />
-              <p id="product_price"><strong>Amount: ₱{product.price}</strong></p>
-              <hr />
+              
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+ 
+  <div className="star-rating star-rating-des-pd">
+    {Array.from({ length: 5 }, (_, index) => (
+      <span key={index} style={{ marginTop: '-5px' }}>
+        {index + 0.5 < randomStarRating ? "★" : "☆"}
+      </span>
+
+      
+    ))}
+     <p id="product_id" className='card-text-des-pd' 
+     style={{ paddingLeft: '15px' }}>
+      <strong>
+      RATING
+      </strong>
+      </p>
+  </div>
+</div>
+
+                
+
+
+
+              <p id="product_price"
+                className='card-title-des-pd' 
+                style={{ fontSize: '40px',
+                color: '#d64f3a' }}>
+                ₱ {product.price}</p>
+
               {/* <div className="stockCounter d-inline">
                 <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
                 <input type="number" className="form-control count d-inline short-input" value={quantity} readOnly />
                 <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
               </div> */}
               <div className="stockCounter d-inline">
-                <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
+                <span className="btn btn-minus-json" onClick={decreaseQty}>-</span>
                 <input
                   type="text"
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  className="form-control count d-inline short-input"
+                  className="form-control count d-inline short-input 
+                  border-for-input"
                   value={quantity}
                   readOnly
                 />
-                <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
+                <span className="btn btn-add-json" onClick={increaseQty}>+</span>
               </div>
               <button
                 type="button"
                 id="cart_btn"
-                className="btn btn-primary d-inline ml-4"
+                className="btn btn-addtocart"
                 disabled={product.stock === 0}
                 onClick={addToCart}
                 style={{ backgroundColor: '#8B4513', color: 'white', fontFamily: 'Calibiri, sans-serif' }}
@@ -167,15 +211,33 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
               </button>
 
               <hr />
-              <p>Status: <span id="stock_status" className={product.stock > 0 ? 'greenColor' : 'redColor'}>
-                {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
-              </span></p>
+              {/* <p className='card-title-des-pd'>Status:
+
+                <span id="stock_status" className={product.stock > 0 ? 'greenColor' : 'redColor'}>
+                  {product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+                </span>
+                </p> */}
+
+              <p className='card-title-des-pd'>
+                Status:
+                <span
+                  style={{
+                    fontFamily: 'Open Sans, sans-serif',
+                    fontWeight: '700',
+                    color: product.stock > 0 ? 'green' : 'red' // Adjust the color based on your needs
+                  }}
+                  id="stock_status"
+                >
+                  {product.stock > 0 ? ' In Stock' : ' Out of Stock'}
+                </span>
+              </p>
+
 
               <hr />
-              <h4 className="mt-2">Description:</h4>
-              <p>{product.description}</p>
+              <h4 className="mt-2 card-title-des-pd">Description</h4>
+              <p className='card-text-des-pd'>{product.description}</p>
               <hr />
-              <div className="col-12 col-lg-5 mt-3">
+              {/* <div className="col-12 col-lg-5 mt-3">
                 <h4 className="mt-2">Cup Size:</h4>
                 <div className="form-check">
                   <input
@@ -219,9 +281,65 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
                     Large
                   </label>
                 </div>
+              </div> */}
+
+              {/* CUP SIZE */}
+              <div className="col-12 col-lg-5 mt-3">
+                <div className="cup-size-container">
+                  <h4 className="card-title-des-pd">Cup Size</h4>
+                </div>
+
+                <div className="grid">
+                  <label className="card">
+                    <input
+                      type="radio"
+                      className="radio"
+                      name="cupSize"
+                      value="Small"
+                      checked={selectedCupSize === 'Small'}
+                      onChange={() => handleCupSizeChange('Small')}
+                    />
+                    <span className="plan-details">
+                      <span className="plan-type">Small</span>
+                      <span style={{ fontSize: '15px' }}>No Extra Fee</span>
+                    </span>
+                  </label>
+
+                  <label className="card">
+                    <input
+                      type="radio"
+                      className="radio"
+                      name="cupSize"
+                      value="Medium"
+                      checked={selectedCupSize === 'Medium'}
+                      onChange={() => handleCupSizeChange('Medium')}
+                    />
+                    <span className="plan-details">
+                      <span className="plan-type">Medium</span>
+                      <span style={{ fontSize: '15px' }}>Extra &#8369;5</span>
+                    </span>
+                  </label>
+
+                  <label className="card">
+                    <input
+                      type="radio"
+                      className="radio"
+                      name="cupSize"
+                      value="Large"
+                      checked={selectedCupSize === 'Large'}
+                      onChange={() => handleCupSizeChange('Large')}
+                    />
+                    <span className="plan-details">
+                      <span className="plan-type">Large</span>
+                      <span style={{ fontSize: '15px' }}>Extra &#8369;10</span>
+
+                    </span>
+                  </label>
+                </div>
               </div>
 
-              <div className="col-12 col-lg-5 mt-3">
+
+              {/* <div className="col-12 col-lg-5 mt-3">
                 <h4 className="mt-2">Sugar Level:</h4>
                 <div className="form-check">
                   <input
@@ -265,10 +383,64 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
                     High
                   </label>
                 </div>
+              </div> */}
+
+
+              {/* SUGAR LEVEL */}
+              <div className="col-12 col-lg-5 mt-3">
+                <div className="cup-size-container">
+                  <h4 className="card-title-des-pd" style={{ paddingTop: '10px' }}>Sugar Level</h4>
+                </div>
+                <div className="grid">
+                  <label className="card">
+                    <input
+                      type="radio"
+                      className="radio"
+                      name="sugarLevel"
+                      value="Low"
+                      checked={selectedSugarLevel === 'Low'}
+                      onChange={() => handleSugarLevelChange('Low')}
+                    />
+                    <span className="plan-details">
+                      <span className="plan-type">Low</span>
+
+                    </span>
+                  </label>
+
+                  <label className="card">
+                    <input
+                      type="radio"
+                      className="radio"
+                      name="sugarLevel"
+                      value="Medium"
+                      checked={selectedSugarLevel === 'Medium'}
+                      onChange={() => handleSugarLevelChange('Medium')}
+                    />
+                    <span className="plan-details">
+                      <span className="plan-type">Medium</span>
+
+                    </span>
+                  </label>
+
+                  <label className="card">
+                    <input
+                      type="radio"
+                      className="radio"
+                      name="sugarLevel"
+                      value="High"
+                      checked={selectedSugarLevel === 'High'}
+                      onChange={() => handleSugarLevelChange('High')}
+                    />
+                    <span className="plan-details">
+                      <span className="plan-type">High</span>
+
+                    </span>
+                  </label>
+                </div>
               </div>
 
-              <hr />
-              <h4 className="mt-2">Addons:</h4>
+
+              {/* <h4 className="mt-2">Addons:</h4>
               <div className="form-check">
                 {addons.map((addon) => (
                   <div key={addon._id} className="form-check">
@@ -284,8 +456,36 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
                     </label>
                   </div>
                 ))}
+              </div> */}
+
+
+              <div className="checkbox-container">
+                <h4 className="mt-2 card-title-des-pd" style={{ paddingTop: '20px' }}>Add-Ons:</h4>
+                {addons.map((addon) => (
+                  <div key={addon._id} className={`checkbox-button ${selectedAddons.includes(addon._id) ? 'checked' : ''}`}>
+                    <input
+                      type="checkbox"
+                      className="form-check-input visually-hidden"
+                      id={`addon_${addon._id}`}
+                      checked={selectedAddons.includes(addon._id)}
+                      onChange={() => handleAddonChange(addon._id)}
+                    />
+                    <label className="checkbox-label" htmlFor={`addon_${addon._id}`}>
+                      <span className="checkbox-icon"></span>
+                      {addon.name}  + ₱ {addon.price}
+                    </label>
+                  </div>
+                ))}
               </div>
+
+
+
             </div>
+          </div>
+
+          <div style={{ paddingTop: '100px' }}>
+
+          
           </div>
         </Fragment>
       )}

@@ -1,0 +1,355 @@
+/* Add the following styles to your existing CSS file or create a new one */
+
+.title-prod-pd {
+    font-family: 'Hammersmith One', sans-serif;
+    color: #8e5f47;
+   text-transform: uppercase;
+
+
+}
+
+.form-check-json {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    display: inline-block;
+}
+
+.form-check-label-json {
+    margin-left: 8px;
+}
+
+:root {
+    --card-line-height: 1.2em;
+    --card-padding: 1em;
+    --card-radius: 0.5em;
+    --color-green: #558309;
+    --color-gray: #e2ebf6;
+    --color-dark-gray: #c4d1e1;
+    --color-brown: #8e5f47;
+    --radio-border-width: 2px;
+    --radio-size: 1em;
+}
+
+
+
+.grid {
+    display: flex;
+    gap: 10px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    position: relative;
+    flex: 1;
+    min-width: 150px;
+
+    &:hover {
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.radio {
+    font-size: inherit;
+    margin: 0;
+    position: absolute;
+    right: calc(var(--card-padding) + var(--radio-border-width));
+    top: calc(var(--card-padding) + var(--radio-border-width));
+}
+
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+    .radio {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: #fff;
+        border: var(--radio-border-width) solid var(--color-brown);
+        border-radius: 50%;
+        cursor: pointer;
+        height: var(--radio-size);
+        outline: none;
+        transition: background 0.2s ease-out, border-color 0.2s ease-out;
+        width: var(--radio-size);
+
+        &::after {
+            border: var(--radio-border-width) solid #fff;
+            border-top: 0;
+            border-left: 0;
+            content: '';
+            display: block;
+            height: 0.6em; /* Adjust the height of the check icon */
+            left: 27%; /* Adjust the left position for better alignment */
+            position: absolute;
+            top: 50%;
+            transform: rotate(45deg) translate(-50%, -50%);
+            width: 0.3em; /* Adjust the width of the check icon */
+        }
+
+        &:checked {
+            background: var(--color-green);
+            border-color: var(--color-green);
+        }
+    }
+
+    .card:hover .radio {
+        border-color: var(--color-dark-gray);
+
+        &:checked {
+            border-color: var(--color-green);
+        }
+    }
+}
+
+.card:hover .plan-details {
+    border-color: var(--color-dark-gray);
+}
+
+.radio:checked ~ .plan-details {
+    border-color: var(--color-green);
+}
+
+.radio:focus ~ .plan-details {
+    box-shadow: 0 0 0 2px var(--color-dark-gray);
+}
+
+.radio:disabled ~ .plan-details {
+    color: var(--color-dark-gray);
+    cursor: default;
+}
+
+.radio:disabled ~ .plan-details .plan-type {
+    color: var(--color-dark-gray);
+}
+
+.card:hover .radio:disabled ~ .plan-details {
+    border-color: var(--color-gray);
+    box-shadow: none;
+}
+
+.card:hover .radio:disabled {
+    border-color: var(--color-gray);
+}
+
+.plan-details {
+    border: var(--radio-border-width) solid var(--color-brown);
+    border-radius: var(--card-radius);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    transition: border-color 0.2s ease-out;
+    width: 100%;
+    font-family: 'Open-sans', sans-serif;
+    color: #8e5f47;
+}
+
+.plan-type {
+    font-size: 1rem;
+}
+
+.plan-cost {
+    font-size: 1.2rem;
+}
+
+.slash {
+    font-weight: normal;
+}
+
+.plan-cycle {
+    font-size: 2rem;
+    font-variant: none;
+    border-bottom: none;
+    cursor: inherit;
+    text-decoration: none;
+}
+
+.hidden-visually {
+    border: 0;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+
+.cup-size-container {
+    margin: 0; /* Ensure there's no margin */
+    padding: 0; /* Ensure there's no padding */
+  }
+  
+  .card-title-des-pd {
+    text-transform: capitalize;
+    font-family: 'Hammersmith One', sans-serif;
+    font-weight: 500;
+    color: #8e5f47;
+    margin-left: 0px !important; /* Ensure there's no margin */
+  }
+
+  .card-text-des-pd
+  {
+    font-size: 20px;
+    font-family: 'Open Sans', sans-serif;
+    color: #8e5f47;
+    text-transform: capitalize;
+  }
+
+
+  /* CHECKBOX STYLES */
+  .checkbox-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Adjust the gap between checkboxes */
+
+}
+
+.checkbox-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 40px; /* Adjust the height of the checkbox button */
+    border: 2px solid #8e5f47;
+    border-radius: 10px;
+    padding: 5px; /* Adjust the padding of the checkbox button */
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+
+    &.checked {
+        background-color: #d29e03;
+         
+    }
+
+    &:hover {
+        background-color: #8e5f47;
+        
+     
+    }
+}
+
+.checkbox-icon {
+    width: 16px; /* Adjust the width of the checkbox icon */
+    height: 16px; /* Adjust the height of the checkbox icon */
+    /* border: 2px solid #ddd; */
+    border-radius: 3px;
+    margin-right: 5px; /* Adjust the spacing between the checkbox icon and the label */
+}
+
+.checkbox-icon::before {
+    /* content: '\2713'; */
+    display: block;
+    color: #fff;
+    font-size: 12px; /* Adjust the size of the checkmark */
+    line-height: 1;
+    text-align: center;
+    margin-top: 1px; /* Adjust the vertical alignment of the checkmark */
+}
+
+.checkbox-label {
+    flex: 1;
+    font-size: 18px; /* Adjust the font size of the label */
+    text-align: center;
+    color: #8e5f47;
+    font-family: 'Open-sans', sans-serif;
+    padding-bottom: auto;
+}
+
+.checkbox-button.checked .checkbox-label {
+    color: #ffffff; /* Change label color to white when checked */
+}
+
+.checkbox-label:hover {
+    color: #fffdfc; /* Change the text color on hover */
+ 
+}
+
+/* ADDONS SPAN */
+.card-title-des-pd span {
+    /* Reset or override styles for the span within card-title-des-pd */
+    color: inherit; /* Inherit the color property from the parent */
+    /* Add any other styles you want here */
+}
+
+/* Your existing styles for greenColor and redColor classes */
+.greenColor {
+    color: green;
+}
+
+.redColor {
+    color: red;
+}
+
+.star-rating-des-pd {
+    color: #e7bd3e;
+    font-size: 25px;
+    align-self: center;
+    /* Add some bottom margin for spacing */
+    display: flex;
+    justify-content: left;
+}
+
+
+/* INCREMENTATION */
+
+.btn-minus-json
+{
+    background-color: rgb(230, 59, 59);
+    color: #fff;
+    font-size: 25px;
+    font-family: 'Hammersmith One', sans-serif;
+    border: 2px solid #661919;
+
+
+}
+
+.btn-add-json
+{
+    background-color: rgb(59, 85, 230);
+    color: #fff;
+    font-size: 25px;
+    margin-right: 25px;
+    font-family: 'Hammersmith One', sans-serif;
+    border: 2px solid #191966;
+
+
+}
+
+.border-for-input
+{
+    border: 3px solid #8e5f47;
+    border-color: #8e5f47;
+    font-family: 'Open Sans', sans-serif;
+    color: #8e5f47;
+    font-weight: 700;
+
+}
+
+.btn-add-json:hover, .btn-minus-json:hover
+{
+    border: 2px solid #8e5f47;
+    border-color: #8e5f47;
+    background-color: #e7bd3e;
+}
+
+.btn-addtocart
+{
+    text-transform: uppercase;
+    border-radius: 40px !important;
+    background-color:#8e5f47;
+    border: 3px solid #664433;
+    border-color: #664433;
+    color: #fff;
+    width: 300px ;
+    height: 60px ;
+}
+
+.btn-addtocart:hover
+{
+    border: 2px solid #8e5f47;
+    border-color: #8e5f47;
+    background-color: #e7bd3e;
+    color: #8e5f47;
+}

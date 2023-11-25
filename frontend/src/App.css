@@ -59,10 +59,12 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
+  margin: 0;
   font-weight: 700;
-  /* background-image: url('/boba.png'); Corrected: use url() */
+  padding: 1px;
+  background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
+  background: linear-gradient(to right, #eae4cf, #ebb585);
+  height: 60vh; /* Cover the entire viewport height */
 }
 .wrapper form {
   padding: 2.5rem 3rem;

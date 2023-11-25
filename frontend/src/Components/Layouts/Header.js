@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -76,6 +76,7 @@ const Header = ({ cartItems }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [user, setUser] = useState(getUser()); 
   const userAuthenticated = !!user; 
+  const navigate = useNavigate();
 
   useEffect(() => {
     setUser(getUser());
@@ -99,9 +100,12 @@ const Header = ({ cartItems }) => {
   };
 
   const handleLogout = () => {
-
+    // Call the logout function to clear user data
     logout();
     setUser(null);
+  
+    // Redirect to the homepage
+    window.location.href = '/';
   };
 
   return (

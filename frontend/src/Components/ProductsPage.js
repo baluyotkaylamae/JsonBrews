@@ -22,22 +22,24 @@ const ProductCard = ({ product, category }) => {
                         {product.name}
                     </h6>
                     <div className="star-rating star-rating-des">
-                        {Array.from({ length: randomStarRating }, (_, index) => (
-                            <span key={index}>&#9733;</span>
+                        {Array.from({ length: 5 }, (_, index) => (
+                            <span key={index}>
+                                {index + 0.5 < randomStarRating ? "★" : "☆"}
+                            </span>
                         ))}
                     </div>
-                     <p className="card-text card-des">{category}</p>
+                    <p className="card-text card-des">{category}</p>
                     <p className="card-text card-price-des">₱ {product.price}</p>
-               
-                    
+
+
                     {/* STAR RATING RANDOMLY GENERATED */}
-                
-                <div className="button-container">
-                <Link to={`/product/${product._id}`} className="btn json-button">
-                        Details
-                    </Link>
-                </div>
-                   
+
+                    <div className="button-container">
+                        <Link to={`/product/${product._id}`} className="btn json-button">
+                            Details
+                        </Link>
+                    </div>
+
                 </div>
             </div>
         </div>

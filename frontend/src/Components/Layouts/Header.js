@@ -185,7 +185,7 @@ const Header = ({ cartItems }) => {
             LOOOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Link to="/Homee" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               <Button sx={{ my: 2, color: 'white', display: 'block' }}>Home</Button>
             </Link>
             <Link to="/ProductsPage" style={{ textDecoration: 'none', color: 'inherit' }}>

@@ -1,34 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import './Home.css'
+import './Home.css';
 import "./Layouts/CurvedBanner.css";
+import './ProductPage.css';
 
 
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, category }) => {
+  const randomStarRating = Math.floor(Math.random() * (5 - 3 + 1)) + 3;
+
+
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <div className="card product-cart-text" style={{ height: "600px" }}>
+      <div className="card product-cart-text prodcard-JSON">
         <img
           src={product.images[0].url}
           alt={product.name}
           className="card-img-top product-image"
         />
-        <div className="card-body">
-          <h5 className="card-title" style={{ paddingBottom: "20px", fontWeight: "bold" }}>
+        <div className="card-body card-des">
+          <h5 className="card-title card-title-des">
             {product.name}
           </h5>
-          <p className="card-text">Price: ₱ {product.price}</p>
-          <p className="card-text">{product.description}</p> 
-          <Link to={`/product/${product._id}`} className="btn jsonbrew-button">
-            Details
-          </Link>
+          <div className="star-rating star-rating-des">
+            {Array.from({ length: 5 }, (_, index) => (
+              <span key={index}>
+                {index + 0.5 < randomStarRating ? "★" : "☆"}
+              </span>
+            ))}
+          </div>
+
+        
+          <p className="card-text card-price-des">₱ {product.price}</p>
+
+
+          <div className="button-container">
+            <Link to={`/product/${product._id}`} className="btn json-button">
+              Details
+            </Link>
+          </div>
+
         </div>
       </div>
     </div>
   );
 };
+
+
+
 const Pagination = ({ productsPerPage, totalProducts, currentPage, paginate }) => {
   const pageNumbers = Math.ceil(totalProducts / productsPerPage);
 
@@ -68,12 +88,15 @@ const Home = () => {
   const [productsPerPage] = useState(4);
 
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get('http://localhost:4001/api/products');
         setProducts(response.data.products);
         setOriginalProducts(response.data.products);
+
+                
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -141,14 +164,14 @@ const Home = () => {
 
   return (
     // <CurvedBanner />
-    
-   <div>
- 
-    <CurvedBanner />
+
+    <div>
+
+      <CurvedBanner />
 
 
-    <div className="container mt-4">
-   
+      <div className="container mt-4">
+
 
         <h2 className="mb-4 product-jsonbrew">Product List</h2>
         {loading ? (

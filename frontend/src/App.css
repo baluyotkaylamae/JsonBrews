@@ -55,35 +55,57 @@ body {
 }
 
 /* Login & Register */
-
 .wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 5rem;
+  margin-bottom: 5rem;
   font-weight: 700;
   /* background-image: url('/boba.png'); Corrected: use url() */
-
- 
 }
-
 .wrapper form {
   padding: 2.5rem 3rem;
+  padding-top: 20px;
   background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background */
 }
-
 .wrapper form .btn {
   background-color: #fa9c23;
   border-color: #fa9c23;
   color: white;
   margin-top: 2.5rem;
 }
-
 .wrapper form a {
   font-size: 0.9rem;
   color: grey;
 }
+.update-profile-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  font-weight: 700;
+  padding: 1px;
+  background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
+  background: linear-gradient(to right, #eae4cf, #ebb585);
+  height: 60vh; /* Cover the entire viewport height */
+}
+.update-profile-bg form {
+  padding: 2.5rem 3rem;
+  padding-top: 20px;
+  background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background */
+}
+.update-profile-bg form .btn {
+  background-color: #fa9c23;
+  border-color: #fa9c23;
+  color: white;
+  margin-top: 2.5rem;
+}
 
+.update-profile-bg form a {
+  font-size: 0.9rem;
+  color: grey;
+}
 /* Avatar */
 .profile {
   margin: 50px auto;

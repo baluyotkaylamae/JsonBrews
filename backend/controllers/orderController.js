@@ -20,6 +20,7 @@ exports.newOrder = async (req, res, next) => {
 
     try {
 
+
         const order = await Order.create({
             orderItems,
             shippingInfo,
@@ -42,6 +43,7 @@ exports.newOrder = async (req, res, next) => {
         console.error('Error creating order:', error);
 
         if (error.name === 'ValidationError') {
+
 
             res.status(400).json({
                 success: false,
@@ -153,7 +155,32 @@ async function generateOrderPDF(order) {
             const productText = ` ${item.name} (₱${item.price.toFixed(2)} each) x ${item.quantity}`;
             doc.text(productText, { align: 'center' });
         });
+        doc.fontSize(12).text('1633, Taguig City, Metro Manila, Philippines', { align: 'center' });
         doc.moveDown();
+
+        doc.fontSize(15).text('------------------------------------------------------------------', { align: 'center' });
+        doc.fontSize(15).text('CASH RECEIPT', { align: 'center' });
+        doc.fontSize(15).text('------------------------------------------------------------------', { align: 'center' });
+
+
+        doc.fontSize(14).text('Ordered Products:', { align: 'center' });
+        order.orderItems.forEach(item => {
+            const productText = ` ${item.name} (₱${item.price.toFixed(2)} each) x ${item.quantity}`;
+            doc.text(productText, { align: 'center' });
+        });
+        doc.moveDown();
+
+        doc.fontSize(12).text(`Order ID:`, { align: 'left' });
+        doc.text(`${order._id}`, { align: 'right' });
+
+        doc.text(`Order Date:`, { align: 'left' });
+        doc.text(`${order.createdAt}`, { align: 'right' });
+
+        doc.text(`Delivery Date:`, { align: 'left' });
+        doc.text(`${new Date(order.deliveredAt).toLocaleDateString()}`, { align: 'right' });
+
+        doc.text(`Order Total:`, { align: 'left' });
+        doc.text(`₱${order.totalPrice.toFixed(2)}`, { align: 'right' });
 
         doc.fontSize(12).text(`Order ID:`, { align: 'left' });
         doc.text(`${order._id}`, { align: 'right' });
@@ -171,9 +198,16 @@ async function generateOrderPDF(order) {
 
         doc.fontSize(15).text('----------------------------------------------------', { align: 'center' });
         doc.fontSize(14).text('Customer Information:', { align: 'center' });
+        doc.fontSize(15).text('----------------------------------------------------', { align: 'center' });
+        doc.fontSize(14).text('Customer Information:', { align: 'center' });
         try {
             const user = await User.findById(order.user);
             if (user) {
+                doc.fontSize(12).text(`Name:`, { align: 'left' });
+                doc.text(`${user.name}`, { align: 'right' });
+
+                doc.text(`Email:`, { align: 'left' });
+                doc.text(`${user.email}`, { align: 'right' });
                 doc.fontSize(12).text(`Name:`, { align: 'left' });
                 doc.text(`${user.name}`, { align: 'right' });
 
@@ -189,9 +223,13 @@ async function generateOrderPDF(order) {
         const addressText = `Address: ${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.postalCode}, ${order.shippingInfo.country}`;
         doc.text(addressText, { align: 'center' });
         doc.fontSize(15).text('----------------------------------------------------', { align: 'center' });
+        const addressText = `Address: ${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.postalCode}, ${order.shippingInfo.country}`;
+        doc.text(addressText, { align: 'center' });
+        doc.fontSize(15).text('----------------------------------------------------', { align: 'center' });
         doc.moveDown();
 
         doc.fontSize(16).text('Thank you for choosing JSON Brews! Always at your service.', { align: 'center' });
+
 
 
         const buffers = [];
@@ -206,6 +244,7 @@ async function generateOrderPDF(order) {
 }
 
 async function sendEmailToCustomer(order) {
+
 
     const transporter = nodemailer.createTransport({
         host: 'sandbox.smtp.mailtrap.io',
@@ -262,7 +301,9 @@ async function updateStock(id, quantity) {
         await product.save({ validateBeforeSave: false });
     } catch (error) {
 
+
         console.error(`Error updating stock: ${error.message}`);
+        throw error;
         throw error;
     }
 }
@@ -273,6 +314,7 @@ exports.deleteOrder = async (req, res, next) => {
 
     if (!order) {
         return res.status(404).json({ message: `No Order found with this ID` })
+
 
     }
     await order.remove()
@@ -290,10 +332,14 @@ function sendEmailToAdmin(order) {
         auth: {
             user: '18a2a26eef4f45',
             pass: '865719decb6b03'
+            user: '18a2a26eef4f45',
+            pass: '865719decb6b03'
         }
     });
 
     const mailOptions = {
+        from: order.user.email,
+        to: 'beaclarisse.elumba@tup.edu.ph',
         from: order.user.email,
         to: 'beaclarisse.elumba@tup.edu.ph',
         subject: 'New Order from Customer',

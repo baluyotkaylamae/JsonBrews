@@ -16,8 +16,8 @@ export default function MonthlySalesChart() {
                     'Authorization': `Bearer ${getToken()}`
                 }
             }
-
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/admin/sales-per-month`, config)
+            const { data } = await axios.get(`http://localhost:4001/api/admin/sales-per-month`, config);
+            // const { data } = await axios.get(`${process.env.REACT_APP_API}/api/admin/sales-per-month`, config)
             setSales(data.salesPerMonth)
             setLoading(false)
 

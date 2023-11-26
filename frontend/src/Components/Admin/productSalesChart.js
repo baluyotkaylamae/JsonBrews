@@ -52,8 +52,8 @@ export default function ProductSalesChart({ data }) {
                     'Authorization': `Bearer ${getToken()}`
                 }
             }
-
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/admin/product-sales`, config)
+            const { data } = await axios.get(`http://localhost:4001/api/admin/product-sales`, config);
+            // const { data } = await axios.get(`${process.env.REACT_APP_API}/api/admin/product-sales`, config)
             setSales(data.totalPercentage)
 
         } catch (error) {
@@ -64,7 +64,6 @@ export default function ProductSalesChart({ data }) {
     useEffect(() => {
         productSales()
     }, [])
-
 
     return (
         <ResponsiveContainer width="90%" height={1000}>
@@ -90,7 +89,5 @@ export default function ProductSalesChart({ data }) {
                 <Legend layout="vertical" verticalAlign="top" align="right" />
             </PieChart>
         </ResponsiveContainer>
-
-
     );
 }

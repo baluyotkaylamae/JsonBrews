@@ -13,18 +13,41 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Layouts/FH.css';
 
+import MonthlySalesChart from './MonthlySalesChart';
+import ProductSalesChart from './ProductSalesChart';
+import UserSalesChart from './UserSalesChart';
 
 const Dashboard = () => {
+
     const [categories, setCategories] = useState([]);
     const [product, setProducts] = useState([]);
+    const [error, setError] = useState([]);
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [categoryNames, setCategoryNames] = useState([]);
     const [productsCount, setProductsCount] = useState({});
     const [userRegistrationDates, setUserRegistrationDates] = useState({});
     const [orderStatusCounts, setOrderStatusCounts] = useState({});
-    const [addons, setAddons] = useState([]);
 
+    const getAdminProducts = async () => {
+        try {
+
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${getToken()}`
+                }
+            }
+
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/admin/products`, config)
+            console.log(data)
+            setProducts(data.products)
+            setLoading(false)
+        } catch (error) {
+            setError(error.response.data.message)
+
+        }
+    }
 
     const getCategories = async () => {
         try {
@@ -136,6 +159,7 @@ const Dashboard = () => {
         getCategories();
         getUsers();
         getProducts();
+        getAdminProducts()
     }, []);
 
     useEffect(() => {
@@ -205,23 +229,6 @@ const Dashboard = () => {
                                             </Link>
                                         </div>
                                     </div>
-
-                                    {/* <div className="col-xl-4 col-sm-6 mb-3">
-                                        <div className="card text-white bg-info o-hidden h-100 dashboard-product">
-                                            <div className="card-body">
-                                                <div className="text-center card-font-size">Addons<br /> <b>{addons.length}</b></div>
-                                            </div>
-
-                                            <Link className="card-footer text-white clearfix small z-1" to="/addons/list">
-                                                <span className="float-left">View Details</span>
-                                                <span className="float-right">
-                                                    <i className="fa fa-angle-right"></i>
-                                                </span>
-                                            </Link>
-                                        </div>
-                                    </div> */}
-
-
 
                                     {/* Add ApexCharts component */}
                                     <div className="col-xl-12">
@@ -296,6 +303,28 @@ const Dashboard = () => {
                                                     type="bar"
                                                     width="500"
                                                 />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-12">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                {/* Use MonthlySalesChart component here */}
+                                                <MonthlySalesChart />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-12">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <ProductSalesChart />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-12">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <UserSalesChart />
                                             </div>
                                         </div>
                                     </div>

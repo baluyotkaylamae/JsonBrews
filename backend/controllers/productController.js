@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const Order = require('../models/order')
 const mongoose = require('mongoose');
 const APIFeatures = require('../utils/apiFeatures');
 const cloudinary = require('cloudinary')
@@ -293,7 +294,63 @@ exports.getSingleProduct = async (req, res, next) => {
 
 // }
 
+exports.productSales = async (req, res, next) => {
+    const totalSales = await Order.aggregate([
+        {
+            $group: {
+                _id: null,
+                total: { $sum: "$itemsPrice" }
 
+            },
+            
+        },
+    ])
+    console.log(totalSales)
+    const sales = await Order.aggregate([
+        { $project: { _id: 0, "orderItems": 1, totalPrice: 1 } },
+         { $unwind: "$orderItems" },
+        {
+            $group: {
+                _id: { product: "$orderItems.name" },
+                total: { $sum: { $multiply: ["$orderItems.price", "$orderItems.quantity"] } }
+            },
+        },
+    ])
+	console.log("sales", sales)
+    
+    if (!totalSales) {
+		return res.status(404).json({
+			message: 'error sales'
+		})
+       
+    }
+    if (!sales) {
+		return res.status(404).json({
+			message: 'error sales'
+		})
+      
+    }
+    
+    let totalPercentage = {}
+    totalPercentage = sales.map(item => {
+         
+        // console.log( ((item.total/totalSales[0].total) * 100).toFixed(2))
+        percent = Number (((item.total/totalSales[0].total) * 100).toFixed(2))
+        total =  {
+            name: item._id.product,
+            percent
+        }
+        return total
+    }) 
+    // return console.log(totalPercentage)
+    res.status(200).json({
+        success: true,
+        totalPercentage,
+        sales,
+        totalSales
+    })
+
+}
 
 
 

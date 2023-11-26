@@ -159,6 +159,7 @@ body {
   border-radius: 30px;
   border: 15px solid rgba(#f6f2ff, 0.7);
   object-fit: cover;
+  image-rendering: auto;
 }
 .username {
   margin-top: 0px;

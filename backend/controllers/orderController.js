@@ -7,45 +7,6 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
 
-
-// exports.newOrder = async (req, res, next) => {
-//     const {
-//         orderItems,
-//         shippingInfo,
-//         itemsPrice,
-//         taxPrice,
-//         shippingPrice,
-//         totalPrice,
-//         paymentInfo
-
-//     } = req.body;
-
-//     const order = await Order.create({
-//         orderItems,
-//         shippingInfo,
-//         itemsPrice,
-//         taxPrice,
-//         shippingPrice,
-//         totalPrice,
-//         paymentInfo,
-//         paidAt: Date.now(),
-//         user: req.user._id
-//     });
-
-//     sendEmailToAdmin(order);
-
-//     res.status(200).json({
-//         success: true,
-//         order
-//     });
-// };
-
-//     res.status(200).json({
-//         success: true,
-//         order
-//     })
-// }
-
 exports.newOrder = async (req, res, next) => {
     const {
         orderItems,
@@ -135,141 +96,6 @@ exports.allOrders = async (req, res, next) => {
         orders
     })
 }
-
-// exports.updateOrder = async (req, res, next) => {
-//     const order = await Order.findById(req.params.id)
-
-//     if (order.orderStatus === 'Delivered') {
-//         return res.status(404).json({ message: `You have already delivered this order` })
-
-//     }
-
-//     order.orderItems.forEach(async item => {
-//         await updateStock(item.product, item.quantity)
-//     })
-
-//     order.orderStatus = req.body.status
-//     order.deliveredAt = Date.now()
-//     await order.save()
-
-//     res.status(200).json({
-//         success: true,
-//     })
-// }
-
-
-// exports.updateOrder = async (req, res, next) => {
-//     try {
-//         const order = await Order.findById(req.params.id)
-
-//         if (!order) {
-//             return res.status(404).json({ message: `No Order found with this ID` })
-//         }
-
-//         if (order.orderStatus === 'Delivered') {
-//             return res.status(400).json({ message: `This order has already been delivered` })
-//         }
-
-//         order.orderItems.forEach(async item => {
-//             await updateStock(item.product, item.quantity)
-//         })
-
-//         order.orderStatus = req.body.status
-//         order.deliveredAt = Date.now()
-//         await order.save()
-
-//         // Send email to customer
-//         if (order.orderStatus === 'Delivered') {
-//             sendEmailToCustomer(order);
-//         }
-
-//         sendEmailToAdmin(order);
-
-//         res.status(200).json({
-//             success: true,
-//             message: `Order delivered. The customer will take the order.`,
-//         });
-//     } catch (error) {
-//         console.error('Error updating order:', error);
-//         res.status(500).json({
-//             success: false,
-//             message: `Failed to update order. ${error.message || 'Unknown error'}`
-//         });
-//     }
-// };
-
-// function sendEmailToCustomer(order) {
-//     const transporter = nodemailer.createTransport({
-//         host: 'sandbox.smtp.mailtrap.io',
-//         port: 2525,
-//         auth: {
-//             user: '18a2a26eef4f45',
-//             pass: '865719decb6b03'
-//         }
-//     });
-
-//     const mailOptions = {
-//         from: 'beaclarisse.elumba@tup.edu.ph',
-//         to: order.user.email,
-//         subject: 'Your Order has been Delivered',
-//         text: `Your order with ID ${order._id} has been delivered. Thank you for shopping with us!`
-//     };
-
-//     transporter.sendMail(mailOptions, function (error, info) {
-//         if (error) {
-//             console.error('Error sending email to customer:', error);
-//         } else {
-//             console.log('Email sent to customer:', info.response);
-//         }
-//     });
-// }
-
-
-
-// exports.updateOrder = async (req, res, next) => {
-//     try {
-//         const order = await Order.findById(req.params.id)
-
-//         if (!order) {
-//             return res.status(404).json({ message: `No Order found with this ID` })
-//         }
-
-//         if (order.orderStatus === 'Delivered') {
-//             return res.status(400).json({ message: `This order has already been delivered` })
-//         }
-
-//         order.orderItems.forEach(async item => {
-//             await updateStock(item.product, item.quantity)
-//         })
-
-//         order.orderStatus = req.body.status
-//         order.deliveredAt = Date.now()
-//         await order.save()
-
-//         if (order.orderStatus === 'Delivered') {
-            
-//             sendEmailToCustomer(order);
-//         }
-
-//         sendEmailToAdmin(order);
-
-//         res.status(200).json({
-//             success: true,
-//             message: `Order delivered. The customer will take the order.`,
-//         });
-//     } catch (error) {
-//         console.error('Error updating order:', error);
-//         res.status(500).json({
-//             success: false,
-//             message: `Failed to update order. ${error.message || 'Unknown error'}`
-//         });
-//     }
-// };
-
-
-
-
-
 exports.updateOrder = async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id);
@@ -461,4 +287,156 @@ function sendEmailToAdmin(order) {
             console.log('Email sent:', info.response);
         }
     });
+}
+
+exports.totalOrders = async (req, res, next) => {
+    const totalOrders = await Order.aggregate([
+        {
+            $group: {
+                _id: null,
+                count: { $sum: 1 }
+            }
+        }
+    ])
+    if (!totalOrders) {
+        return res.status(404).json({
+            message: 'error total orders',
+        })
+    }
+    res.status(200).json({
+        success: true,
+        totalOrders
+    })
+
+}
+
+exports.totalSales = async (req, res, next) => {
+    const totalSales = await Order.aggregate([
+        {
+            $group: {
+                _id: null,
+                totalSales: { $sum: "$totalPrice" }
+            }
+        }
+    ])
+    if (!totalSales) {
+        return res.status(404).json({
+            message: 'error total sales',
+        })
+    }
+    res.status(200).json({
+        success: true,
+        totalSales
+    })
+}
+
+exports.customerSales = async (req, res, next) => {
+    const customerSales = await Order.aggregate([
+        {
+            $lookup: {
+                from: 'users',
+                localField: 'user',
+                foreignField: '_id',
+                as: 'userDetails'
+            },
+        },
+        // {
+        //     $group: {
+        //         _id: "$user",
+        //         total: { $sum: "$totalPrice" },
+        //     }
+        // },
+
+        { $unwind: "$userDetails" },
+        // {
+        //     $group: {
+        //         _id: "$user",
+        //         total: { $sum: "$totalPrice" },
+        //         doc: { "$first": "$$ROOT" },
+
+        //     }
+        // },
+
+        // {
+        //     $replaceRoot: {
+        //         newRoot: { $mergeObjects: [{ total: '$total' }, '$doc'] },
+        //     },
+        // },
+        {
+            $group: {
+                _id: "$userDetails.name",
+                total: { $sum: "$totalPrice" }
+            }
+        },
+        // {
+        //     $project: {
+        //         _id: 0,
+        //         "userDetails.name": 1,
+        //         total: 1,
+        //     }
+        // },
+        { $sort: { total: -1 } },
+
+    ])
+    console.log(customerSales)
+    if (!customerSales) {
+        return res.status(404).json({
+            message: 'error customer sales',
+        })
+    }
+    // return console.log(customerSales)
+    res.status(200).json({
+        success: true,
+        customerSales
+    })
+
+}
+exports.salesPerMonth = async (req, res, next) => {
+    const salesPerMonth = await Order.aggregate([
+        {
+            $group: {
+                // _id: {month: { $month: "$paidAt" } },
+                _id: {
+                    year: { $year: "$paidAt" },
+                    month: { $month: "$paidAt" }
+                },
+                total: { $sum: "$totalPrice" },
+            },
+        },
+
+        {
+            $addFields: {
+                month: {
+                    $let: {
+                        vars: {
+                            monthsInString: [, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', ' Sept', 'Oct', 'Nov', 'Dec']
+                        },
+                        in: {
+                            $arrayElemAt: ['$$monthsInString', "$_id.month"]
+                        }
+                    }
+                }
+            }
+        },
+        { $sort: { "_id.month": 1 } },
+        {
+            $project: {
+                _id: 0,
+                month: 1,
+                total: 1,
+            }
+        }
+
+    ])
+    if (!salesPerMonth) {
+        return res.status(404).json({
+            message: 'error sales per month',
+        })
+    }
+    // return console.log(customerSales)
+    res.status(200).json({
+        success: true,
+        salesPerMonth
+    })
+
 }

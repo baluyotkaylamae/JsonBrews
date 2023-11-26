@@ -28,7 +28,3 @@ router.get('/admin/customer-sales', customerSales);
 router.get('/admin/sales-per-month',salesPerMonth);
 //router.post('/send-email-to-admin', sendEmailToAdminEndpoint);
 module.exports = router;
-
-
-
-module.exports = router;

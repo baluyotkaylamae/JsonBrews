@@ -8,6 +8,15 @@ import '../Layouts/FH.css';
 import './ProdDet.css';
 
 
+import ProdCard from './ProdCard';
+import Slider from 'react-slick'; // Import Slider from react-slick
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import './Slidee.css';
+
+
+
+
 const ProductDetails = ({ addItemToCart, cartItems }) => {
   const randomStarRating = Math.floor(Math.random() * (5 - 3 + 1)) + 3;
 
@@ -19,6 +28,12 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
   const [selectedAddons, setSelectedAddons] = useState([]);
 
   let { id } = useParams();
+
+
+  const [otherProducts, setOtherProducts] = useState([]);
+
+
+
 
   // const productDetails = async (id) => {
   //   try {
@@ -62,13 +77,13 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
     try {
       const response = await axios.get('http://localhost:4001/api/addons');
       const allAddons = response.data.addons;
-  
+
       const productCategory = product.category || '';
       const filteredAddons = allAddons.filter((addon) => addon.category === productCategory);
-  
+
       console.log('Product Category:', productCategory);
       console.log('Filtered Addons:', filteredAddons); // Add this line
-  
+
       setAddons(filteredAddons);
     } catch (error) {
       console.error('Error fetching addons:', error);
@@ -115,6 +130,50 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
     fetchAddons();
   }, [id, fetchAddons]);
 
+
+  const fetchOtherProducts = async () => {
+    try {
+      const response = await axios.get('http://localhost:4001/api/products');
+      const { data } = response;
+      // Assuming the server responds with an array of products in the 'products' property
+      const otherProductsArray = data.products;
+
+      if (Array.isArray(otherProductsArray) && otherProductsArray.length > 0) {
+        setOtherProducts(otherProductsArray);
+      } else {
+        console.error('Invalid response format for other products:', data);
+      }
+    } catch (err) {
+      console.error('Error fetching other products:', err);
+    }
+  };
+
+
+  useEffect(() => {
+    // Fetch other products when the component mounts
+    fetchOtherProducts();
+  }, []);
+
+
+  const settings = {
+    dots: true,
+    arrows: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4, // Adjust the number of slides to show at once
+    slidesToScroll: 1,
+    centerMode: true, // Enable center mode
+    centerPadding: '0px',
+    className: 'customslider',
+    appendDots: (dots) => (
+      <div style={{ position: 'absolute', top: '-70px', right: '10px' }}>
+        <ul style={{ margin: '0' }}> {dots} </ul>
+      </div>
+    ),
+
+    // ... (other settings, customize as needed)
+  };
+
   localStorage.setItem('cartItems', JSON.stringify(cartItems));
 
   return (
@@ -138,47 +197,49 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
             <div className="col-12 col-lg-5 mt-5">
               <h2 className='title-prod-pd'>{product.name}</h2>
               <i>
-                <p id="product_id" className='card-title-des-pd'>Product No. 
+                <p id="product_id" className='card-title-des-pd'>Product No.
                   <span
                     style={{
                       fontFamily: 'Open Sans, sans-serif',
-                    paddingLeft:'5px'
+                      paddingLeft: '5px'
                     }
-                  }
+                    }
                   >
-                     {product._id}
+                    {product._id}
                   </span>
                 </p>
               </i>
 
-              
+
               <div style={{ display: 'flex', alignItems: 'center' }}>
- 
-  <div className="star-rating star-rating-des-pd">
-    {Array.from({ length: 5 }, (_, index) => (
-      <span key={index} style={{ marginTop: '-5px' }}>
-        {index + 0.5 < randomStarRating ? "★" : "☆"}
-      </span>
 
-      
-    ))}
-     <p id="product_id" className='card-text-des-pd' 
-     style={{ paddingLeft: '15px' }}>
-      <strong>
-      RATING
-      </strong>
-      </p>
-  </div>
-</div>
+                <div className="star-rating star-rating-des-pd">
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <span key={index} style={{ marginTop: '-5px' }}>
+                      {index + 0.5 < randomStarRating ? "★" : "☆"}
+                    </span>
 
-                
+
+                  ))}
+                  <p id="product_id" className='card-text-des-pd'
+                    style={{ paddingLeft: '15px' }}>
+                    <strong>
+                      RATING
+                    </strong>
+                  </p>
+                </div>
+              </div>
+
+
 
 
 
               <p id="product_price"
-                className='card-title-des-pd' 
-                style={{ fontSize: '40px',
-                color: '#d64f3a' }}>
+                className='card-title-des-pd'
+                style={{
+                  fontSize: '40px',
+                  color: '#d64f3a'
+                }}>
                 ₱ {product.price}</p>
 
               {/* <div className="stockCounter d-inline">
@@ -485,7 +546,40 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
 
           <div style={{ paddingTop: '100px' }}>
 
-          
+            {/* put the other products here */}
+
+            {/* Put the other products here */}
+            {/* <div className="row">
+        {Array.isArray(otherProducts) ? (
+          otherProducts.map((otherProduct) => (
+            <ProdCard key={otherProduct._id} product={otherProduct} />
+          ))
+        ) : (
+          <p>No other products available</p>
+        )}
+      </div> */}
+
+          <hr className='hrr'/>
+          <h3 className='title-prod-pd'
+          style={{textAlign: 'center', paddingTop: '40px'}}>Recommended For You</h3>
+            <div className='slider-des'>
+
+              <Slider {...settings}>
+                {Array.isArray(otherProducts) ? (
+                  otherProducts.map((otherProduct) => (
+                    <ProdCard key={otherProduct._id} product={otherProduct} />
+                  ))
+                ) : (
+                  <p>No other products available</p>
+                )}
+              </Slider>
+
+
+            </div>
+
+
+
+
           </div>
         </Fragment>
       )}

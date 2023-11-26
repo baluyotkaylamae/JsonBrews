@@ -1,0 +1,52 @@
+.customslider
+{
+    margin: -20px !important;
+    padding-bottom: 100px;
+
+}
+
+.customslider .slick-prev,
+.customslider .slick-next {
+    font-size: 50px; /* Adjust the font size as needed */
+    color: #000; /* Adjust the color as needed */
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    cursor: pointer;
+}
+
+.customslider .slick-prev {
+  left: 0;
+}
+
+.customslider .slick-next {
+  right: 0;
+}
+
+li button:before {
+    font-size: 15px !important;
+    color: #A97155 !important;
+}
+
+li button:after {
+    font-size: 15px !important;
+    background-color: #8e5f47 !important;
+}
+
+.slider-des
+{
+
+    padding-top: 100px;
+  
+    padding-bottom: 50px;
+}
+
+.hrr {
+    width: 50%;
+    margin: 0 auto; /* Center the horizontal line */
+    border-color: #8e5f47;/* Set the color of the horizontal line */
+    border-width: 5px; /* Set the thickness of the horizontal line */
+    opacity: 80%;
+  margin-top: auto;
+  }

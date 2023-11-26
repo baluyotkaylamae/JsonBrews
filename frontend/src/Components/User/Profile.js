@@ -54,6 +54,7 @@ const Profile = () => {
 
                     <div className="background-page">
                         <div className="profile">
+                        {/* <img src="./coffee.png" alt="Coffee Logo" className="mt-1 ml-5" /> */}
                             <h2 className="mt-1 ml-5">Profile</h2>
 
                             <div className="mt-5 user-info row">

@@ -108,6 +108,11 @@ body {
   font-size: 0.9rem;
   color: grey;
 }
+.img-profile {
+  width: 60px; /* Adjust the width as per your requirement */
+  height: auto; /* Maintain aspect ratio */
+  margin-left: 1px; /* Add margin for spacing */
+}
 /* Avatar */
 .profile {
   margin: 50px auto;
@@ -119,8 +124,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "Montserrat", sans-serif;
-  color: #000; /* Font color set to black */
+  font-family: 'Hammersmith One', sans-serif;
+  color: #b38269;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .background-page {
@@ -145,7 +150,7 @@ body {
 .user-info {
   text-align: left;
   font-family: "Montserrat", sans-serif;
-  color: #000; /* Font color set to black */
+  color: #b38269;
 }
 .avatar img {
   width: 80%;

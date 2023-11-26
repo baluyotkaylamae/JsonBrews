@@ -28,7 +28,9 @@ font-family: Roboto, Arial, Helvetica, sans-serif;
 {
 
     background-color: #E4D1B9 !important;
-    color:#A97155 !important;
+    color:#8e5f47 !important;
+    font-family: 'Hammersmith One', sans-serif !important;
+    border:  2px solid   #978671;
 }
 
 .Json-Login-Form

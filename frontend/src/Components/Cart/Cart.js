@@ -124,8 +124,14 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                                                         </ul>
                                                     </div>
                                                 )}
-                                                <p>Sugar Level: {item.sugarLevel}</p>
-                                                <p>Cup Size: {item.cupSize}</p>
+                                                <p><strong>
+                                                Sugar Level: 
+                                                </strong>
+                                                </p> {item.sugarLevel}
+                                                <p>
+                                                    <strong>
+                                                    Cup Size:
+                                                        </strong> {item.cupSize}</p>
 
                                                 {/* Calculate and display the total price for the item and its addons */}
                                                 <p id="card_item_price">
@@ -141,20 +147,26 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                                                     <span
                                                         className="btn btn-danger minus"
                                                         onClick={() => decreaseQty(item.product, item.quantity, item.addons)}
+                                                        style={{margin:'1px'}}
                                                     >
                                                         -
                                                     </span>
-                                                    <span className="count d-inline">{item.quantity}</span>
+                                                    <span className="count d-inline"
+                                                    style={{margin:'15px'}}>
+                                                        {item.quantity}</span>
                                                     <span
                                                         className="btn btn-primary plus"
-                                                        onClick={() => increaseQty(item.product, item.quantity, item.stock, item.addons || [])}
+                                                        onClick={() => 
+                                                            increaseQty(item.product, item.quantity, item.stock, 
+                                                                item.addons || [])}
+                                                                style={{borderRadius:'5px'}}
                                                     >
                                                         +
                                                     </span>
                                                 </div>
                                             </div>
 
-                                            
+
                                             <div className="col-4 col-lg-1 mt-4 mt-lg-0">
                                                 <i
                                                     id="delete_cart_item"

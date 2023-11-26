@@ -24,13 +24,34 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
         <Fragment>
             <MetaData title={'Shipping Info'} />
             <CheckoutSteps shipping />
-            <div className="row wrapper">
+            <div  style={{backgroundColor: 'white !important',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: '10',
+            fontWeight: '700',
+            padding: '1px',
+            height: '120vh'
+           }}>
                 <div className="col-10 col-lg-5">
                     <form
                         className="shadow-lg"
+                        style={{borderRadius: '10px',  
+                        width: '500px', 
+                        padding: '20px', 
+                        border: '3px solid #b38269'}}
                         onSubmit={submitHandler}
+                        
                     >
-                        <h1 className="mb-4">Shipping Information</h1>
+                        <h2 className="mb-4"
+                        style={{ fontFamily: 
+                        'Hammersmith One, sans-serif',
+                        color: '#8e5f47',
+                        textTransform: 'uppercase',
+                        fontWeight: '450px',
+                        textAlign: 'center'
+                        }}>Shipping 
+                        <br/>Information</h2>
                         <div className="form-group">
                             <label htmlFor="address_field">Address</label>
                             <input
@@ -115,7 +136,7 @@ const Shipping = ({ shipping, saveShippingInfo }) => {
                             id="shipping_btn"
                             type="submit"
                             className="btn btn-block py-3"
-                            style={{ backgroundColor: '#8B4513', color: 'white', fontFamily: 'Roboto, sans-serif' }}
+                            style={{ backgroundColor: '#8B4513 !important', color: 'white', fontFamily: 'Open Sans, sans serif' }}
                         >
                             PROCEED
                         </button>

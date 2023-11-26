@@ -7,7 +7,6 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
 
-
 // exports.newOrder = async (req, res, next) => {
 //     const {
 //         orderItems,
@@ -45,7 +44,6 @@ const path = require('path');
 //         order
 //     })
 // }
-
 exports.newOrder = async (req, res, next) => {
     const {
         orderItems,
@@ -81,13 +79,13 @@ exports.newOrder = async (req, res, next) => {
         console.error('Error creating order:', error);
 
         if (error.name === 'ValidationError') {
-            // Handle validation error (e.g., required fields missing)
+          
             res.status(400).json({
                 success: false,
                 message: `Validation error. ${error.message || 'Unknown error'}`
             });
         } else {
-            // Handle other errors
+            
             res.status(500).json({
                 success: false,
                 message: `Failed to create order. ${error.message || 'Unknown error'}`
@@ -265,10 +263,6 @@ exports.allOrders = async (req, res, next) => {
 //         });
 //     }
 // };
-
-
-
-
 
 exports.updateOrder = async (req, res, next) => {
     try {

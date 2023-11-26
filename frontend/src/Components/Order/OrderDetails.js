@@ -5,7 +5,6 @@ import Loader from '../Layouts/Loader'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import PDFDocument from 'pdfkit';
 
 import { getToken } from '../../utils/helpers'
 
@@ -47,17 +46,6 @@ const OrderDetails = () => {
         }
     }, [error, id])
 
-    // const handlePrintButtonClick = async () => {
-    //     try {
-    //         const { data } = await axios.post(`http://localhost:4001/api/order/generate-pdf/${order._id}`);
-    
-    //         window.open(data.path, '_blank');
-    //     } catch (error) {
-    //         console.error('Error generating PDF:', error);
-    //     }
-    // };
-    
-
     const shippingDetails = shippingInfo && `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.postalCode}, ${shippingInfo.country}`
 
     // const isPaid = paymentInfo && paymentInfo.status === 'succeeded' ? true : false
@@ -85,10 +73,12 @@ const OrderDetails = () => {
                             <h4 className="my-4">Payment Status</h4>
                             <p className={isPaid ? "greenColor" : "redColor"}><b>{isPaid ? "PAID" : "NOT PAID"}</b></p>
 
+                            <h4 className="my-4">Stripe ID</h4>
+                            <p>{paymentInfo && paymentInfo.id}</p>
 
                             <h4 className="my-4">Order Status:</h4>
                             <p className={order.orderStatus && String(order.orderStatus).includes('Delivered') ? "greenColor" : "redColor"} ><b>{orderStatus}</b></p>
-                           
+
                             {/* {order.orderStatus === 'Delivered' && (
                                 <button
                                     className="btn btn-primary"
@@ -110,7 +100,7 @@ const OrderDetails = () => {
                                         </div>
 
                                         <div className="col-5 col-lg-5">
-                                        <p>Item Name:</p><Link to={`/products/${item.product}`}>{item.name}</Link>
+                                            <p>Item Name:</p><Link to={`/products/${item.product}`}>{item.name}</Link>
                                         </div>
 
 

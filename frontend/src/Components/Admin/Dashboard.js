@@ -321,13 +321,13 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-xl-12">
+                                    {/* <div className="col-xl-12">
                                         <div className="card">
                                             <div className="card-body">
                                                 <UserSalesChart />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </Fragment>
                         )}

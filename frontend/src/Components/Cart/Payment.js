@@ -15,7 +15,7 @@ const Payment = ({ cartItems, shippingInfo }) => {
     orderItems: cartItems,
     shippingInfo,
     paymentInfo: {
-      status: 'paid', 
+      status: 'paid',
       method: 'Cash on Delivery (COD)',
     },
   };
@@ -64,14 +64,14 @@ const Payment = ({ cartItems, shippingInfo }) => {
           Authorization: `Bearer ${getToken()}`,
         },
       };
-  
+
       // console.log('Request Payload:', order);
       const { data } = await axios.post('http://localhost:4001/api/order/new', order, config);
-  
+
       toast.success('Order created', {
         position: toast.POSITION.BOTTOM_RIGHT,
       });
-  
+
       // console.log('Order created:', data);
       navigate('/success');
     } catch (error) {
@@ -83,13 +83,13 @@ const Payment = ({ cartItems, shippingInfo }) => {
       );
     }
   };
-  
+
   const submitHandler = async (e) => {
     e.preventDefault();
     document.querySelector('#pay_btn').disabled = true;
 
     console.log('Order Info:', order);
-   
+
     createOrder(order);
   };
 
@@ -97,10 +97,25 @@ const Payment = ({ cartItems, shippingInfo }) => {
     <Fragment>
       <MetaData title={'Payment'} />
       <CheckoutSteps shipping confirmOrder payment />
-      <div className="row wrapper">
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontWeight: '700',
+          padding: '1px',
+          height: '80vh',
+        }}>
         <div className="col-10 col-lg-5">
-          <form className="shadow-lg" onSubmit={submitHandler}>
-            <h1 className="mb-4">Payment</h1>
+          <form className="shadow-lg"
+            style={{
+              borderRadius: '10px',
+              width: '500px',
+              padding: '20px',
+              border: '3px solid #b38269'
+            }} onSubmit={submitHandler}>
+            <h1 className="mb-4"
+              style={{ paddingTop: '5px' }}>Payment</h1>
 
             <div className="text-center">
               <p>Cash on Delivery (COD)</p>

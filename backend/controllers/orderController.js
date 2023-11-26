@@ -1,6 +1,6 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
-const nodemailer = require ('nodemailer');
+const nodemailer = require('nodemailer');
 const User = require('../models/user');
 
 const PDFDocument = require('pdfkit');
@@ -19,7 +19,7 @@ exports.newOrder = async (req, res, next) => {
     } = req.body;
 
     try {
-      
+
         const order = await Order.create({
             orderItems,
             shippingInfo,
@@ -42,13 +42,13 @@ exports.newOrder = async (req, res, next) => {
         console.error('Error creating order:', error);
 
         if (error.name === 'ValidationError') {
-            // Handle validation error (e.g., required fields missing)
+
             res.status(400).json({
                 success: false,
                 message: `Validation error. ${error.message || 'Unknown error'}`
             });
         } else {
-            // Handle other errors
+
             res.status(500).json({
                 success: false,
                 message: `Failed to create order. ${error.message || 'Unknown error'}`
@@ -140,20 +140,45 @@ async function generateOrderPDF(order) {
         const doc = new PDFDocument();
 
         doc.fontSize(18).text('JSON Brews Order Receipt', { align: 'center' });
+        doc.fontSize(12).text('1633, Taguig City, Metro Manila, Philippines', { align: 'center' });
         doc.moveDown();
 
-        doc.fontSize(12).text(`Order ID: ${order._id}`);
-        doc.text(`Order Date: ${order.createdAt}`);
-        doc.text(`Delivery Date: ${new Date(order.deliveredAt).toLocaleDateString()}`);
-        doc.text(`Order Total: ₱${order.totalPrice.toFixed(2)}`);
+        doc.fontSize(15).text('------------------------------------------------------------------', { align: 'center' });
+        doc.fontSize(15).text('CASH RECEIPT', { align: 'center' });
+        doc.fontSize(15).text('------------------------------------------------------------------', { align: 'center' });
+
+
+        doc.fontSize(14).text('Ordered Products:', { align: 'center' });
+        order.orderItems.forEach(item => {
+            const productText = ` ${item.name} (₱${item.price.toFixed(2)} each) x ${item.quantity}`;
+            doc.text(productText, { align: 'center' });
+        });
         doc.moveDown();
 
-        doc.fontSize(14).text('Customer Information:', { underline: true });
+        doc.fontSize(12).text(`Order ID:`, { align: 'left' });
+        doc.text(`${order._id}`, { align: 'right' });
+
+        doc.text(`Order Date:`, { align: 'left' });
+        doc.text(`${order.createdAt}`, { align: 'right' });
+
+        doc.text(`Delivery Date:`, { align: 'left' });
+        doc.text(`${new Date(order.deliveredAt).toLocaleDateString()}`, { align: 'right' });
+
+        doc.text(`Order Total:`, { align: 'left' });
+        doc.text(`₱${order.totalPrice.toFixed(2)}`, { align: 'right' });
+
+        doc.moveDown();
+
+        doc.fontSize(15).text('----------------------------------------------------', { align: 'center' });
+        doc.fontSize(14).text('Customer Information:', { align: 'center' });
         try {
             const user = await User.findById(order.user);
             if (user) {
-                doc.fontSize(12).text(`Name: ${user.name}`);
-                doc.text(`Email: ${user.email}`);
+                doc.fontSize(12).text(`Name:`, { align: 'left' });
+                doc.text(`${user.name}`, { align: 'right' });
+
+                doc.text(`Email:`, { align: 'left' });
+                doc.text(`${user.email}`, { align: 'right' });
             } else {
                 doc.text('Customer information not available');
             }
@@ -161,18 +186,13 @@ async function generateOrderPDF(order) {
             doc.text('Error fetching customer information');
         }
 
-        doc.moveDown();
-
-        doc.text(`Address: ${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.postalCode}, ${order.shippingInfo.country}`);
-        doc.moveDown();
-
-        doc.fontSize(14).text('Ordered Products:', { underline: true });
-        order.orderItems.forEach(item => {
-            doc.fontSize(12).text(`- ${item.name} (₱${item.price.toFixed(2)} each) x ${item.quantity}`);
-        });
+        const addressText = `Address: ${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.postalCode}, ${order.shippingInfo.country}`;
+        doc.text(addressText, { align: 'center' });
+        doc.fontSize(15).text('----------------------------------------------------', { align: 'center' });
         doc.moveDown();
 
         doc.fontSize(16).text('Thank you for choosing JSON Brews! Always at your service.', { align: 'center' });
+
 
         const buffers = [];
         doc.on('data', buffers.push.bind(buffers));
@@ -186,7 +206,7 @@ async function generateOrderPDF(order) {
 }
 
 async function sendEmailToCustomer(order) {
-    
+
     const transporter = nodemailer.createTransport({
         host: 'sandbox.smtp.mailtrap.io',
         port: 2525,
@@ -241,9 +261,9 @@ async function updateStock(id, quantity) {
         product.stock = product.stock - quantity;
         await product.save({ validateBeforeSave: false });
     } catch (error) {
-        
+
         console.error(`Error updating stock: ${error.message}`);
-        throw error; 
+        throw error;
     }
 }
 
@@ -253,7 +273,7 @@ exports.deleteOrder = async (req, res, next) => {
 
     if (!order) {
         return res.status(404).json({ message: `No Order found with this ID` })
-     
+
     }
     await order.remove()
 
@@ -268,14 +288,14 @@ function sendEmailToAdmin(order) {
         host: 'sandbox.smtp.mailtrap.io',
         port: 2525,
         auth: {
-            user: '18a2a26eef4f45', 
-            pass: '865719decb6b03' 
+            user: '18a2a26eef4f45',
+            pass: '865719decb6b03'
         }
     });
 
     const mailOptions = {
-        from: order.user.email, 
-        to: 'beaclarisse.elumba@tup.edu.ph', 
+        from: order.user.email,
+        to: 'beaclarisse.elumba@tup.edu.ph',
         subject: 'New Order from Customer',
         text: `A new order with ID ${order._id} has been placed. You can now proceed updating the order status.`
     };

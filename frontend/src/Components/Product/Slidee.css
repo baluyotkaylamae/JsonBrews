@@ -43,7 +43,7 @@ li button:after {
 }
 
 .hrr {
-    width: 50%;
+    width: 20%;
     margin: 0 auto; /* Center the horizontal line */
     border-color: #8e5f47;/* Set the color of the horizontal line */
     border-width: 5px; /* Set the thickness of the horizontal line */

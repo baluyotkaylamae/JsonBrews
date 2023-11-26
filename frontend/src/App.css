@@ -65,7 +65,7 @@ body {
   padding: 1px;
   background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
   background: linear-gradient(to right, #eae4cf, #ebb585);
-  height: 60vh; /* Cover the entire viewport height */
+  height: 120vh; /* Cover the entire viewport height */
 }
 .wrapper form {
   padding: 2.5rem 3rem;
@@ -73,10 +73,12 @@ body {
   background-color: rgba(255, 255, 255, 0.8); /* Add a semi-transparent white background */
 }
 .wrapper form .btn {
-  background-color: #fa9c23;
-  border-color: #fa9c23;
+  background-color: #8e5f47;
+  border-color: #8e5f47;
   color: white;
   margin-top: 2.5rem;
+  font-family: 'Hammersmith One', sans-serif;
+  border-radius: 20px;
 }
 .wrapper form a {
   font-size: 0.9rem;
@@ -91,7 +93,7 @@ body {
   padding: 1px;
   background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
   background: linear-gradient(to right, #eae4cf, #ebb585);
-  height: 60vh; /* Cover the entire viewport height */
+  height: 120vh; /* Cover the entire viewport height */
 }
 .update-profile-bg form {
   padding: 2.5rem 3rem;

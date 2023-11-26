@@ -38,7 +38,6 @@ import { getUser } from './utils/helpers';
 import ProtectedRoute from './Components/Route/ProtectedRoute';
 import OrdersList from './Components/Admin/OrdersList';
 import ProcessOrder from './Components/Admin/ProcessOrder';
-import Homee from './Components/Homee';
 import ProductsPage from './Components/ProductsPage';
 
 
@@ -149,7 +148,7 @@ function App() {
     })
     localStorage.setItem('shippingInfo', JSON.stringify(data))
   }
-  
+
 
   return (
     <div>
@@ -161,8 +160,7 @@ function App() {
 
           {/*for login */}
           <Route path="/" element={<Home />} exact="true" />
-          <Route path="/Homee" element={<Homee />} exact="true" />
-          <Route path="/ProductsPage" element={<ProductsPage  />} exact="true" /> 
+          <Route path="/ProductsPage" element={<ProductsPage />} exact="true" />
           <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" />
           <Route path="/search/:keyword" element={<Home />} exact="true" />
 
@@ -175,7 +173,23 @@ function App() {
           <Route path="/password/update" element={<UpdatePassword />} />
 
           {/* cart */}
-          <Route path="/cart" element={<Cart cartItems={state.cartItems} addItemToCart={addItemToCart} removeItemFromCart={removeItemFromCart} />} exact="true" />
+          {/* <Route path="/cart" element={<Cart cartItems={state.cartItems} addItemToCart={addItemToCart} removeItemFromCart={removeItemFromCart} />} exact="true" /> */}
+          <Route
+            path="/cart"
+            element={
+              getUser() ? (
+                <Cart
+                  cartItems={state.cartItems}
+                  addItemToCart={addItemToCart}
+                  removeItemFromCart={removeItemFromCart}
+                />
+              ) : (
+                <Login />
+              )
+            }
+            exact="true"
+          />
+          
           <Route path="/shipping" element={<Shipping
             shipping={state.shippingInfo}
             saveShippingInfo={saveShippingInfo}

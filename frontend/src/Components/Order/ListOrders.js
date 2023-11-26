@@ -6,7 +6,8 @@ import Loader from '../Layouts/Loader'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getToken } from '../../utils/helpers'
+import { getToken } from '../../utils/helpers';
+import ProdDet from '../Product/ProdDet.css';
 
 const ListOrders = () => {
     const [loading, setLoading] = useState(true)
@@ -75,7 +76,7 @@ const ListOrders = () => {
             data.rows.push({
                 id: order._id,
                 numOfItems: order.orderItems.length,
-                amount: `$${order.totalPrice}`,
+                amount: `₱${order.totalPrice}`,
                 status: order.orderStatus && String(order.orderStatus).includes('Delivered')
                     ? <p style={{ color: 'green' }}>{order.orderStatus}</p>
                     : <p style={{ color: 'red' }}>{order.orderStatus}</p>,
@@ -92,7 +93,7 @@ const ListOrders = () => {
     return (
         <Fragment>
             <MetaData title={'My Orders'} />
-            <h1 className="my-5">My Orders</h1>
+            <h1 className="my-5 title-prod-pd">My Orders</h1>
             {loading ? <Loader /> : (
                 <MDBDataTable
                     data={setOrders()}

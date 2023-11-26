@@ -50,6 +50,7 @@
   text-transform: uppercase;
   font-family: 'Hammersmith One', sans-serif;
   font-weight: 500;
+  /* border: 2px solid #8e5f47 !important; */
 
 } 
 
@@ -77,13 +78,17 @@
 }
 
 .register-photo-json .image-holder-reg {
-  flex: 1;
+  flex: 200;
   background: url('../../../public/coffee2.png');
-  background-size: contain; /* Change this to 'cover' or '100%' based on your preference */
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center center;
   margin-left: -60px !important;
+  box-sizing: border-box; /* Include padding and borders in the total width and height */
+  height: 100%; /* Set a specific height to ensure the cover works properly */
+  width: 100%; /* Set a specific width if needed */
 }
+
 
 .register-photo-json  {
   
@@ -94,12 +99,15 @@
 
 }
 
-.image-holder-log
-{
-  flex: 1; 
+.image-holder-log {
+  flex: 200;
   background: url('../../../public/coffee3.png');
-  background-size:contain;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
   transform: rotate(330deg);
+  height: 100%; /* Set a specific height to ensure the cover works properly */
+  width: 100%; /* Set a specific width if needed */
 }
 
 

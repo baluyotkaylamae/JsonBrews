@@ -8,7 +8,8 @@ const ProdCard = ({ product }) => {
 
   return (
     <div className="col-lg-3 col-md-4 col-sm-6 mb-4">
-      <div className="card product-cart-text prodcard-JSON">
+      <div className="card product-cart-text prodcard-JSON" 
+      style={{ zIndex: 3 }}>
         <img
           src={product.images[0].url}
           alt={product.name}
@@ -29,7 +30,7 @@ const ProdCard = ({ product }) => {
           <p className="card-text card-price-des">₱ {product.price}</p>
 
           <div className="button-container">
-            <Link to={`/product/${product._id}`} className="btn json-button">
+          <Link to={`/product/${product._id}`} className="btn json-button">
               Details
             </Link>
           </div>

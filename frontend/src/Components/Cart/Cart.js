@@ -3,20 +3,21 @@ import { Link } from 'react-router-dom';
 import MetaData from '../Layouts/Metadata';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import CoffeeIcon from '@mui/icons-material/Coffee';
 
 const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
     const navigate = useNavigate();
 
-    const increaseQty = (id, quantity, stock) => {
+    const increaseQty = (id, quantity, stock, selectedAddons) => {
         const newQty = quantity + 1;
         if (newQty > stock) return;
-        addItemToCart(id, newQty);
+        addItemToCart(id, newQty, selectedAddons);
     };
 
-    const decreaseQty = (id, quantity) => {
+    const decreaseQty = (id, quantity, selectedAddons) => {
         const newQty = quantity - 1;
         if (newQty <= 0) return;
-        addItemToCart(id, newQty);
+        addItemToCart(id, newQty, selectedAddons);
     };
 
     const removeCartItemHandler = (id) => {
@@ -70,12 +71,27 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
         <Fragment>
             <MetaData title={'Your Cart'} />
             {cartItems.length === 0 ? (
-                <h2 className="mt-5">Your Cart is Empty</h2>
+                <div>
+
+                    <img className="my-5 img-fluid d-block mx-auto" src="/images/sadperson.png" alt="Order Success" width="200" height="200" />
+                    <h2 className="mt-5" style={{
+                        textAlign: 'center',
+                        textTransform: 'uppercase'
+                    }}>Your Cart is Empty</h2>
+
+                </div>
+
             ) : (
                 <Fragment>
                     <h2 className="mt-5">
-                        Your Cart: <b>{cartItems.length} Items </b>
-                    </h2>
+                        <span style={{ display: 'flex', alignItems: 'center' }}>
+                            <CoffeeIcon style={{ fontSize: 36, marginLeft: '8px' }} />
+                            <span style={{ marginLeft: '8px', 
+                            borderRight: '5px solid #b38269', 
+                            paddingRight: '8px'}}>CART</span>
+                            &nbsp; [ {cartItems.length} ]  ITEMS   </span> 
+                    </h2> 
+
 
                     <div className="row d-flex justify-content-between">
                         <div className="col-12 col-lg-8">
@@ -85,7 +101,9 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
 
                                     <div className="cart-item">
                                         <div className="row">
-                                            <div className="col-4 col-lg-3">
+                                            <div className="col-4 col-lg-3"
+                                            style={{marginLeft: '15px', 
+                                            marginRight: '-20px'}}>
                                                 <img src={item.image} alt="Jsbrew" height="90" width="115" />
                                             </div>
 
@@ -106,8 +124,14 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                                                         </ul>
                                                     </div>
                                                 )}
-                                                <p>Sugar Level: {item.sugarLevel}</p>
-                                                <p>Cup Size: {item.cupSize}</p>
+                                                <p><strong>
+                                                Sugar Level: 
+                                                </strong>
+                                                </p> {item.sugarLevel}
+                                                <p>
+                                                    <strong>
+                                                    Cup Size:
+                                                        </strong> {item.cupSize}</p>
 
                                                 {/* Calculate and display the total price for the item and its addons */}
                                                 <p id="card_item_price">
@@ -122,19 +146,27 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                                                 <div className="stockCounter d-inline">
                                                     <span
                                                         className="btn btn-danger minus"
-                                                        onClick={() => decreaseQty(item.product, item.quantity)}
+                                                        onClick={() => decreaseQty(item.product, item.quantity, item.addons)}
+                                                        style={{margin:'1px'}}
                                                     >
                                                         -
                                                     </span>
-                                                    <span className="count d-inline">{item.quantity}</span>
+                                                    <span className="count d-inline"
+                                                    style={{margin:'15px'}}>
+                                                        {item.quantity}</span>
                                                     <span
                                                         className="btn btn-primary plus"
-                                                        onClick={() => increaseQty(item.product, item.quantity, item.stock)}
+                                                        onClick={() => 
+                                                            increaseQty(item.product, item.quantity, item.stock, 
+                                                                item.addons || [])}
+                                                                style={{borderRadius:'5px'}}
                                                     >
                                                         +
                                                     </span>
                                                 </div>
                                             </div>
+
+
                                             <div className="col-4 col-lg-1 mt-4 mt-lg-0">
                                                 <i
                                                     id="delete_cart_item"

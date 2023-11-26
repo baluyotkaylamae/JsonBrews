@@ -57,7 +57,7 @@ function App() {
 
 
     if (!getUser()) {
-      toast.error("Login first EHEHE", {
+      toast.error("Login First", {
         position: toast.POSITION.TOP_CENTER
       });
       return;

@@ -80,6 +80,10 @@ const UpdateProfile = () => {
             }
         }
     };
+    const goBack = () => {
+        // Navigate back to the previous page
+        navigate(-1);
+    };
 
     useEffect(() => {
         getProfile();
@@ -169,14 +173,13 @@ const UpdateProfile = () => {
                                 </div>
                             </div>
                         </div>
-
-                        <button
-                            type="submit"
-                            className="btn update-btn btn-block mt-4 mb-3"
-                            disabled={loading ? true : false}
-                        >
-                            Update
-                        </button>
+                            <button
+                                type="submit"
+                                className="btn update-btn btn-block mt-4 mb-3"
+                                disabled={loading ? true : false}
+                            >
+                                Update
+                            </button>
                     </form>
                 </div>
             </div>

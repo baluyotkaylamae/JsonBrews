@@ -90,7 +90,8 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
     }
   }, [product.category]);
 
-  const [selectedSugarLevel, setSelectedSugarLevel] = useState('');
+  // const [selectedSugarLevel, setSelectedSugarLevel] = useState('');
+  const [selectedSugarLevel, setSelectedSugarLevel] = useState('Low');
 
   const handleSugarLevelChange = (level) => {
     setSelectedSugarLevel(level);

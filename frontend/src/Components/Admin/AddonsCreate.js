@@ -37,6 +37,13 @@ const CreateAddon = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
+  
+    // Basic form validation
+    if (!name || !description || !category || !price) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+  
     axios
       .post('http://localhost:4001/api/addons/new', { name, description, category, price })
       .then((res) => {
@@ -53,6 +60,7 @@ const CreateAddon = () => {
         toast.error('Failed to create addon'); // Use toast for error message
       });
   };
+  
 
   return (
     <div className="container mt-5">

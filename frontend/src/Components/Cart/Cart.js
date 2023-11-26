@@ -8,16 +8,16 @@ import CoffeeIcon from '@mui/icons-material/Coffee';
 const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
     const navigate = useNavigate();
 
-    const increaseQty = (id, quantity, stock) => {
+    const increaseQty = (id, quantity, stock, selectedAddons) => {
         const newQty = quantity + 1;
         if (newQty > stock) return;
-        addItemToCart(id, newQty);
+        addItemToCart(id, newQty, selectedAddons);
     };
 
-    const decreaseQty = (id, quantity) => {
+    const decreaseQty = (id, quantity, selectedAddons) => {
         const newQty = quantity - 1;
         if (newQty <= 0) return;
-        addItemToCart(id, newQty);
+        addItemToCart(id, newQty, selectedAddons);
     };
 
     const removeCartItemHandler = (id) => {
@@ -140,14 +140,14 @@ const Cart = ({ addItemToCart, cartItems, removeItemFromCart }) => {
                                                 <div className="stockCounter d-inline">
                                                     <span
                                                         className="btn btn-danger minus"
-                                                        onClick={() => decreaseQty(item.product, item.quantity)}
+                                                        onClick={() => decreaseQty(item.product, item.quantity, item.addons)}
                                                     >
                                                         -
                                                     </span>
                                                     <span className="count d-inline">{item.quantity}</span>
                                                     <span
                                                         className="btn btn-primary plus"
-                                                        onClick={() => increaseQty(item.product, item.quantity, item.stock)}
+                                                        onClick={() => increaseQty(item.product, item.quantity, item.stock, item.addons || [])}
                                                     >
                                                         +
                                                     </span>

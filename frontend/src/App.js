@@ -39,8 +39,7 @@ import ProtectedRoute from './Components/Route/ProtectedRoute';
 import OrdersList from './Components/Admin/OrdersList';
 import ProcessOrder from './Components/Admin/ProcessOrder';
 import ProductsPage from './Components/ProductsPage';
-
-
+import UserManagement from './Components/Admin/userManagement';
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -172,7 +171,15 @@ function App() {
           <Route path="/password/forgot" element={<ForgotPassword />} exact="true" />
           <Route path="/password/reset/:token" element={<NewPassword />} exact="true" />
           <Route path="/password/update" element={<UpdatePassword />} />
-
+          <Route
+            path="/admin/users"
+            element={
+              <ProtectedRoute isAdmin={true}>
+                <UserManagement />
+              </ProtectedRoute>
+            }
+            end
+          />
           {/* cart */}
           {/* <Route path="/cart" element={<Cart cartItems={state.cartItems} addItemToCart={addItemToCart} removeItemFromCart={removeItemFromCart} />} exact="true" /> */}
           <Route
@@ -190,7 +197,7 @@ function App() {
             }
             exact="true"
           />
-          
+
           <Route path="/shipping" element={<Shipping
             shipping={state.shippingInfo}
             saveShippingInfo={saveShippingInfo}

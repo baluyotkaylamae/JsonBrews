@@ -25,7 +25,6 @@ const Dashboard = () => {
     const [categoryNames, setCategoryNames] = useState([]);
     const [productsCount, setProductsCount] = useState({});
     const [userRegistrationDates, setUserRegistrationDates] = useState({});
-    const [orderStatusCounts, setOrderStatusCounts] = useState({});
 
     const getAdminProducts = async () => {
         try {
@@ -143,15 +142,7 @@ const Dashboard = () => {
         }
     };
 
-    const getOrderStatusCounts = () => {
-        // Count the occurrences of each order status
-        const statusCounts = {};
-        product.forEach(order => {
-            const status = order.status;
-            statusCounts[status] = (statusCounts[status] || 0) + 1;
-        });
-        setOrderStatusCounts(statusCounts);
-    };
+
 
     useEffect(() => {
         getCategories();
@@ -159,11 +150,6 @@ const Dashboard = () => {
         getProducts();
         getAdminProducts()
     }, []);
-
-    useEffect(() => {
-        // Fetch order status counts when products change
-        getOrderStatusCounts();
-    }, [product]);
 
     return (
         <Fragment>
@@ -281,54 +267,36 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="row">
+                                        <div className="col-xl-6">
+                                            <div className="card">
+                                                <div className="card-body d-flex flex-column align-items-center">
+                                                    <h5 className="card-title" style={{ color: "#b38269" }}>Monthly Sales Chart</h5>
+                                                    {/* Use MonthlySalesChart component here */}
+                                                    <MonthlySalesChart />
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                {console.log('Rendering Order Status Chart:', Object.keys(orderStatusCounts), Object.values(orderStatusCounts))}
-                                                <Chart
-                                                    options={{
-                                                        chart: {
-                                                            id: "order-status-chart"
-                                                        },
-                                                        xaxis: {
-                                                            categories: Object.keys(orderStatusCounts)
-                                                        }
-                                                    }}
-                                                    series={[
-                                                        {
-                                                            name: "order-status",
-                                                            data: Object.values(orderStatusCounts)
-                                                        }
-                                                    ]}
-                                                    type="bar"
-                                                    width="500"
-                                                />
+                                        <div className="col-xl-6">
+                                            <div className="card">
+                                                <div className="card-body d-flex flex-column align-items-center">
+                                                    <h5 className="card-title" style={{ color: "#b38269" }}>User Sales Chart</h5>
+                                                    {/* Use UserSalesChart component here */}
+                                                    <UserSalesChart />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-xl-12">
                                         <div className="card">
-                                            <div className="card-body">
-                                                {/* Use MonthlySalesChart component here */}
-                                                <MonthlySalesChart />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
+                                            <div className="card-body d-flex flex-column align-items-center">
+                                                <h5 className="card-title" style={{ color: "#b38269" }}>Product Sales Chart</h5>
                                                 <ProductSalesChart />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                <UserSalesChart />
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </Fragment>
                         )}

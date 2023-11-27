@@ -47,7 +47,7 @@ const CreateCategory = () => {
     <div className="container mt-5">
       <div className="row">
         <div className="col-md-3">
-          <Sidebar /> {/* Add the Sidebar component here */}
+          <Sidebar /> 
         </div>
         <div className="col-md-9 text-crud" style={{paddingBottom:'50px'}}>
           <h2 className='title-crud'>Create Category</h2>
@@ -84,7 +84,7 @@ const CreateCategory = () => {
           </form>
         </div>
       </div>
-      <ToastContainer /> {/* Include this to render the notifications */}
+      <ToastContainer /> 
     </div>
   );
 };

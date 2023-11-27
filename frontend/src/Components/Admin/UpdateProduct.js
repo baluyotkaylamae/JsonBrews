@@ -22,6 +22,8 @@ const UpdateProduct = () => {
     const [categories, setCategories] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
     const [error, setError] = useState('');
+    const [validationErrors, setValidationErrors] = useState({});
+    
     let navigate = useNavigate();
 
     const { id } = useParams();
@@ -121,7 +123,48 @@ const UpdateProduct = () => {
 
         }
     }, [error, isUpdated, id ])
+   
     const submitHandler = (e) => {
+
+        const errors = {};
+        let isValid = true;
+    
+        if (!product.name) {
+          isValid = false;
+          errors.name = 'Please enter a name.';
+        }
+    
+        if (!product.description) {
+          isValid = false;
+          errors.description = 'Please enter a description.';
+        }
+    
+        if (!product.price || isNaN(product.price) || product.price < 0) {
+          isValid = false;
+          errors.price = 'Please enter a valid price.';
+        }
+    
+        if (!product.stock || isNaN(product.stock) || product.stock < 0) {
+          isValid = false;
+          errors.stock = 'Please enter a valid stock quantity.';
+        }
+    
+        if (!product.category) {
+          isValid = false;
+          errors.category = 'Please select a valid category.';
+        }
+    
+        if (!images || images.length === 0) {
+          isValid = false;
+          errors.images = 'Please select at least one image.';
+        }
+    
+        if (!isValid) {
+          
+          toast.error('Please fill out all fields');
+          return;
+        }
+        
         e.preventDefault();
         const formData = new FormData();
         formData.set('name', name);

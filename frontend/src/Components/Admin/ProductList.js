@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Sidebar from './Sidebar';
 import axios from 'axios';
+import { getToken } from '../../utils/helpers';
 
 const ProductDataTable = () => {
   const [products, setProducts] = useState([]);
@@ -107,9 +108,16 @@ const ProductDataTable = () => {
     return data;
   };
 
+  // const config = {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         'Authorization': `Bearer ${getToken()}`
+  //       }
+  //     };
+
   const handleDelete = (productId) => {
     axios
-      .delete(`http://localhost:4001/api/product/${productId}`)
+      .delete(`http://localhost:4001/api/admin/delete/product/${productId}`)
       .then(() => {
         setProducts(products.filter((product) => product._id !== productId));
         toast.success('Product is deleted successfully');

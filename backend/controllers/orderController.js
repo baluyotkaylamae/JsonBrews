@@ -2,7 +2,6 @@ const Order = require('../models/order');
 const Product = require('../models/product');
 const nodemailer = require('nodemailer');
 const User = require('../models/user');
-
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
@@ -19,7 +18,6 @@ exports.newOrder = async (req, res, next) => {
     } = req.body;
 
     try {
-
         const order = await Order.create({
             orderItems,
             shippingInfo,
@@ -31,16 +29,13 @@ exports.newOrder = async (req, res, next) => {
             paidAt: Date.now(),
             user: req.user._id
         });
-
         sendEmailToAdmin(order);
-
         res.status(201).json({
             success: true,
             order
         });
     } catch (error) {
         console.error('Error creating order:', error);
-
         if (error.name === 'ValidationError') {
 
             res.status(400).json({
@@ -263,20 +258,28 @@ async function updateStock(id, quantity) {
     }
 }
 
-
 exports.deleteOrder = async (req, res, next) => {
-    const order = await Order.findById(req.params.id)
+    try {
+        const order = await Order.findById(req.params.id);
 
-    if (!order) {
-        return res.status(404).json({ message: `No Order found with this ID` })
+        if (!order) {
+            return res.status(404).json({ message: `No Order found with this ID` });
+        }
 
+        await order.deleteOne(); 
+
+        res.status(200).json({
+            success: true,
+            message: 'Order deleted successfully'
+        });
+    } catch (error) {
+        console.error('Error deleting order:', error);
+        res.status(500).json({
+            success: false,
+            message: `Failed to delete order. ${error.message || 'Unknown error'}`,
+        });
     }
-    await order.remove()
-
-    res.status(200).json({
-        success: true
-    })
-}
+};
 
 
 function sendEmailToAdmin(order) {

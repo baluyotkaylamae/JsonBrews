@@ -21,7 +21,7 @@ router.get('/product/:id', getProductById);
 
 //admin
 router.put('/admin/update/product/:id', isAuthenticatedUser, authorizeRoles("admin"), updateProduct);
-router.delete('/admin/delete/product/:id', isAuthenticatedUser, authorizeRoles("admin"), deleteProduct);
+router.delete('/admin/delete/product/:id',  deleteProduct);
 router.post('/admin/product/new', isAuthenticatedUser, authorizeRoles("admin"), upload.array('images'), newProduct);
 router.get('/admin/product', isAuthenticatedUser, authorizeRoles("admin"), getAdminProduct);
 

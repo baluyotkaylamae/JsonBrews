@@ -16,11 +16,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { getUser, logout } from '../../utils/helpers';
 import './FH.css';
 import CoffeeIcon from '@mui/icons-material/Coffee';
-
-
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
+//import { Form, FormControl } from 'react-bootstrap';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -201,6 +200,12 @@ const Header = ({ cartItems }) => {
         </Link>
       </Box>
 
+      {/* <Form className="d-flex me-3">
+            <FormControl type="text" placeholder="Search" className="mr-2 custom-font" />
+            <Button className="custom-font" variant="outline-dark">Search</Button>
+          </Form> */}
+
+
       {/* <Search>
         <SearchIconWrapper>
           <SearchIcon />
@@ -209,7 +214,7 @@ const Header = ({ cartItems }) => {
           placeholder="Search…"
           inputProps={{ 'aria-label': 'search' }}
         /> */}
-      <Search />
+      {/* <Search /> */}
 
 
       <Box sx={{ flexGrow: 0 }}>
@@ -247,7 +252,6 @@ const Header = ({ cartItems }) => {
           onClose={handleCloseUserMenu}
         >
 
-
           {settings.map((setting, index) => (
             <MenuItem key={index} onClick={handleCloseUserMenu}>
               {index === 0 ? (
@@ -260,17 +264,20 @@ const Header = ({ cartItems }) => {
                 </Link>
               )}
             </MenuItem>
-
-
-
           ))}
+
+
+          {user && user.role === 'admin' && (
+                <Link to="/dashboard" style={{ textDecoration: 'none' , color: 'inherit' }}>
+                  <Typography textAlign="center">Dashboard</Typography>
+                </Link>
+                )}
+
           <MenuItem key={4} onClick={handleLogout}>
             <Typography textAlign="center" color="red">Logout</Typography>
           </MenuItem>
         </Menu>
       </Box>
-
-
 
     </Toolbar>
       </Container >

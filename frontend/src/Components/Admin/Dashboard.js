@@ -13,8 +13,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Layouts/FH.css';
 
-import MonthlySalesChart from './MonthlySalesChart';
-import ProductSalesChart from './ProductSalesChart';
+import MonthlySalesChart from './monthlySalesChart';
+import ProductSalesChart from './productSalesChart';
 import UserSalesChart from './UserSalesChart';
 
 const Dashboard = () => {

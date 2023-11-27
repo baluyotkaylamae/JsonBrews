@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './Home.css';
 import "./Layouts/CurvedBanner.css";
 import './ProductPage.css';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
@@ -31,7 +32,7 @@ const ProductCard = ({ product, category }) => {
             ))}
           </div>
 
-        
+
           <p className="card-text card-price-des">₱ {product.price}</p>
 
 
@@ -86,7 +87,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(4);
-
+  const [searchTerm, setSearchTerm] = useState('');
 
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const Home = () => {
         setProducts(response.data.products);
         setOriginalProducts(response.data.products);
 
-                
+
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -112,6 +113,22 @@ const Home = () => {
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const filterProducts = () => {
+    const filteredProducts = originalProducts.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setProducts(filteredProducts);
+    setCurrentPage(1); // Reset to the first page after filtering
+  };
+
+  const resetSearch = () => {
+    setSearchTerm('');
+    setProducts(originalProducts);
+    setCurrentPage(1); // Reset to the first page after clearing search
+  };
+
+
 
   const CurvedBanner = () => {
     return (
@@ -174,6 +191,64 @@ const Home = () => {
 
 
         <h2 className="mb-4 product-jsonbrew">Product List</h2>
+
+
+        <div className="mb-4" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginRight: '50px' }}>
+          <div style={{ position: 'relative' }}>
+            <input
+              type="text"
+              placeholder=" Search products by name.. "
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{
+                border: '3px solid #b38269',
+                borderRadius: '8px',
+                marginRight: '10px',
+                width: '300px',
+                height: '50px',
+                paddingRight: '10px'
+              }}
+            />
+            <button
+              onClick={resetSearch}
+              style={{
+                position: 'absolute',
+                right: '0',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                borderRadius: '8px', // Adjust the border radius as needed
+                backgroundColor: '#d64f3a',
+                color: 'whitesmoke',
+                border: '3px solid #d64f3a', // Adjust the border thickness as needed
+                fontSize: '10px', // Adjust the font size of the entire button
+                padding: '5px 5px', // Adjust the padding as needed
+                marginRight: '15px',
+              }}
+            >
+              <DeleteIcon style={{ fontSize: '16px' }} />
+            </button>
+
+          </div>
+
+          <button
+            onClick={filterProducts}
+            style={{
+              borderRadius: '10px',
+              backgroundColor: '#8e5f47',
+              color: 'whitesmoke',
+              border: '5px solid #8e5f47',
+              marginRight: '10px',
+              height: '50px'
+            }}
+          >
+            Search
+          </button>
+        </div>
+
+
+
+
+
         {loading ? (
           <p>Loading...</p>
         ) : error ? (

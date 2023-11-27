@@ -33,7 +33,7 @@ const UpdateProfile = () => {
         } catch (error) {
             console.error('Error fetching profile:', error);
             toast.error('Error fetching user profile', {
-                position: toast.POSITION.BOTTOM_RIGHT,
+                position: toast.POSITION.BOTTOM_CENTER,
             });
         }
     };
@@ -51,7 +51,7 @@ const UpdateProfile = () => {
             setIsUpdated(data.success);
             setLoading(false);
             toast.success('User updated', {
-                position: toast.POSITION.BOTTOM_RIGHT,
+                position: toast.POSITION.BOTTOM_CENTER,
             });
             navigate('/me', { replace: true });
         } catch (error) {
@@ -63,19 +63,19 @@ const UpdateProfile = () => {
                 console.error('Server response:', error.response.data);
                 console.error('Status code:', error.response.status);
                 toast.error(error.response.data.message || 'User update failed', {
-                    position: toast.POSITION.BOTTOM_RIGHT,
+                    position: toast.POSITION.BOTTOM_CENTER,
                 });
             } else if (error.request) {
                 // The request was made but no response was received
                 console.error('No response received from the server');
                 toast.error('No response received from the server', {
-                    position: toast.POSITION.BOTTOM_RIGHT,
+                    position: toast.POSITION.BOTTOM_CENTER,
                 });
             } else {
                 // Something happened in setting up the request that triggered an Error
                 console.error('Error setting up the request:', error.message);
                 toast.error('Error setting up the request', {
-                    position: toast.POSITION.BOTTOM_RIGHT,
+                    position: toast.POSITION.BOTTOM_CENTER,
                 });
             }
         }
@@ -116,7 +116,6 @@ const UpdateProfile = () => {
     return (
         <Fragment>
             <MetaData title={'Update Profile'} />
-
             <div className="row update-profile-bg" >
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg" 

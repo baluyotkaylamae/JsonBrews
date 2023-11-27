@@ -6,16 +6,11 @@ import Loader from '../Layouts/Loader';
 import MetaData from '../Layouts/Metadata';
 import '../Layouts/FH.css';
 import './ProdDet.css';
-
-
 import ProdCard from './ProdCard';
-import Slider from 'react-slick'; // Import Slider from react-slick
+import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Slidee.css';
-
-
-
 
 const ProductDetails = ({ addItemToCart, cartItems }) => {
   const randomStarRating = Math.floor(Math.random() * (5 - 3 + 1)) + 3;
@@ -24,16 +19,13 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
   const [product, setProduct] = useState({});
   const [addons, setAddons] = useState([]);
   const [error, setError] = useState('');
-  const [quantity, setQuantity] = useState(1); // Default quantity is 1
+  const [quantity, setQuantity] = useState(1); 
   const [selectedAddons, setSelectedAddons] = useState([]);
 
   let { id } = useParams();
 
 
   const [otherProducts, setOtherProducts] = useState([]);
-
-
-
 
   // const productDetails = async (id) => {
   //   try {
@@ -58,14 +50,13 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
       setLoading(false);
     } catch (err) {
       if (err.response) {
-        // The request was made, but the server responded with a status code
-        // that falls out of the range of 2xx
+       
         console.error('Server responded with an error:', err.response.data);
       } else if (err.request) {
-        // The request was made but no response was received
+    
         console.error('No response received from the server:', err.request);
       } else {
-        // Something happened in setting up the request that triggered an Error
+       
         console.error('Error setting up the request:', err.message);
       }
       setError('Product not found');
@@ -136,7 +127,6 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
     try {
       const response = await axios.get('http://localhost:4001/api/products');
       const { data } = response;
-      // Assuming the server responds with an array of products in the 'products' property
       const otherProductsArray = data.products;
 
       if (Array.isArray(otherProductsArray) && otherProductsArray.length > 0) {
@@ -186,12 +176,19 @@ const ProductDetails = ({ addItemToCart, cartItems }) => {
           <MetaData title={product.name} />
           <div className="row d-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
-              <Carousel >
-                {product.images.map((image, index) => (
-                  <Carousel.Item key={index}>
-                    <img className="d-block w-100" src={image.url} alt={product.name} />
-                  </Carousel.Item>
-                ))}
+            <Carousel>
+                {product.images && product.images.length > 0 ? (
+                  product.images.map((image, index) => (
+                    <Carousel.Item key={index}>
+                      <img className="d-block w-100" src={image.url} alt={product.name} />
+                    </Carousel.Item>
+                  ))
+                ) : (
+                  <Carousel.Item>
+                  <img className="d-block w-100" src="placeholder_image_url" alt="Placeholder" />
+                </Carousel.Item>
+                
+                )}
               </Carousel>
             </div>
 

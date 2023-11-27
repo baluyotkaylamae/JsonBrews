@@ -1,9 +1,7 @@
-
 import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Chart from 'react-apexcharts';
 import 'apexcharts';
-
 import MetaData from '../Layouts/Metadata';
 import Loader from '../Layouts/Loader';
 import Sidebar from './Sidebar';
@@ -14,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../Layouts/FH.css';
 
 import MonthlySalesChart from './monthlySalesChart';
+
 import ProductSalesChart from './productSalesChart';
 import UserSalesChart from './UserSalesChart';
 
@@ -27,7 +26,6 @@ const Dashboard = () => {
     const [categoryNames, setCategoryNames] = useState([]);
     const [productsCount, setProductsCount] = useState({});
     const [userRegistrationDates, setUserRegistrationDates] = useState({});
-    const [orderStatusCounts, setOrderStatusCounts] = useState({});
 
     const getAdminProducts = async () => {
         try {
@@ -145,28 +143,13 @@ const Dashboard = () => {
         }
     };
 
-    const getOrderStatusCounts = () => {
-        // Count the occurrences of each order status
-        const statusCounts = {};
-        product.forEach(order => {
-            const status = order.status;
-            statusCounts[status] = (statusCounts[status] || 0) + 1;
-        });
-        setOrderStatusCounts(statusCounts);
-    };
-
     useEffect(() => {
         getCategories();
         getUsers();
         getProducts();
         getAdminProducts()
     }, []);
-
-    useEffect(() => {
-        // Fetch order status counts when products change
-        getOrderStatusCounts();
-    }, [product]);
-
+    
     return (
         <Fragment>
             <div className="row">
@@ -178,9 +161,7 @@ const Dashboard = () => {
                     <div className="container">
                         <h1 className="my-4 dashboard-title">Dashboard</h1>
 
-                        {loading ? (
-                            <p>Loading...</p>
-                        ) : (
+                        {loading ? <Loader /> : (
                             <Fragment>
                                 <MetaData title={'Admin Dashboard'} />
 
@@ -231,103 +212,90 @@ const Dashboard = () => {
                                     </div>
 
                                     {/* Add ApexCharts component */}
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                {console.log('Rendering Chart:', categoryNames, productsCount)}
-                                                <Chart
-                                                    options={{
-                                                        chart: {
-                                                            id: "basic-bar"
-                                                        },
-                                                        xaxis: {
-                                                            categories: categoryNames // Use categoryNames instead of [category.name]
-                                                        }
-                                                    }}
-                                                    series={[
-                                                        {
-                                                            name: "series-1",
-                                                            data: Object.values(productsCount)
-                                                        }
-                                                    ]}
-                                                    type="bar"
-                                                    width="500"
-                                                />
+                                    <div className="row">
+                                        <div className="col-xl-6 margin-down">
+                                            <div className="card">
+                                                <div className="card-body d-flex flex-column align-items-center">
+                                                    <h5 className="card-title" style={{ color: "#b38269" }}>Products per Categories</h5>
+                                                    {console.log('Rendering Chart:', categoryNames, productsCount)}
+                                                    <Chart
+                                                        options={{
+                                                            chart: {
+                                                                id: "basic-bar"
+                                                            },
+                                                            xaxis: {
+                                                                categories: categoryNames
+                                                            }
+                                                        }}
+                                                        series={[
+                                                            {
+                                                                name: "series-1",
+                                                                data: Object.values(productsCount)
+                                                            }
+                                                        ]}
+                                                        type="bar"
+                                                        width="500"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-xl-6">
+                                            <div className="card">
+                                                <div className="card-body d-flex flex-column align-items-center">
+                                                    <h5 className="card-title" style={{ color: "#b38269" }}>User Registration by Day</h5>
+                                                    {console.log('Rendering User Registration Chart:', Object.keys(userRegistrationDates), Object.values(userRegistrationDates))}
+                                                    <Chart
+                                                        options={{
+                                                            chart: {
+                                                                id: "user-registration-chart"
+                                                            },
+                                                            xaxis: {
+                                                                categories: Object.keys(userRegistrationDates)
+                                                            }
+                                                        }}
+                                                        series={[
+                                                            {
+                                                                name: "users-registered",
+                                                                data: Object.values(userRegistrationDates)
+                                                            }
+                                                        ]}
+                                                        type="bar"
+                                                        width="500"
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                {console.log('Rendering User Registration Chart:', Object.keys(userRegistrationDates), Object.values(userRegistrationDates))}
-                                                <Chart
-                                                    options={{
-                                                        chart: {
-                                                            id: "user-registration-chart"
-                                                        },
-                                                        xaxis: {
-                                                            categories: Object.keys(userRegistrationDates)
-                                                        }
-                                                    }}
-                                                    series={[
-                                                        {
-                                                            name: "users-registered",
-                                                            data: Object.values(userRegistrationDates)
-                                                        }
-                                                    ]}
-                                                    type="bar"
-                                                    width="500"
-                                                />
+                                    <div className="row">
+                                    <div className="col-xl-6 col-sm-6 mt-3 margin-down">
+                                            <div className="card">
+                                                <div className="card-body d-flex flex-column align-items-center">
+                                                    <h5 className="card-title" style={{ color: "#b38269" }}>Monthly Sales Chart</h5>
+                                                    {/* Use MonthlySalesChart component here */}
+                                                    <MonthlySalesChart />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-xl-6 mt-3">
+                                            <div className="card">
+                                                <div className="card-body d-flex flex-column align-items-center">
+                                                    <h5 className="card-title" style={{ color: "#b38269" }}>User Sales Chart</h5>
+                                                    {/* Use UserSalesChart component here */}
+                                                    <UserSalesChart />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-xl-12">
+                                    <div className="col-xl-12 mt-3 margin-down">
                                         <div className="card">
-                                            <div className="card-body">
-                                                {console.log('Rendering Order Status Chart:', Object.keys(orderStatusCounts), Object.values(orderStatusCounts))}
-                                                <Chart
-                                                    options={{
-                                                        chart: {
-                                                            id: "order-status-chart"
-                                                        },
-                                                        xaxis: {
-                                                            categories: Object.keys(orderStatusCounts)
-                                                        }
-                                                    }}
-                                                    series={[
-                                                        {
-                                                            name: "order-status",
-                                                            data: Object.values(orderStatusCounts)
-                                                        }
-                                                    ]}
-                                                    type="bar"
-                                                    width="500"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                {/* Use MonthlySalesChart component here */}
-                                                <MonthlySalesChart />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
+                                            <div className="card-body d-flex flex-column align-items-center">
+                                                <h5 className="card-title" style={{ color: "#b38269" }}>Product Sales Chart</h5>
                                                 <ProductSalesChart />
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                <UserSalesChart />
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                             </Fragment>
                         )}

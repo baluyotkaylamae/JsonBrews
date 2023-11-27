@@ -7,9 +7,9 @@ const {
   updateProduct,
   deleteProduct,
   getProducts,
-  getProductById,
   getAdminProduct,
   getSingleProduct,
+  getProductById,
   productSales
 } = require('../controllers/productController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
@@ -17,13 +17,15 @@ const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 router.get('/products', getProducts);
 router.get('/products/:id', getSingleProduct);
 router.get('/product/:id', getProductById);
-router.put('/product/:id', updateProduct);
-router.delete('/product/:id', deleteProduct);
-router.post('/product/new', upload.array('images'), newProduct);
 
-router.get('/admin/product', getAdminProduct);
-router.get('/admin/product-sales', productSales);
 
+//admin
+router.put('/admin/update/product/:id', isAuthenticatedUser, authorizeRoles("admin"), updateProduct);
+router.delete('/admin/delete/product/:id',  deleteProduct);
+router.post('/admin/product/new', isAuthenticatedUser, authorizeRoles("admin"), upload.array('images'), newProduct);
+router.get('/admin/product', isAuthenticatedUser, authorizeRoles("admin"), getAdminProduct);
+
+router.get('/admin/product-sales',  productSales);
 router.patch('/product/:id', async (req, res) => {
   const { id } = req.params;
   const { stock } = req.body;

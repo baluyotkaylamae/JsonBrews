@@ -158,6 +158,7 @@ function App() {
         <Routes>
 
           {/*for login */}
+          
           <Route path="/" element={<Home />} exact="true" />
           <Route path="/ProductsPage" element={<ProductsPage />} exact="true" />
           <Route path="/product/:id" element={<ProductDetails cartItems={state.cartItems} addItemToCart={addItemToCart} />} exact="true" />

@@ -87,44 +87,58 @@ const OrdersList = () => {
         }
     }
     
-    const deleteOrderHandler = async (id) => {
+    // const deleteOrderHandler = async (id) => {
+    //     deleteOrder(id)
+    // }
+        // try {
+        //     const config = {
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             // 'Authorization': `Bearer ${getToken()}`
+                    
+        //         }
+        //     }
+        //     const { data } = await axios.delete(`http://localhost:4001/api/admin/delete/order/${id}`, config)
+        //     setIsDeleted(data.success)
+        //     setLoading(false)
+        // } catch (error) {
+        //     console.error('Error deleting order:', error.response || error.message); 
+        //     setError(error.response ? error.response.data.message : error.message);
+        // }
+    // }
+
+    const deleteOrder = async (id) => {
         try {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${getToken()}` 
+                    'Authorization': `Bearer ${getToken()}`
                 }
             }
             const { data } = await axios.delete(`http://localhost:4001/api/admin/order/${id}`, config)
             setIsDeleted(data.success)
             setLoading(false)
         } catch (error) {
-            console.error('Error deleting order:', error.response || error.message); 
-            setError(error.response ? error.response.data.message : error.message);
+            setError(error.response.data.message)
+
         }
     }
-
-   
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                console.log('Fetching orders...');
-                await listOrders();
-                console.log('Orders fetched successfully.');
-            } catch (error) {
-                console.error('Error fetching orders:', error);
-                errMsg(error.message);
-                setError('');
-            }
-            if (isDeleted) {
-                console.log('Order deleted successfully.');
-                successMsg('Order deleted successfully');
-                navigate('/order/list');
-            }
-        };
+        listOrders()
+        if (error) {
+            errMsg(error)
+            setError('')
+        }
+        if (isDeleted) {
+            successMsg('Order deleted successfully');
+            navigate('/admin/order');
+        }
+    }, [error, isDeleted])
+
+    const deleteOrderHandler = (id) => {
     
-        fetchData();
-    }, [error, isDeleted, navigate]);
+        deleteOrder(id);
+    };
     
     
     const setOrders = () => {

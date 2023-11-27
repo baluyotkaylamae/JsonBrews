@@ -266,7 +266,6 @@ const Header = ({ cartItems }) => {
             </MenuItem>
           ))}
 
-
           {user && user.role === 'admin' && (
                 <Link to="/dashboard" style={{ textDecoration: 'none' , color: 'inherit' }}>
                   <Typography textAlign="center">Dashboard</Typography>

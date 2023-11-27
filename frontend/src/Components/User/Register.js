@@ -190,6 +190,8 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Metadata from '../Layouts/Metadata';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import '../Layouts/RLForms.css';
 
@@ -224,13 +226,45 @@ const Register = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-
+  
+    // Check if name is empty
+    if (!name) {
+      toast.error('Name is required', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+  
+    // Check if email is empty or invalid
+    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
+      toast.error('Enter a valid email address', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+  
+    // Check if password is empty
+    if (!password) {
+      toast.error('Password is required', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+  
+    // Check if avatar is empty
+    if (!avatar) {
+      toast.error('Avatar is required', {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+      return;
+    }
+  
     const formData = new FormData();
     formData.set('name', name);
     formData.set('email', email);
     formData.set('password', password);
     formData.set('avatar', avatar);
-
+  
     register(formData);
   };
 

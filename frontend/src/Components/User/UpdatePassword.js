@@ -28,7 +28,7 @@ const UpdatePassword = () => {
             setIsUpdated(data.success)
             setLoading(false)
             toast.success('password updated', {
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: toast.POSITION.BOTTOM_CENTER
             });
             navigate('/me')
         } catch (error) {
@@ -38,19 +38,30 @@ const UpdatePassword = () => {
     useEffect(() => {
         if (error) {
             toast.error(error, {
-                position: toast.POSITION.BOTTOM_RIGHT
+                position: toast.POSITION.BOTTOM_CENTER
             });
         }
     }, [error, ])
 
+    //validation for updating password
     const submitHandler = (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.set('oldPassword', oldPassword);
-        formData.set('password', password);
-        updatePassword(formData)
-    }
-
+    
+        // Check if required fields are empty
+        if (!oldPassword || !password) {
+            toast.error('Both old password and new password are required', {
+                position: toast.POSITION.BOTTOM_CENTER,
+            });
+            return;
+        }
+    
+        const formData = {
+            oldPassword,
+            password,
+        };
+    
+        updatePassword(formData);
+    };
     return (
         <Fragment>
             <MetaData title={'Change Password'} />

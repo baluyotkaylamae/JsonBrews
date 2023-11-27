@@ -33,7 +33,7 @@ const UpdateProfile = () => {
         } catch (error) {
             console.error('Error fetching profile:', error);
             toast.error('Error fetching user profile', {
-                position: toast.POSITION.BOTTOM_CENTER,
+                position: toast.POSITION.BOTTOM_CENTER, 
             });
         }
     };
@@ -56,7 +56,6 @@ const UpdateProfile = () => {
             navigate('/me', { replace: true });
         } catch (error) {
             console.error('Error updating profile:', error);
-
             if (error.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
@@ -80,6 +79,8 @@ const UpdateProfile = () => {
             }
         }
     };
+
+    
     const goBack = () => {
         // Navigate back to the previous page
         navigate(-1);
@@ -89,14 +90,37 @@ const UpdateProfile = () => {
         getProfile();
     }, []); // Empty dependency array ensures the effect runs only once when the component mounts
 
-    const submitHandler = (e) => {
+    //validation of update profile
+    const submitHandler = async (e) => {
         e.preventDefault();
+    
+        // Check if required fields are empty
+        if (!name || !email || !avatar) {
+            toast.error('All fields are required', {
+                position: toast.POSITION.BOTTOM_CENTER,
+            });
+            return;
+        }
+    
         const formData = new FormData();
         formData.set('name', name);
         formData.set('email', email);
         formData.set('avatar', avatar);
-        updateProfile(formData);
+    
+        try {
+            // Clear any previous error messages
+            setError('');
+    
+            // Attempt to update the profile
+            await updateProfile(formData);
+        } catch (error) {
+            // Display the error using toast.error
+            toast.error(error.message || 'User update failed', {
+                position: toast.POSITION.BOTTOM_CENTER,
+            });
+        }
     };
+    
 
     const onChange = (e) => {
         const reader = new FileReader();

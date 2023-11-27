@@ -267,7 +267,9 @@ const UpdateProduct = () => {
                                         <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
                                     ))}
                                 </div>
-                                <button type="submit" className="btn btn-crud">Update</button>
+                                <button type="submit" 
+                                className="btn btn-crud"
+                                style={{marginTop: '20px'}}>Update</button>
                             </form>
                         </div>
                     </div>

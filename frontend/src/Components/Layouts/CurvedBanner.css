@@ -5,6 +5,7 @@
     height: 600px; /* Adjust the height as needed */
     margin-top: 4px; /* Adjust the margin-top to bring it down */
     display: flex;
+    padding-bottom: 40%;
   }
   
   

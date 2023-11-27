@@ -53,7 +53,9 @@ const Profile = () => {
                     <MetaData title={'Your Profile'} />
 
                     <div className="background-page">
-                        <div className="profile">
+                        <div className="profile"
+                        style={{ border: '3px solid #8e5f47',
+                        borderRadius: '15px'}}>
                             {/* <img src="./coffee.png" alt="Coffee Logo" className="mt-1 ml-5" /> */}
                             <h2 className="mt-1 ml-5">Profile</h2>
 

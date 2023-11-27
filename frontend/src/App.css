@@ -95,7 +95,7 @@ body {
   padding: 10px;
   background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
   background: linear-gradient(to right, #eae4cf, #ebb585);
-  height: 70vh; /* Cover the entire viewport height */
+  height: 80vh; /* Cover the entire viewport height */
 }
 .update-profile-bg form {
   padding: 2.5rem 3rem;

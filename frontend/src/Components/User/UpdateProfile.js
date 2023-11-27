@@ -140,12 +140,22 @@ const UpdateProfile = () => {
     return (
         <Fragment>
             <MetaData title={'Update Profile'} />
+
             <div className="row update-profile-bg" >
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg" 
-                    
+                   style={{ border: '3px solid #8e5f47',
+                borderRadius: '15px'}}
                     onSubmit={submitHandler} encType="multipart/form-data">
-                        <h1 className="mt-2 mb-5">Update Profile</h1>
+                        <h2 className="mt-2 mb-5"
+                        style={{
+                            color: '#8e5f47',
+                            textTransform: 'uppercase',
+                            fontFamily: 'Hammersmith One, sans-serif',
+                            textAlign: 'center', 
+                            margin: '0 auto',   
+                           
+                        }}>Update Profile</h2>
                         <div className="form-group">
                             <label htmlFor="email_field">Name</label>
                             <input
@@ -201,12 +211,16 @@ const UpdateProfile = () => {
                                 type="submit"
                                 className="btn update-btn btn-block mt-4 mb-3"
                                 disabled={loading ? true : false}
+                                style={{marginTop: '30%', backgroundColor: '#8e5f47',
+                                        borderColor: '#8e5f47'}}
                             >
                                 Update
                             </button>
                     </form>
                 </div>
             </div>
+         
+            
         </Fragment>
     );
 };

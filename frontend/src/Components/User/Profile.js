@@ -54,7 +54,7 @@ const Profile = () => {
 
                     <div className="background-page">
                         <div className="profile">
-                        {/* <img src="./coffee.png" alt="Coffee Logo" className="mt-1 ml-5" /> */}
+                            {/* <img src="./coffee.png" alt="Coffee Logo" className="mt-1 ml-5" /> */}
                             <h2 className="mt-1 ml-5">Profile</h2>
 
                             <div className="mt-5 user-info row">
@@ -76,12 +76,14 @@ const Profile = () => {
                                     <h4>Joined On</h4>
                                     <p>{String(user.createdAt).substring(0, 10)}</p>
 
-                                    {user.role !== 'admin' && (
-                                        <Link to="/orders/me" className="btn btn-danger btn-block mt-5">
-                                            My Orders
-                                        </Link>
-                                    )}
                                     <div className="button-container">
+                                        <div className="button">
+                                            {user.role !== 'admin' && (
+                                                <Link to="/orders/me" className="btn btn-danger btn-block mt-0 btn-pill">
+                                                    My Orders
+                                                </Link>
+                                            )}
+                                        </div>
                                         <div className="button">
                                             <Link to="/me/update" id="edit_profile" className="btn btn-primary btn-block">
                                                 Edit Profile

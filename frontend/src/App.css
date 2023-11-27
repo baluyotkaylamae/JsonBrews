@@ -65,7 +65,7 @@ body {
   padding: 1px;
   background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
   background: linear-gradient(to right, #eae4cf, #ebb585);
-  height: 120vh; /* Cover the entire viewport height */
+  height: 70vh; /* Cover the entire viewport height */
 }
 .wrapper form {
   padding: 2.5rem 3rem;
@@ -90,10 +90,10 @@ body {
   align-items: center;
   margin: 0;
   font-weight: 700;
-  padding: 1px;
+  padding: 10px;
   background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
   background: linear-gradient(to right, #eae4cf, #ebb585);
-  height: 120vh; /* Cover the entire viewport height */
+  height: 70vh; /* Cover the entire viewport height */
 }
 .update-profile-bg form {
   padding: 2.5rem 3rem;
@@ -106,7 +106,6 @@ body {
   color: white;
   margin-top: 2.5rem;
 }
-
 .update-profile-bg form a {
   font-size: 0.9rem;
   color: grey;
@@ -136,7 +135,7 @@ body {
   background: #f2994a;
   background: -webkit-linear-gradient(to right, #f0d175, #ebb585);
   background: linear-gradient(to right, #eae4cf, #ebb585);
-  padding: 1px;
+  padding: 60px;
   color: #000; /* Font color set to black */
 }
 .avatar {

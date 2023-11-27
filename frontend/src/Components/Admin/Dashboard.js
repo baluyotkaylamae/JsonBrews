@@ -227,56 +227,61 @@ const Dashboard = () => {
                                     </div>
 
                                     {/* Add ApexCharts component */}
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                {console.log('Rendering Chart:', categoryNames, productsCount)}
-                                                <Chart
-                                                    options={{
-                                                        chart: {
-                                                            id: "basic-bar"
-                                                        },
-                                                        xaxis: {
-                                                            categories: categoryNames // Use categoryNames instead of [category.name]
-                                                        }
-                                                    }}
-                                                    series={[
-                                                        {
-                                                            name: "series-1",
-                                                            data: Object.values(productsCount)
-                                                        }
-                                                    ]}
-                                                    type="bar"
-                                                    width="500"
-                                                />
+                                    <div className="row">
+                                        <div className="col-xl-6">
+                                            <div className="card">
+                                                <div className="card-body d-flex flex-column align-items-center">
+                                                    <h5 className="card-title" style={{ color: "#b38269" }}>Products per Categories</h5>
+                                                    {console.log('Rendering Chart:', categoryNames, productsCount)}
+                                                    <Chart
+                                                        options={{
+                                                            chart: {
+                                                                id: "basic-bar"
+                                                            },
+                                                            xaxis: {
+                                                                categories: categoryNames
+                                                            }
+                                                        }}
+                                                        series={[
+                                                            {
+                                                                name: "series-1",
+                                                                data: Object.values(productsCount)
+                                                            }
+                                                        ]}
+                                                        type="bar"
+                                                        width="500"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-xl-6">
+                                            <div className="card">
+                                                <div className="card-body d-flex flex-column align-items-center">
+                                                    <h5 className="card-title" style={{ color: "#b38269" }}>User Registration by Day</h5>
+                                                    {console.log('Rendering User Registration Chart:', Object.keys(userRegistrationDates), Object.values(userRegistrationDates))}
+                                                    <Chart
+                                                        options={{
+                                                            chart: {
+                                                                id: "user-registration-chart"
+                                                            },
+                                                            xaxis: {
+                                                                categories: Object.keys(userRegistrationDates)
+                                                            }
+                                                        }}
+                                                        series={[
+                                                            {
+                                                                name: "users-registered",
+                                                                data: Object.values(userRegistrationDates)
+                                                            }
+                                                        ]}
+                                                        type="bar"
+                                                        width="500"
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-xl-12">
-                                        <div className="card">
-                                            <div className="card-body">
-                                                {console.log('Rendering User Registration Chart:', Object.keys(userRegistrationDates), Object.values(userRegistrationDates))}
-                                                <Chart
-                                                    options={{
-                                                        chart: {
-                                                            id: "user-registration-chart"
-                                                        },
-                                                        xaxis: {
-                                                            categories: Object.keys(userRegistrationDates)
-                                                        }
-                                                    }}
-                                                    series={[
-                                                        {
-                                                            name: "users-registered",
-                                                            data: Object.values(userRegistrationDates)
-                                                        }
-                                                    ]}
-                                                    type="bar"
-                                                    width="500"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
+
                                     <div className="col-xl-12">
                                         <div className="card">
                                             <div className="card-body">

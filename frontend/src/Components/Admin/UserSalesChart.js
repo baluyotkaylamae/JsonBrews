@@ -27,7 +27,7 @@ const UserSalesChart = ({ data }) => {
                 }
             }
 
-            const { data } = await axios.get(`http://localhost:4001/api/admin/product-sales`, config);
+            const { data } = await axios.get(`http://localhost:4001/api/admin/customer-sales`, config);
             // const { data } = await axios.get(`${process.env.REACT_APP_API}/api/admin/customer-sales`, config)
             setSales(data.customerSales)
             setLoading(false)

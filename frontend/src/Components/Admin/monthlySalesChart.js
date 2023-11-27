@@ -30,9 +30,9 @@ export default function MonthlySalesChart() {
        
     }, [])
 
-    return (
-        <ResponsiveContainer width="90%" height={600}>
-            <LineChart width={600} height={300} data={sales} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+   return (
+        <ResponsiveContainer width="60%" height={200}>
+            <LineChart width={500} height={200} data={sales} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                 <Line type="monotone" dataKey="total" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <XAxis dataKey="month" />
@@ -40,7 +40,5 @@ export default function MonthlySalesChart() {
                 <Tooltip />
             </LineChart>
         </ResponsiveContainer>
-
-
     );
 }

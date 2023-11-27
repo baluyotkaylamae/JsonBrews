@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../Layouts/FH.css';
 
 import MonthlySalesChart from './MonthlySalesChart';
-import ProductSalesChart from './ProductSalesChart';
+import ProductSalesChart from './productSalesChart';
 import UserSalesChart from './UserSalesChart';
 
 const Dashboard = () => {
@@ -142,15 +142,13 @@ const Dashboard = () => {
         }
     };
 
-
-
     useEffect(() => {
         getCategories();
         getUsers();
         getProducts();
         getAdminProducts()
     }, []);
-
+    
     return (
         <Fragment>
             <div className="row">
@@ -214,7 +212,7 @@ const Dashboard = () => {
 
                                     {/* Add ApexCharts component */}
                                     <div className="row">
-                                        <div className="col-xl-6">
+                                        <div className="col-xl-6 margin-down">
                                             <div className="card">
                                                 <div className="card-body d-flex flex-column align-items-center">
                                                     <h5 className="card-title" style={{ color: "#b38269" }}>Products per Categories</h5>
@@ -268,7 +266,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                     <div className="row">
-                                        <div className="col-xl-6">
+                                    <div className="col-xl-6 col-sm-6 mt-3 margin-down">
                                             <div className="card">
                                                 <div className="card-body d-flex flex-column align-items-center">
                                                     <h5 className="card-title" style={{ color: "#b38269" }}>Monthly Sales Chart</h5>
@@ -278,7 +276,7 @@ const Dashboard = () => {
                                             </div>
                                         </div>
 
-                                        <div className="col-xl-6">
+                                        <div className="col-xl-6 mt-3">
                                             <div className="card">
                                                 <div className="card-body d-flex flex-column align-items-center">
                                                     <h5 className="card-title" style={{ color: "#b38269" }}>User Sales Chart</h5>
@@ -288,7 +286,7 @@ const Dashboard = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-xl-12">
+                                    <div className="col-xl-12 mt-3 margin-down">
                                         <div className="card">
                                             <div className="card-body d-flex flex-column align-items-center">
                                                 <h5 className="card-title" style={{ color: "#b38269" }}>Product Sales Chart</h5>

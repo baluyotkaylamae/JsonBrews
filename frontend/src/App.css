@@ -55,6 +55,10 @@ body {
   font-family: calibri;
 }
 
+.card-with-padding {
+  padding: 40px;
+}
+
 /* Login & Register */
 .wrapper {
   display: flex;

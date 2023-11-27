@@ -1,9 +1,7 @@
-
 import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Chart from 'react-apexcharts';
 import 'apexcharts';
-
 import MetaData from '../Layouts/Metadata';
 import Loader from '../Layouts/Loader';
 import Sidebar from './Sidebar';
@@ -12,9 +10,8 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Layouts/FH.css';
-
-import MonthlySalesChart from './MonthlySalesChart';
-import ProductSalesChart from './ProductSalesChart';
+import MonthlySalesChart from './monthlySalesChart';
+import ProductSalesChart from './productSalesChart';
 import UserSalesChart from './UserSalesChart';
 
 const Dashboard = () => {
@@ -178,9 +175,7 @@ const Dashboard = () => {
                     <div className="container">
                         <h1 className="my-4 dashboard-title">Dashboard</h1>
 
-                        {loading ? (
-                            <p>Loading...</p>
-                        ) : (
+                        {loading ? <Loader /> : (
                             <Fragment>
                                 <MetaData title={'Admin Dashboard'} />
 

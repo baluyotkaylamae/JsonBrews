@@ -64,22 +64,6 @@ exports.newProduct = async (req, res, next) => {
 	})
 }
 
-// exports.updateProduct = async (req, res) => {
-// 	try {
-// 		const { id } = req.params;
-// 		const updatedProduct = req.body;
-
-// 		const product = await Product.findByIdAndUpdate(id, updatedProduct, { new: true });
-
-// 		if (!product) {
-// 			return res.status(404).json({ message: 'Product not found' });
-// 		}
-
-// 		return res.json(product);
-// 	} catch (error) {
-// 		return res.status(500).json({ error: 'Internal server error' });
-// 	}
-// };
 
 exports.deleteProduct = async (req, res) => {
 	try {
@@ -133,24 +117,7 @@ exports.getSingleProduct = async (req, res, next) => {
 		product
 	})
 }
-
-exports.getProductById = async (req, res) => {
-	try {
-	  const { id } = req.params;
-  
-	  const product = await Product.findById(id);
-  
-	  if (!product) {
-		return res.status(404).json({ message: 'Product not found' });
-	  }
-  
-	  return res.json(product);
-	} catch (error) {
-	  return res.status(500).json({ error: 'Internal server error' });
-	}
-  };
-  
-
+ 
 exports.getAdminProduct = async (req, res, next) => {
 
 	const products = await Product.find();
@@ -236,64 +203,24 @@ exports.getSingleProduct = async (req, res, next) => {
 	})
 }
 
-// exports.updateProduct = async (req, res, next) => {
 
-//     console.log(req.body)
-//     let product = await product.findById(req.params.id);
-
-//     if (!product) {
-//         return res.status(404).json({
-//             success: false,
-//             message: 'Product not found'
-//         })
-//     }
-
-//     if (req.body.images) {
-
-//         let images = [];
-
-//         if (typeof req.body.images === 'string') {
-//             images.push(req.body.images)
-//         } else {
-//             images = req.body.images
-//         }
-    
-//         if (images !== undefined) {
-//             for (let i = 0; i < product.images.length; i++) {
-//                 const result = await cloudinary.v2.uploader.destroy(products.images[i].public_id)
-//             }
-//         }
-
-//         let imagesLinks = [];
-
-//         for (let i = 0; i < images.length; i++) {
-//             console.log(images[i])
-//             const result = await cloudinary.v2.uploader.upload(images[i], {
-//                 folder: 'baghub/product'
-//             });
-
-//             imagesLinks.push({
-//                 public_id: result.public_id,
-//                 url: result.secure_url
-//             })
-
-//         }
-//         req.body.images = imagesLinks
-//     }
-
-//     product = await product.findByIdAndUpdate(req.params.id, req.body, {
-//         new: true,
-//         runValidators: true,
-//         useFindandModify: false
-//     })
-
-//     return res.status(200).json({
-//         success: true,
-//         product
-//     })
-
-// }
-
+exports.getProductById = async (req, res) => {
+	try {
+	  const { id } = req.params;
+  
+	  const product = await Product.findById(id);
+  
+	  if (!product) {
+		return res.status(404).json({ message: 'Product not found' });
+	  }
+  
+	  return res.json(product);
+	} catch (error) {
+	  return res.status(500).json({ error: 'Internal server error' });
+	}
+  };
+  
+  
 exports.productSales = async (req, res, next) => {
     const totalSales = await Order.aggregate([
         {

@@ -3,6 +3,7 @@ import axios from 'axios';
 import Sidebar from './Sidebar';
 import { useNavigate } from 'react-router-dom';
 import './CRUD.css';
+import { getToken } from '../../utils/helpers';
 
 const CreateProduct = () => {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const CreateProduct = () => {
   useEffect(() => {
     console.log('Fetching categories...');
     axios
-      .get('http://localhost:4001/api/categories')
+      .get('http://localhost:4001/api/categories', configs)
       .then((response) => {
         console.log('Categories data:', response.data);
         setCategories(response.data.categories);
@@ -77,6 +78,13 @@ const CreateProduct = () => {
         console.error('Failed to fetch categories:', error);
       });
   }, []);
+
+  const configs = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      'Authorization': `Bearer ${getToken()}`
+    }
+  }
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -95,11 +103,12 @@ const CreateProduct = () => {
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data"
+          "Content-Type": "multipart/form-data",
+          'Authorization': `Bearer ${getToken()}`
         }
       };
 
-      await axios.post('http://localhost:4001/api/product/new', formData, config);
+      await axios.post('http://localhost:4001/api/admin/product/new', formData, config);
 
       alert('Product created successfully');
       setProduct({

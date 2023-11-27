@@ -53,7 +53,6 @@ export default function ProductSalesChart({ data }) {
                 }
             }
             const { data } = await axios.get(`http://localhost:4001/api/admin/product-sales`, config);
-            // const { data } = await axios.get(`${process.env.REACT_APP_API}/api/admin/product-sales`, config)
             setSales(data.totalPercentage)
 
         } catch (error) {
@@ -68,7 +67,6 @@ export default function ProductSalesChart({ data }) {
     return (
         <ResponsiveContainer width="90%" height={1000}>
             <PieChart width={1000} height={1000}>
-                {/* <Pie data={data} dataKey="percent" nameKey="name" cx="50%" cy="50%" outerRadius={50} fill="#8884d8" /> */}
                 <Pie
                     dataKey="percent"
                     nameKey="name"

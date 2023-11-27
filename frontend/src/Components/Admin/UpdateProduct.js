@@ -182,19 +182,18 @@ const UpdateProduct = () => {
     }
     console.log(images)
     console.log(categories)
+
     return (
-        <Fragment>
-            <MetaData title={`Product User`} />
+       
+        <div className="container mt-5">
             <div className="row">
-                <div className="col-12 col-md-2">
+            <div className="col-md-3">
                     <Sidebar />
                 </div>
-                <div className="col-12 col-md-10">
-                    <div className="row wrapper">
-                        <div className="col-10 col-lg-5">
-                            <form className="shadow-lg" onSubmit={submitHandler}>
-                                <h1 className="mt-2 mb-5">Update Product</h1>
-                                <div className="form-group">
+                <div className="col-md-9 text-crud" style={{paddingBottom:'50px'}}>
+                        <h2 className='title-crud'>Update Product</h2>
+                            <form onSubmit={submitHandler}>
+                            <div className="mb-3">
                                     <label htmlFor="name_field">Name</label>
                                     <input
                                         type="name"
@@ -268,13 +267,11 @@ const UpdateProduct = () => {
                                         <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
                                     ))}
                                 </div>
-                                <button type="submit" className="btn update-btn btn-block mt-4 mb-3" >Update</button>
+                                <button type="submit" className="btn btn-crud">Update</button>
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
-        </Fragment>
+                </div>   
     )
 }
 

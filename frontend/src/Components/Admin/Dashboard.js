@@ -10,8 +10,9 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../Layouts/FH.css';
-import MonthlySalesChart from './monthlySalesChart';
-import ProductSalesChart from './productSalesChart';
+
+import MonthlySalesChart from './MonthlySalesChart';
+import ProductSalesChart from './ProductSalesChart';
 import UserSalesChart from './UserSalesChart';
 
 const Dashboard = () => {

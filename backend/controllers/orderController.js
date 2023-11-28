@@ -123,7 +123,7 @@ exports.updateOrder = async (req, res, next) => {
             order.orderItems.forEach(async item => {
                 await updateStock(item.product, item.quantity);
             });
-        }
+        }   
 
         sendEmailToAdmin(order);
 

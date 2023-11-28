@@ -19,7 +19,7 @@ const ListOrders = () => {
             const config = {
                 headers: {
                      'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${getToken()}`
+                     'Authorization': `Bearer ${getToken()}`
                 }
             }
             const { data } = await axios.get(`http://localhost:4001/api/orders/me`, config)

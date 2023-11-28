@@ -165,7 +165,8 @@ const ProcessOrder = () => {
     return (
         <Fragment>
             <MetaData title={`Process Order # ${order && order._id}`} />
-            <div className="row">
+            <div className="row"
+            style={{margin: '5%'}}>
                 <div className="col-12 col-md-2">
                     <Sidebar />
                 </div>
@@ -229,7 +230,9 @@ const ProcessOrder = () => {
                                     </div>
                                     <button className="btn btn-primary btn-block update-status-btn" 
                                     onClick={() => updateOrderHandler(order._id)}
-                                    style={{ backgroundColor: '#8B4513', color: 'white', fontFamily: 'Calibiri, sans-serif' }}>
+                                    style={{ backgroundColor: '#8B4513', color: 'white', 
+                                    fontFamily: 'Calibiri, sans-serif',
+                                    margin: '4%'}}>
                                        
                                         Confirm Status
                                     </button>

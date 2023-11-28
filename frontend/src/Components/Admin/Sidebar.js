@@ -93,11 +93,11 @@ const Sidebar = () => {
             data-toggle="collapse"
             data-target="#allOrdersDropdown"
           >
-            ALL ORDERS
+            ORDERS
           </button>
           <div id="allOrdersDropdown" className={`collapse ${isAllOrderOpen ? 'show' : ''}`}>
             <a href="/admin/order" className="list-group-item list-group-item-action sidebar-dashboard">
-              LIST OF ORDERS
+              Orders List
             </a>
           </div>
 
@@ -107,11 +107,11 @@ const Sidebar = () => {
             data-toggle="collapse"
             data-target="#userDropdown"
           >
-           USER LIST
+           USERS
           </button>
           <div id="userDropdown" className={`collapse ${isUserOpen ? 'show' : ''}`}>
             <a href="/admin/users" className="list-group-item list-group-item-action sidebar-dashboard">
-              USER EDIT
+              User List
             </a>
           </div>
         </div>

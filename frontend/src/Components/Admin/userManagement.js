@@ -123,7 +123,7 @@ const UserManagement = () => {
                 </div>
                 <div className="col-md-9">
                     <div>
-                        <h2>User Management</h2>
+                        <h2>LIST OF USERS</h2>
                         <MDBDataTable
                             data={setDataTable()}
                             className="px-3"

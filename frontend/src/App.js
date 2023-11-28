@@ -225,7 +225,10 @@ function App() {
           } />
 
           {/* orders  -- Customer*/}
-          <Route path="/orders/me" element={<ListOrders />} />
+          <Route path="/orders/me" element={<ProtectedRoute>
+          <ListOrders />
+          </ProtectedRoute>} end />
+
           <Route path="/order/:id" element={<OrderDetails />} />
 
           <Route path="/admin/order" element={<ProtectedRoute isAdmin={true}>

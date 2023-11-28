@@ -203,7 +203,7 @@ const OrdersList = () => {
                 </div>
                 <div className="col-12 col-md-10">
                     <Fragment>
-                        <h1 className="my-5">All Orders</h1>
+                        <h2 className="my-5">LIST OF ORDERS</h2>
                         {loading ? <Loader /> : (
                             <MDBDataTable
                                 data={setOrders()}

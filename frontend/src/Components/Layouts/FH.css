@@ -115,10 +115,14 @@ font-family: Roboto, Arial, Helvetica, sans-serif;
 
 .sidebar-dashboard
 {
-    background-color: #E4D1B9 !important;
+    background-color: #8e5f47 !important;
     color: #FAF8F1;
 }
 
+.list-group-item:hover{
+    background-color: #F8DE22 !important;
+    color: #8e5f47;
+}
 
 .short-input {
     width: 100px; 

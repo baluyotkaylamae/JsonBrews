@@ -103,6 +103,10 @@ exports.updateOrder = async (req, res, next) => {
             return res.status(400).json({ message: `This order has already been delivered` });
         }
 
+        if (order.orderStatus === 'Shipping') {
+            return res.status(400).json({ message: `This order has already been shipped` });
+        }
+
         order.orderItems.forEach(async item => {
             await updateStock(item.product, item.quantity);
         });
@@ -113,6 +117,12 @@ exports.updateOrder = async (req, res, next) => {
 
         if (order.orderStatus === 'Delivered') {
             sendEmailToCustomer(order);
+        }
+
+        if (order.orderStatus === 'Shipping') {
+            order.orderItems.forEach(async item => {
+                await updateStock(item.product, item.quantity);
+            });
         }
 
         sendEmailToAdmin(order);
